@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+  <time>69</time>
+  <cells>
+    <cell row="0" col="0"/>
+    <cell row="1" col="0"/>
+  </cells>
+</game>

@@ -26,7 +26,7 @@ public class FileHandler {
         this.levelPath = levelPath;
         this.savePath = savePath;
     }
-    public Document getXML(Path xmlFilePath) {
+    public static Document getXML(Path xmlFilePath) {
         SAXReader reader = new SAXReader();
         Document document = null;
         try {
@@ -36,7 +36,7 @@ public class FileHandler {
         }
         return document;
     }
-    public void saveXML(Document document, String id) {
+    public static void saveXML(Document document, String id) {
         FileWriter out = null;
         try {
             out = new FileWriter(id);

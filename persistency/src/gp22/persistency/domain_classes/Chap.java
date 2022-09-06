@@ -1,4 +1,7 @@
-package nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes;
+package gp22.persistency.domain_classes;
+
+import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.Direction;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.Entity;
 
 public class Chap implements Entity {
     Direction direction;

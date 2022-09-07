@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+  <time>69</time>
+  <cells>
+    <cell row="0" col="0">
+      <entity name="Key"/>
+      <entity name="Chap" direction="NORTH"/>
+    </cell>
+    <cell row="0" col="1"></cell>
+  </cells>
+</game>

@@ -6,16 +6,8 @@ import java.util.List;
 public class GameClock implements Subject {
     private static GameClock clock;
     private final ArrayList<Observer> timedElements; // Move the observer stuff to a separate class.
-    private static final Runnable onTick = () -> {
-        // Do something to determine time to wait for a tick... Need to talk to Borgar about it.
-        while(get().running) {
-            get().tickIncrement();
 
-            // Tick observers.
-            get().update();
-        }
-    };
-    private static final Thread tickThread = new Thread(onTick, "Tick Thread");
+    Thread tickThread;
 
     private long tickCount;
     private long levelTickCount;
@@ -24,7 +16,9 @@ public class GameClock implements Subject {
     private boolean running;
 
     public static GameClock get() {
-        if (clock == null) clock = new GameClock();
+        if (clock == null) {
+            clock = new GameClock();
+        }
         return clock;
     }
 
@@ -55,9 +49,29 @@ public class GameClock implements Subject {
     }
     protected  void resetLevelTick() { levelTickCount = 0L; }
 
-    protected static void stop() {
-        get().running = false; // This is bad but it works for now.
+
+    protected void start() {
+        // Set up our clock to tick.
+        Runnable onTick = () -> {
+            while (running) {
+                tickIncrement();
+                update();
+                try {
+                    Thread.sleep(16);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        tickThread = new Thread(onTick, "Tick Thread");
+
+        running = true;
+        tickThread.start();
     }
+    protected void stop() {
+        running = false;
+    }
+    protected Thread thread() { return tickThread; }
 
     private GameClock() {
         tickCount = 0;
@@ -65,7 +79,5 @@ public class GameClock implements Subject {
         timePlayed = 0;
         timeRemaining = 0;
         timedElements = new ArrayList<>();
-        running = true;
-        tickThread.start();
     }
 }

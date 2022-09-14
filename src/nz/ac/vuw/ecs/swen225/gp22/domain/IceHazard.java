@@ -1,4 +1,4 @@
-package gp22.domain;
+package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 public class IceHazard extends Hazard {
 	public IceHazard(Coord coords) {

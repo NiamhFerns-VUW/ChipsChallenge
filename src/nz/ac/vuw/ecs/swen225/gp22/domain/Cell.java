@@ -1,13 +1,13 @@
-package gp22.domain;
+package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 import java.util.ArrayList;
 
 public class Cell {
 	private FreeTile storedTile;
 	private ArrayList<Entity> entities;
-	public final Coord coordinate;
+	public final gp22.domain.Coord coordinate;
 	
-	public Cell(FreeTile storedTile, Coord coordinate) {
+	public Cell(FreeTile storedTile, gp22.domain.Coord coordinate) {
 		this.storedTile = storedTile;
 		this.coordinate = coordinate;
 		entities = new ArrayList<Entity>();

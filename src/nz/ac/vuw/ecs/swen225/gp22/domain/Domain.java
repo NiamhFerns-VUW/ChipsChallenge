@@ -1,4 +1,4 @@
-package gp22.domain;
+package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 /**
  * The domain class is the part of the domain package the other packages interact with.

@@ -1,30 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.*;
+import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 public class Converter {
 
-    /**
-     * Takes entity properties (name and optionally direction) and creates xml element from it.
-     * @param entity
-     * @return
-     */
-    public static Element entityToXMLElement(Entity entity) {
-        System.out.println("entity: " + entity);
-        Document document = DocumentHelper.createDocument();
-        Element entityElement = document.addElement("entity");
-        Element name = entityElement.addAttribute("name", entity.getClass().getSimpleName());
-        if (entity instanceof Chap c) {
-            entityElement.addAttribute("direction",c.getDirection().toString());
-        }
-        if (entity instanceof Monster m) {
-            entityElement.addAttribute("direction",m.getDirection().toString());
-        }
-        return entityElement;
-    }
 
     /**
      * Takes freeTile and gets its classname and creates xml element from it.
@@ -56,5 +38,29 @@ public class Converter {
             cellEntities.add(element);
         }
         return cellElement;
+    }
+
+    /**
+     * Takes entity properties (name and optionally direction) and creates xml element from it.
+     * @param entity
+     * @return
+     */
+    public static Element entityToXMLElement(Entity entity) {
+        System.out.println("entity: " + entity);
+        return null;
+//        System.out.println("entity: " + entity);
+//        Document document = DocumentHelper.createDocument();
+//        Element entityElement = document.addElement("entity");
+//        Element name = entityElement.addAttribute("name", entity.getClass().getSimpleName());
+//        if (entity instanceof Chap c) {
+//            entityElement.addAttribute("direction",c.getDirection().toString());
+//        }
+//        if (entity instanceof Monster m) {
+//            entityElement.addAttribute("direction",m.getDirection().toString());
+//        }
+//        return entityElement;
+    }
+    public static void main(String[] args) {
+//        entityToXMLElement()
     }
 }

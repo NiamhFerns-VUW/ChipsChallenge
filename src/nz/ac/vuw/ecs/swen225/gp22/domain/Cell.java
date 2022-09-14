@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Cell {
 	private FreeTile storedTile;
 	private ArrayList<Entity> entities;
-	public final gp22.domain.Coord coordinate;
+	public final Coord coordinate;
 	
-	public Cell(FreeTile storedTile, gp22.domain.Coord coordinate) {
+	public Cell(FreeTile storedTile, Coord coordinate) {
 		this.storedTile = storedTile;
 		this.coordinate = coordinate;
 		entities = new ArrayList<Entity>();

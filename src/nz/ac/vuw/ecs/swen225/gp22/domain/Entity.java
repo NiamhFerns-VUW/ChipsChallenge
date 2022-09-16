@@ -1,4 +1,4 @@
-package gp22.domain;
+package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 /**
  * The Entity interface is for the various things that the player could interact with.

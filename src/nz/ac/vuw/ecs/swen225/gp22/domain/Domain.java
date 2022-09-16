@@ -21,7 +21,7 @@ public class Domain {
 		throw new Error("Code not done!");	//TODO
 	}
 	
-	public void getLevel() {
+	public Level getLevel() {
 		return currentLevel;
 	}
 	public void setLevel(Level newLevel) {

@@ -1,7 +1,16 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 public class Info extends FreeTile {
-	public final String infoText;
+	public String infoText;
+
+	public String getInfoText() {
+		return infoText;
+	}
+
+	public void setInfoText(String infoText) {
+		this.infoText = infoText;
+	}
+
 	public Info(Coord coords, String infoText) {
 		super(coords);
 		this.infoText = infoText;

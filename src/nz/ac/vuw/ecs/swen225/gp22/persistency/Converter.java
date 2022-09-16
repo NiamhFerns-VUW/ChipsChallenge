@@ -31,7 +31,7 @@ public class Converter {
     public static Element cellToXMLElement(Cell cell) {
         Document document = DocumentHelper.createDocument();
         Element cellElement = document.addElement("cell");
-        cellElement.add(freeTileToXMLElement(cell.getFreeTile()));
+        cellElement.add(freeTileToXMLElement(cell.getStoredTile()));
         Element cellEntities = cellElement.addElement("entities");
         for (Entity entity : cell.getEntities()) {
             Element element = entityToXMLElement(entity);

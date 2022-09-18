@@ -6,6 +6,9 @@ public class Hazard extends FreeTile {
 		super(coords);
 		this.hazardType = hazardType;
 	}
+	public Hazard(){
+		this.hazardType=null;
+	}
 	@Override
 	public boolean onMoveInto(Entity e, Direction d) {
 		throw new Error("Code not done!");	//TODO

@@ -4,6 +4,7 @@ public class Wall extends FreeTile {
 	public Wall(Coord coords) {
 		super(coords);
 	}
+	public Wall(){}
 	@Override
 	public boolean onMoveInto(Entity e, Direction d) {
 		return false;

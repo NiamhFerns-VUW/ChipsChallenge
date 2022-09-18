@@ -15,6 +15,10 @@ public class Info extends FreeTile {
 		super(coords);
 		this.infoText = infoText;
 	}
+	public Info(){}
+	public Info(String infoText){
+		this.infoText = infoText;
+	}
 	@Override
 	public boolean onMoveInto(Entity e, Direction d) {
 		throw new Error("Code not done!");	//TODO

@@ -9,6 +9,9 @@ public class Key implements Entity {
 	public void setKeyColor(String keyColor) {
 		this.keyColor = keyColor;
 	}
+	public Key(String keyColor) {
+		setKeyColor(keyColor);
+	}
 	@Override
 	public boolean interact(Entity e, Direction d, Coord c) {
 		throw new Error("Code not done!");	//TODO

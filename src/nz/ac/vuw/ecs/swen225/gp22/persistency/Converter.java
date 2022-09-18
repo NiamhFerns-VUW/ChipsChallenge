@@ -1,10 +1,6 @@
-package gp22.persistency;
+package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.Cell;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.Chap;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.Entity;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.Monster;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.domain_classes.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

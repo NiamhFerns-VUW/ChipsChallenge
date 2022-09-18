@@ -1,4 +1,4 @@
-package gp22.persistency;
+package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -12,6 +12,7 @@ public class Key implements Entity {
 	public Key(String keyColor) {
 		setKeyColor(keyColor);
 	}
+	public Key(){}
 	@Override
 	public boolean interact(Entity e, Direction d, Coord c) {
 		throw new Error("Code not done!");	//TODO

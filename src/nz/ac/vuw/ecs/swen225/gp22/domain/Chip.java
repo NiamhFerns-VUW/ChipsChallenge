@@ -5,6 +5,9 @@ public class Chip extends MovingEntity {
 	public Chip(Direction facingDir){
 		super(facingDir);
 	}
+	public Chip(){
+		super(Direction.None);
+	}
 
 	@Override
 	public boolean interact(Entity e, Direction d, Coord c) {

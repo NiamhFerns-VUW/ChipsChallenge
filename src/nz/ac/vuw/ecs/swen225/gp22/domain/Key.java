@@ -1,7 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 public class Key implements Entity {
-	String keyColor;
+	public String keyColor;
 	public String getKeyColor() {
 		return keyColor;
 	}

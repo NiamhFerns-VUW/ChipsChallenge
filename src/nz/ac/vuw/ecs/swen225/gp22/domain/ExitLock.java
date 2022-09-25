@@ -5,6 +5,7 @@ public class ExitLock extends FreeTile {
 		super(coords);
 		// TODO Auto-generated constructor stub
 	}
+	public ExitLock(){}
 	@Override
 	public boolean onMoveInto(Entity e, Direction d) {
 		throw new Error("Code not done!");	//TODO

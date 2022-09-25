@@ -5,4 +5,5 @@ public class Exit extends FreeTile {
 		super(coords);
 		// TODO Auto-generated constructor stub
 	}
+	public Exit(){}
 }

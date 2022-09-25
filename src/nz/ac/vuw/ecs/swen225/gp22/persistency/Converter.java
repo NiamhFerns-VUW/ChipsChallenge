@@ -114,7 +114,8 @@ public class Converter {
                     return field.getName().equals(fieldName);
                 }).findAny();
                 if (optionalField.isEmpty()) {
-                    throw new RuntimeException();
+//                    throw new RuntimeException();
+                    return;
                 }
                 Field field = optionalField.get();
                 try {
@@ -174,15 +175,17 @@ public class Converter {
             Class<?> aClass = Class.forName("nz.ac.vuw.ecs.swen225.gp22.domain."+text);
             Object o = aClass.getDeclaredConstructor().newInstance();
             FreeTile freeTile = (FreeTile) o;
+            System.out.println("prop list: " + propertyList);
             propertyList.forEach(e->{
+                System.out.println("e: " + e.getName());
                 String fieldName = e.getName();
                 String fieldValue = e.getText();
                 Field[] declaredFields = freeTile.getClass().getDeclaredFields();
-                Optional<Field> optionalField = Arrays.stream(declaredFields).filter(field -> {
-                    return field.getName().equals(fieldName);
-                }).findAny();
+                Optional<Field> optionalField = Arrays.stream(declaredFields).filter(field -> field.getName().equals(fieldName)).findAny();
+                System.out.println("field name: " + fieldName);
+                System.out.println("field val: " + fieldValue);
                 if (optionalField.isEmpty()) {
-                    throw new RuntimeException();
+                    return;
                 }
                 Field field = optionalField.get();
                 try {

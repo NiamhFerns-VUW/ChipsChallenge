@@ -16,10 +16,19 @@ public abstract class MovingEntity implements Entity {
 	public Direction getDir() {
 		return facingDir;
 	}
-	
-	public void move(Direction d) {
-		throw new Error("Code not done!");	//TODO
+
+	/**
+	 * Attempts to move in the given direction, returning a boolean based on if the movement was a success or not.
+	 *
+	 * @param d - The direction to move.
+	 * @return boolean - Returns false if it did not move, true otherwise.
+	 */
+	public boolean move(Direction d) {
+		facingDir = d;
+		if (!level.cells[coords.x()+d.x][coords.y()+d.y].onMoveInto(this, d)) return false;
+
+		level.cells[coords.x()][coords.y()].removeEntity(this);
+		level.cells[coords.x()+d.x][coords.y()+d.y].getEntities().add(this);
+		return true;
 	}
-	
-	public abstract boolean interact(Entity e, Direction d, Coord c);
 }

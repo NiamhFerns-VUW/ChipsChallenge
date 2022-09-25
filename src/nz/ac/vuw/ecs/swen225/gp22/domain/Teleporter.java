@@ -1,8 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+/**
+ * Teleporters teleport the target to a random different teleporter of the same colour when they are stepped on.
+ */
 public class Teleporter extends FreeTile {
-	public Teleporter(Coord coords) {
-		super(coords);
+	public Teleporter(Cell myCell) {
+		super(myCell);
 	}
 	@Override
 	public boolean onMoveInto(Entity e, Direction d) {

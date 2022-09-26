@@ -4,7 +4,6 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        // SwingUtilities.invokeLater(GameHandler::new);
-        new GameHandler();
+        SwingUtilities.invokeLater(GameHandler::new);
     }
 }

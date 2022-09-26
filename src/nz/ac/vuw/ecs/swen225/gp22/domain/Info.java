@@ -1,9 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+/**
+ * The Info tile displays text when Chip is standing on it.
+ */
 public class Info extends FreeTile {
 	public final String infoText;
-	public Info(Coord coords, String infoText) {
-		super(coords);
+	public Info(Cell myCell, String infoText) {
+		super(myCell);
 		this.infoText = infoText;
 	}
 	@Override

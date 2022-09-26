@@ -2,10 +2,12 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 import java.util.ArrayList;
 
+/**
+ * Each Cell keeps track of the tile it is made up of and the entities on it.
+ */
 public class Cell {
 	private FreeTile storedTile;
 	private ArrayList<Entity> entities;
-	public final Coord coordinate;
 	
 	public Cell(FreeTile storedTile, Coord coordinate) {
 		this.storedTile = storedTile;

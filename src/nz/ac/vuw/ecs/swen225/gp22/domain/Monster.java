@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+/**
+ * The monster moves around and kills Chip when they touch.
+ */
 public class Monster extends MovingEntity{
 	Direction facingDir;
 	

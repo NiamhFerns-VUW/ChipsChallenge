@@ -1,8 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+/**
+ * Blocks movement across until a MoveableBlock is pushed onto it.
+ */
 public class Pit extends FreeTile{
-	public Pit(Coord coords) {
-		super(coords);
+	public Pit(Cell myCell) {
+		super(myCell);
 	}
 	@Override
 	public boolean onMoveInto(Entity e, Direction d) {

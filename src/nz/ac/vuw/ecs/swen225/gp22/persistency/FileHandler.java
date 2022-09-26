@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -36,20 +37,24 @@ public class FileHandler {
         }
         return document;
     }
-    public static void saveXML(Document document, String id) {
-        FileWriter out = null;
+    public static void saveXML(Element element, String id) {
+        Document document = DocumentHelper.createDocument();
+        element.setDocument(document);
+        document.setRootElement(element);
         try {
-            out = new FileWriter(id);
-        } catch (IOException e) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            OutputFormat format = OutputFormat.createPrettyPrint();
+            XMLWriter writer = new XMLWriter(byteArrayOutputStream, format);
+            writer.write(document);
+            writer.close();
+
+            FileWriter fileWriter = new FileWriter(id);
+            fileWriter.write(byteArrayOutputStream.toString());
+            fileWriter.close();
+
+
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        }
-        try {
-            document.write(out);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            out.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

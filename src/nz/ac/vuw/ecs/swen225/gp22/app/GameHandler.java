@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 public class GameHandler extends JFrame implements Observer {
     private GameState state;
     private final InputHandler input;
-    private final JPanel gamePanel;
+    private JPanel gamePanel;
     private final JPanel timerPanel;
 
     Domain domain;
@@ -27,7 +27,6 @@ public class GameHandler extends JFrame implements Observer {
         assert SwingUtilities.isEventDispatchThread();
 
         // Create fields.
-        gamePanel  = new GamePanel();
         timerPanel = new TimerPanel();
         domain     = new Domain();
         input      = new InputHandler(domain);
@@ -40,14 +39,18 @@ public class GameHandler extends JFrame implements Observer {
         setTitle("Chips Challenge");
         setLocationRelativeTo(null);
         setVisible(true);
-        add(timerPanel);
-        add(gamePanel);
+        // add(timerPanel);
         addKeyListener(input);
-        pack();
 
         // Start the game and game clock.
         start();
         GameClock.get().start();
+
+        // Set the level.
+        state = new StartMenu("Start Menu");
+        gamePanel = state.getPanel();
+        add(gamePanel);
+        pack();
     }
 
     public void start() {
@@ -56,34 +59,15 @@ public class GameHandler extends JFrame implements Observer {
 
     @Override
     public void update() {
+        assert SwingUtilities.isEventDispatchThread();
+        validate();
         gamePanel.repaint();
-        timerPanel.repaint();
-    }
-}
-
-class TimerPanel extends JPanel {
-    TimerPanel() {
-        setPreferredSize(new Dimension(640, 100));
-        setBackground(Color.GRAY);
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponents(g);
-
-        g.setColor(Color.blue);
-        g.fillRect(20, 20, 10, 10);
-    }
-}
-
-class GamePanel extends JPanel {
-    GamePanel() {
-        setPreferredSize(new Dimension(640, 480));
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponents(g);
-
-        g.setColor(Color.black);
-        g.fillRect(0, 0, 40, 40);
+    protected void setState(GameState state) {
+        remove(gamePanel);
+        this.state = state;
+        gamePanel = state.getPanel();
+        add(gamePanel);
     }
 }

@@ -35,7 +35,9 @@ class InputHandler implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent keyEvent) {}
+    public void keyTyped(KeyEvent keyEvent) {
+        System.out.println("Hello");
+    }
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {

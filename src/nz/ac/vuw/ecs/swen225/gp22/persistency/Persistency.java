@@ -8,14 +8,23 @@ import org.dom4j.Element;
 
 public class Persistency {
 
-    // load gameSave
+    /**
+     * loads xml file at path into a gameSave object.
+     * @param path
+     * @return
+     */
     public static GameSave loadGameSave(Path path) {
         Document document = FileHandler.getXML(path);
         GameSave gameSave = new GameSave();
         gameSave.fromXml(document.getRootElement());
         return gameSave;
     }
-    // save gameSave
+
+    /**
+     * writes the xml of a gameSave object to path given.
+     * @param gameSave
+     * @param path
+     */
     public static void saveGameSave(GameSave gameSave, Path path) {
         FileHandler.saveXML(gameSave.toXml(),path.toString());
     }

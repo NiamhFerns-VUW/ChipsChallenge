@@ -92,9 +92,7 @@ public class Converter {
             .filter(e -> e.getName().equals("name"))
             .findAny();
         String name = "";
-        List<Element> entityProperties = element.elements().stream().filter(e -> {
-            return !(e.getName().equals("name"));
-        }).toList();
+        List<Element> entityProperties = element.elements().stream().filter(e -> !(e.getName().equals("name"))).toList();
 
         if (optionalName.isPresent()) {
             name = optionalName.get().getText();
@@ -107,11 +105,8 @@ public class Converter {
                 String fieldName = e.getName();
                 String fieldValue = e.getText();
                 Field[] declaredFields = entity.getClass().getDeclaredFields();
-                Optional<Field> optionalField = Arrays.stream(declaredFields).filter(field -> {
-                    return field.getName().equals(fieldName);
-                }).findAny();
+                Optional<Field> optionalField = Arrays.stream(declaredFields).filter(field -> field.getName().equals(fieldName)).findAny();
                 if (optionalField.isEmpty()) {
-//                    throw new RuntimeException();
                     return;
                 }
                 Field field = optionalField.get();
@@ -121,7 +116,6 @@ public class Converter {
                     throw new RuntimeException(ex);
                 }
             });
-            System.out.println("en prop: " + entityProperties);
             return entity;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -138,7 +132,6 @@ public class Converter {
 
     // tileToXMLElement
     public static Element tileToXMLElement(FreeTile freeTile) {
-        System.out.println("tileToXMLElement called on: " + freeTile);
         Document document = DocumentHelper.createDocument();
         Element tileElement = document.addElement("tile");
         tileElement.addElement("name").addText(freeTile.getClass().getSimpleName());
@@ -154,9 +147,13 @@ public class Converter {
         });
         return tileElement;
     }
-    // xmlElementToTile
+
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static FreeTile xmlElementToTile(Element element) {
-        System.out.println("xmlElementToTile called on: " + element);
         Optional<Element> name = element.elements().stream().filter(e -> e.getName().equals("name"))
             .findAny();
         List<Element> propertyList = element.elements().stream()
@@ -164,23 +161,16 @@ public class Converter {
         if (name.isEmpty()) {
             throw new RuntimeException();
         }
-//        if (propertyList.isEmpty()) {
-//            throw new RuntimeException();
-//        }
         String text = name.get().getText();
         try {
             Class<?> aClass = Class.forName("nz.ac.vuw.ecs.swen225.gp22.domain."+text);
             Object o = aClass.getDeclaredConstructor().newInstance();
             FreeTile freeTile = (FreeTile) o;
-            System.out.println("prop list: " + propertyList);
             propertyList.forEach(e->{
-                System.out.println("e: " + e.getName());
                 String fieldName = e.getName();
                 String fieldValue = e.getText();
                 Field[] declaredFields = freeTile.getClass().getDeclaredFields();
                 Optional<Field> optionalField = Arrays.stream(declaredFields).filter(field -> field.getName().equals(fieldName)).findAny();
-                System.out.println("field name: " + fieldName);
-                System.out.println("field val: " + fieldValue);
                 if (optionalField.isEmpty()) {
                     return;
                 }
@@ -205,7 +195,11 @@ public class Converter {
         }
     }
 
-    // cellToXMLElement
+    /**
+     * converts cell to xml element
+     * @param cell
+     * @return
+     */
     public static Element cellToXmlElement(Cell cell) {
         System.out.println("cellToXmlElement called on: " + cell);
         Document document = DocumentHelper.createDocument();
@@ -220,7 +214,11 @@ public class Converter {
         });
         return cellElement;
     }
-    // xmlElementToCell
+    /**
+     * converts xml element to cell.
+     * @param cellElement
+     * @return
+     */
     public static Cell xmlElementToCell(Element cellElement) {
         System.out.println("xmlElementToCell called on: " + cellElement);
         Optional<Element> optionalTile = cellElement.elements().stream()
@@ -232,7 +230,6 @@ public class Converter {
         }
         Element tileElement = optionalTile.get();
         FreeTile freeTile = xmlElementToTile(tileElement);
-
         Cell cell = new Cell();
         cell.setStoredTile(freeTile);
         ArrayList<Entity> entityArrayList = new ArrayList<>();

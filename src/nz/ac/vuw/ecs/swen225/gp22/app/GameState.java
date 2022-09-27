@@ -45,7 +45,8 @@ class BaseGameplayFrame extends JPanel {
         super.paintComponents(g);
         g.clearRect(0,0,640,480);
 
-        g.setColor(Color.black);
-        g.fillRect(0,0,100,100);
+        // My reference to your code will go here..
+        // Renderer.renderMethod(g).
+        // You have free rain to do whatever you want with this graphics component.
     }
 }

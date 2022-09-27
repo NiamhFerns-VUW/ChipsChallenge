@@ -5,11 +5,12 @@ import java.awt.*;
 
 class TimerPanel extends JPanel {
     TimerPanel() {
-        setPreferredSize(new Dimension(640, 100));
-        setBackground(Color.GRAY);
+        setPreferredSize(new Dimension(640, 75));
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponents(g);
+        // Fill the background colour.
+        g.fillRect(0,0, getWidth(), getHeight());
     }
 }

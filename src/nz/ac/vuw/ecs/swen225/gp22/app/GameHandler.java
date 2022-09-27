@@ -39,7 +39,11 @@ public class GameHandler extends JFrame implements Observer {
         setTitle("Chips Challenge");
         setLocationRelativeTo(null);
         setVisible(true);
-        // add(timerPanel);
+
+        // Layout
+
+
+        add(timerPanel, BorderLayout.NORTH);
         addKeyListener(input);
 
         // Start the game and game clock.
@@ -49,7 +53,7 @@ public class GameHandler extends JFrame implements Observer {
         // Set the level.
         state = new StartMenu("Start Menu");
         gamePanel = state.getPanel();
-        add(gamePanel);
+        add(gamePanel, BorderLayout.CENTER);
         pack();
     }
 
@@ -61,6 +65,7 @@ public class GameHandler extends JFrame implements Observer {
     public void update() {
         assert SwingUtilities.isEventDispatchThread();
         validate();
+        timerPanel.repaint();
         gamePanel.repaint();
     }
 

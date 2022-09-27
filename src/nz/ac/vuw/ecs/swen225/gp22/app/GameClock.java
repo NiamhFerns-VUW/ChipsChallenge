@@ -1,17 +1,18 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameClock extends Subject {
     private static GameClock clock;
-    Thread tickThread;
+    private Timer timer;
+    public static final int FRAMERATE = 60;
 
     private long tickCount;
     private long levelTickCount;
     private long timePlayed;
     private long timeRemaining;
-    private boolean running;
 
     public static GameClock get() {
         if (clock == null) {
@@ -36,27 +37,18 @@ public class GameClock extends Subject {
     }
 
     protected void start() {
-        // Set up our clock to tick.
-        Runnable onTick = () -> {
-            while (running) {
+            timer = new Timer(1000 / FRAMERATE, _e -> {
                 tickIncrement();
                 update();
-                try {
-                    Thread.sleep(16);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        tickThread = new Thread(onTick, "Tick Thread");
-
-        running = true;
-        tickThread.start();
+            });
+            timer.start();
     }
     protected void stop() {
-        running = false;
+        timer.stop();
     }
-    protected Thread thread() { return tickThread; }
+    public boolean isRunning() {
+        return timer.isRunning();
+    }
 
     private GameClock() {
         tickCount = 0;

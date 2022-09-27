@@ -20,6 +20,10 @@ public class GameSave {
         cells = new Cell[16][17];
     }
 
+    /**
+     * converts current gameSave object to xml.
+     * @return
+     */
     public Element toXml(){
         Document document = DocumentHelper.createDocument();
         Element gameElement = document.addElement("game");
@@ -39,6 +43,11 @@ public class GameSave {
         }
         return gameElement;
     }
+
+    /**
+     * Takes xml element and sets current gameSaves fields with the xml values. Currently no input checking.
+     * @param element
+     */
     public void fromXml(Element element) {
         String timeString = Objects.requireNonNull(
             element.elements().stream().filter(e -> e.getName().equals("time")).findFirst()

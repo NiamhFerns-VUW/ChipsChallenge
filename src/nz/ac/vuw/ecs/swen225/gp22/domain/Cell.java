@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Cell {
 	private FreeTile storedTile;
+	private final Coord coordinate;
 	private ArrayList<Entity> entities;
 	
 	public Cell(FreeTile storedTile, Coord coordinate) {
@@ -14,8 +15,12 @@ public class Cell {
 		this.coordinate = coordinate;
 		entities = new ArrayList<Entity>();
 	}
-	public boolean onMoveInto(Entity e, Direction d) {
-		return storedTile.onMoveInto(e, d);
+	public boolean beforeMoveInto(MovingEntity e, Direction d) {
+		return storedTile.onMoveInto(e, d) && entities.stream().allMatch(a -> a.interactBefore(e, d, coordinate));
+	}
+
+	public boolean afterMoveInto(MovingEntity e, Direction d) {
+		return entities.stream().allMatch(a -> a.interactAfter(e, d, coordinate));
 	}
 	
 	public FreeTile getStoredTile() {
@@ -26,5 +31,9 @@ public class Cell {
 	}
 	public ArrayList<Entity> getEntities() {
 		return entities;
+	}
+
+	public void removeEntity(Entity e) {
+		entities = (ArrayList<Entity>) entities.stream().filter(entity -> entity != e).toList();
 	}
 }

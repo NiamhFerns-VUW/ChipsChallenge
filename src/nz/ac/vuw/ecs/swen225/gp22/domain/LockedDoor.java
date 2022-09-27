@@ -10,7 +10,7 @@ public class LockedDoor extends FreeTile {
 		this.lockColour = lockColour;
 	}
 	@Override
-	public boolean onMoveInto(Entity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d) {
 		throw new Error("Code not done!");	//TODO
 	}
 }

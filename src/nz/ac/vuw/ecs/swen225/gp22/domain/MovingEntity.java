@@ -25,10 +25,13 @@ public abstract class MovingEntity implements Entity {
 	 */
 	public boolean move(Direction d) {
 		facingDir = d;
-		if (!level.cells[coords.x()+d.x][coords.y()+d.y].beforeMoveInto(this, d)) return false;
+		Cell nextCell = level.cells[coords.x()+d.x][coords.y()+d.y];
+
+		if (!nextCell.beforeMoveInto(this, d)) return false;
 
 		level.cells[coords.x()][coords.y()].removeEntity(this);
-		level.cells[coords.x()+d.x][coords.y()+d.y].getEntities().add(this);
+		nextCell.getEntities().add(this);
+		nextCell.afterMoveInto(this, d);
 		return true;
 	}
 }

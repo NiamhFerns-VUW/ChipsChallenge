@@ -8,11 +8,11 @@ public class MoveableBlock extends MovingEntity {
 		super(Direction.None);
 	}
 	@Override
-	public boolean interactBefore(MovingEntity e, Direction d, Coord c) {
+	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
 		throw new Error("Code not done!");    //TODO
 	}
 	@Override
-	public boolean interactAfter(MovingEntity e, Direction d, Coord c) {
+	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
 		throw new Error("Code not done!");	//TODO
 	}
 	@Override

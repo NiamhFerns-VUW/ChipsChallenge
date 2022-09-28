@@ -1,7 +1,7 @@
 class FreeTile
 { 
-  Position coords;
-public boolean onMoveInto(Entity e, Direction d) {
+  Cell myCell;
+public boolean onMoveInto(MovingEntity e, Direction d) {
   }
 }
 
@@ -14,16 +14,16 @@ class Domain
 {
   Persistency persist;
   * -> 1 Level currentLevel;
-  
+
   public Level getLevel() {
   }
-  
+
   public void movePlayer(Direction dir) {
   }
-  
+
   public void update() {
   }
-  
+
   public void startLevel(String levelName) {
   }
 }
@@ -41,14 +41,14 @@ class Pit
 
 interface Entity
 {
-  boolean interact(Entity e, Direction d, Coord
-                   sc);
+  boolean interactBefore(MovingEntity e, Direction d, Cell c);
+  boolean interactAfter(MovingEntity e, Direction d, Cell c);
   int drawHierarchy();
 }
 
 class ExitLock
 {
-  isA FreeTile; 
+  isA FreeTile;
 }
 
 class Treasure
@@ -119,16 +119,15 @@ public String getHazardName(){
 class Cell
 {
   FreeTile storedTile;
-  Position coords;
-0..1 -> * Entity entities;  
+0..1 -> * Entity entities;
   0..1 -> 1 FreeTile;
 
   public ArrayList<Entity> getEntities() {
   }
   public FreeTile getTile() {
   }
-  
-  public boolean onMoveInto(Entity e, Direction d) {
+
+  public boolean onMoveInto(MovingEntity e, Direction d) {
   }
 }
 
@@ -138,21 +137,18 @@ class Level
   0..1 -> * Cell map;
   0..1 -> 1 Chip player;
   0..1 -> 0..8 Entity inventory;
-  
-  public Cell[][] getCells() {
-  }
-  
+
   public Entity[] getInventory() {
   }
 }
 
 class MovingEntity {
   isA Entity;
-  
+
   Direction direct;
   Coord coords;
   Level level;
-  
+
   public Direction getDir() {
   }
   public void move(Direction dir) {
@@ -182,12 +178,12 @@ class FreeTile
   position.association Entity__FreeTile 0,10 174,1;
     position.association FreeTile__Model 110,14 0,11;
   position.association Entity:entities__FreeTile 0,0 174,9;
-position 1115 275 292 77.8667;
+position 1115 275 198 109.867;
 }
 
 class FreeTile
 {
-  position 1115 275 292 77.8667;
+  position 1115 275 198 109.867;
 }
 
 class Treasure
@@ -237,7 +233,7 @@ class Domain
   position.association Domain__FreeTile:board 223,37 1,0;
   position.association Cell:board__Domain 223,0 0,52;
   position.association Domain__Entity:invent 0,0 174,45;
-  position.association Domain__Level:currentLevel 156,0 200,90;
+  position.association Domain__Level:currentLevel 156,0 200,100;
 }
 
 class Pit
@@ -267,15 +263,15 @@ class Info
 
 class Cell
 {
-  position 1093 21 292 145.867;
+  position 1093 21 198 160.867;
   position.association Cell__FreeTile 109,129 119,0;
-  position.association Cell__Entity:entities 0,0 310,5;
+  position.association Cell__Entity:entities 0,0 110,5;
 }
 
 class Level
 {
   position.association Cell:map__Level 116,7 0,10;
-  position.association Entity:inventory__Level 0,0 310,78;
+  position.association Entity:inventory__Level 0,0 383,65;
     position.association Chip:player__Level 14,95 213,0;
 position 782 55 161 94.8667;
 }

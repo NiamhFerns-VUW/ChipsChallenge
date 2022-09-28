@@ -5,11 +5,11 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  * AntiHazard with the same hazardType.
  */
 public class IceHazard extends Hazard {
-	public IceHazard(Cell myCell) {
-		super(myCell, "Ice");
+	public IceHazard() {
+		super("Ice");
 	}
 	@Override
-	public boolean onMoveInto(MovingEntity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		throw new Error("Code not done!");	//TODO
 	}
 }

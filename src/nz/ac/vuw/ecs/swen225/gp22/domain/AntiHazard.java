@@ -8,13 +8,13 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public record AntiHazard(String hazardType) implements Entity {
 	@Override
-	public boolean interactBefore(MovingEntity e, Direction d, Coord c) {
+	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
 		return true;
 	}
 	@Override
-	public boolean interactAfter(MovingEntity e, Direction d, Coord c) {
+	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
 		if (!(e instanceof Chip p)) return true;
-		if (p.level.addToInventory(this)) p.level.cells[c.x()][c.y()].removeEntity(this);
+		if (p.level.addToInventory(this)) myCell.removeEntity(this);
 		return true;
 	}
 

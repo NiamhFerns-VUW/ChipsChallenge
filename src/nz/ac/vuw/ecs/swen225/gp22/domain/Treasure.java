@@ -8,20 +8,20 @@ import java.util.Arrays;
  */
 public class Treasure implements Entity {
 	@Override
-	public boolean interactBefore(MovingEntity e, Direction d, Coord c) {
+	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
 		return true;
 	}
 
 	@Override
-	public boolean interactAfter(MovingEntity e, Direction d, Coord c) {
-		e.level.cells[c.x()][c.y()].removeEntity(this);
+	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
+		myCell.removeEntity(this);
 		e.level.setRemainingTreasures(e.level.getRemainingTreasures()-1);
 
 		if (e.level.getRemainingTreasures() == 0) {	// if there are no more treasures left, the ExitLocks disappear
 			Arrays.stream(e.level.cells)
 					.flatMap(cl-> Arrays.stream(cl))
 					.filter(cell->cell.getStoredTile() instanceof ExitLock)
-					.forEach(cell->cell.setStoredTile(new FreeTile(cell)));
+					.forEach(cell->cell.setStoredTile(new FreeTile()));
 		}
 
 		return true;

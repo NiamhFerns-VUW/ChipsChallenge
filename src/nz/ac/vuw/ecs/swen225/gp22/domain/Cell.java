@@ -7,20 +7,18 @@ import java.util.ArrayList;
  */
 public class Cell {
 	private FreeTile storedTile;
-	private final Coord coordinate;
 	private ArrayList<Entity> entities;
 	
-	public Cell(FreeTile storedTile, Coord coordinate) {
+	public Cell(FreeTile storedTile) {
 		this.storedTile = storedTile;
-		this.coordinate = coordinate;
 		entities = new ArrayList<Entity>();
 	}
 	public boolean beforeMoveInto(MovingEntity e, Direction d) {
-		return storedTile.onMoveInto(e, d) && entities.stream().allMatch(a -> a.interactBefore(e, d, coordinate));
+		return storedTile.onMoveInto(e, d, this) && entities.stream().allMatch(a -> a.interactBefore(e, d, this));
 	}
 
 	public boolean afterMoveInto(MovingEntity e, Direction d) {
-		return entities.stream().allMatch(a -> a.interactAfter(e, d, coordinate));
+		return entities.stream().allMatch(a -> a.interactAfter(e, d, this));
 	}
 	
 	public FreeTile getStoredTile() {

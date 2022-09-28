@@ -5,12 +5,11 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public class Hazard extends FreeTile {
 	public final String hazardType;
-	public Hazard(Cell myCell, String hazardType) {
-		super(myCell);
+	public Hazard(String hazardType) {
 		this.hazardType = hazardType;
 	}
 	@Override
-	public boolean onMoveInto(MovingEntity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		throw new Error("Code not done!");	//TODO
 	}
 }

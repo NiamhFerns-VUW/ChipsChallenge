@@ -17,7 +17,7 @@ public interface Entity {
 	 * @return Returns true if the interaction is successful, false if there is a failure
 	 * (such as the interaction causing a box to attempt to move into a wall).
 	 */
-	boolean interactBefore(MovingEntity e, Direction d, Coord c);
+	boolean interactBefore(MovingEntity e, Direction d, Cell myCell);
 	/**
 	 * The interactAfter method causes the entity to perform an action based on its class, after the player moves
 	 * onto this entity's tile.
@@ -29,7 +29,7 @@ public interface Entity {
 	 * @return Returns true if the interaction is successful, false if there is a failure
 	 * (such as the interaction causing a box to attempt to move into a wall).
 	 */
-	boolean interactAfter(MovingEntity e, Direction d, Coord c);
+	boolean interactAfter(MovingEntity e, Direction d, Cell myCell);
 	
 	/**
 	 * @return Returns an integer with the class' position in the draw hierarchy,

@@ -14,10 +14,10 @@ import java.io.*;
 class Fuzz{
     static final Random random = new Random();
     public static void randomKeys(int size){
-        Main newGame = new Main();
+        GameHandler game = new GameHandler();
         Robot robot = new Robot();
 
-        // newGame.run().newApp();  // skip to first level
+        // game.run().newApp();  // skip to first level
 
         List<KeyEvent> keys = List.of(  KeyEvent.VK_UP,
                                         KeyEvent.VK_DOWN,

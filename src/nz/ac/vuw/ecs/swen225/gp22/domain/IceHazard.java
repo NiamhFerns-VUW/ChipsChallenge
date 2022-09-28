@@ -9,7 +9,7 @@ public class IceHazard extends Hazard {
 		super(myCell, "Ice");
 	}
 	@Override
-	public boolean onMoveInto(Entity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d) {
 		throw new Error("Code not done!");	//TODO
 	}
 }

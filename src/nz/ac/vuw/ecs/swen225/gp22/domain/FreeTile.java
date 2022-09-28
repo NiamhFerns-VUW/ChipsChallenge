@@ -10,7 +10,7 @@ public class FreeTile {
 		this.myCell = myCell;
 	}
 	
-	public boolean onMoveInto(Entity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d) {
 		return true;
 	}
 }

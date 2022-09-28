@@ -8,7 +8,7 @@ public class ExitLock extends FreeTile {
 		super(myCell);
 	}
 	@Override
-	public boolean onMoveInto(Entity e, Direction d) {
-		throw new Error("Code not done!");	//TODO
+	public boolean onMoveInto(MovingEntity e, Direction d) {
+		return false;
 	}
 }

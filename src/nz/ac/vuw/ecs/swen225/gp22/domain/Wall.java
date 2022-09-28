@@ -8,7 +8,7 @@ public class Wall extends FreeTile {
 		super(myCell);
 	}
 	@Override
-	public boolean onMoveInto(Entity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d) {
 		return false;
 	}
 }

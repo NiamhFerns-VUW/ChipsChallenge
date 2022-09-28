@@ -14,7 +14,7 @@ public class MapGUI {
     public void updateMap(Graphics g){
         //This is probably not the correct way to get access to the Cells 2d array but for now it will do
         Domain d = new Domain();
-        Cell[][] array = d.getLevel().getCells();
+        Cell[][] array = d.getLevel().cells;
         for(int i = 0; i < array.length; i++){
             for (int j=0; j < array[i].length; j++){
                 Cell cell = array[i][j];

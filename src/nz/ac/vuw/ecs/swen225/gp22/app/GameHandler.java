@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import java.io.File;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 
 import javax.swing.*;
@@ -7,12 +8,15 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 
 public class GameHandler extends JFrame implements Observer {
     private GameState state;
     private final InputHandler input;
     private JPanel gamePanel;
     private final JPanel timerPanel;
+
+    JMenuBar menuBar = new JMenuBar();
 
     Domain domain;
 
@@ -49,6 +53,28 @@ public class GameHandler extends JFrame implements Observer {
         // Start the game and game clock.
         start();
         GameClock.get().start();
+
+        // add menubar
+        JMenu fileMenu = new JMenu("file");
+        JMenuItem loadMenuItem = new JMenuItem("load");
+        JMenuItem saveMenuItem = new JMenuItem("save");
+        fileMenu.add(loadMenuItem);
+        fileMenu.add(saveMenuItem);
+
+        loadMenuItem.addActionListener(al->{
+            JFileChooser fileChooser = new JFileChooser("./saves/");
+            fileChooser.showOpenDialog(this);
+            File selectedFile = fileChooser.getSelectedFile();
+            String s = Persistency.loadGame(selectedFile.getPath());
+            System.out.println("returned: " + s);
+        });
+        saveMenuItem.addActionListener(al->{
+            Persistency.saveGameSave("pass me domain/gameSave object","lksdjfklsdf");
+        });
+
+        menuBar.add(fileMenu);
+        setJMenuBar(menuBar);
+
 
         // Set the level.
         state = new StartMenu("Start Menu");

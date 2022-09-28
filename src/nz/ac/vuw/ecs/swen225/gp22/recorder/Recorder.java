@@ -9,12 +9,11 @@ import java.util.Stack;
 
 public class Recorder {
 
-    //GameState currentState;
-    //Recording currentRecording; //Do we need Recording Class? Or stack here?
-        //Store in List then in reverse (starting at back of list) store each Step into Stack
-
     private ArrayList<Stack<Step>> recordings;
     private ArrayList<Step> currentRecording;
+
+    private String currentLevel = "zero";
+    private boolean startRecording = false;
 
 
     public Recorder(){
@@ -22,10 +21,60 @@ public class Recorder {
         currentRecording = new ArrayList<>();
     }
 
-    public void createStep(String direction, GameClock gc){
-        currentRecording.add(new Step());
+    public void start(){
+        startRecording = true;
     }
 
+    public void reset(){
+        currentRecording.clear();
+        currentLevel = "zero";
+        startRecording = false;
+    }
+
+    public void setLevel(String level){
+        this.currentLevel = level;
+    }
+    public void up(){
+        if(startRecording){
+            long time = GameClock.get().currentTime();
+            currentRecording.add(new Step("Up", time));
+        }
+    }
+
+    public void down(){
+        if(startRecording){
+            long time = GameClock.get().currentTime();
+            currentRecording.add(new Step("Down", time));
+        }
+    }
+
+    public void left(){
+        if(startRecording){
+            long time = GameClock.get().currentTime();
+            currentRecording.add(new Step("Left", time));
+        }
+    }
+
+    public void right(){
+        if(startRecording){
+            long time = GameClock.get().currentTime();
+            currentRecording.add(new Step("Right", time));
+        }
+    }
+
+    public void none(){
+        if(startRecording){
+            long time = GameClock.get().currentTime();
+            currentRecording.add(new Step("None", time));
+        }
+    }
+
+    /**
+    public Element setGameSave(GameState gs){
+        GameSave gs
+        return gs.toXML();
+    }
+    */
 
     public void saveRecording(){
         //Reverse input allSteps into a Stack as each step is being converted into XML
@@ -34,7 +83,7 @@ public class Recorder {
             gameHistory.push(currentRecording.get(i));
         }
         recordings.add(gameHistory);
-        currentRecording.clear();
+        reset();
     }
 
     /** LoadRecording()

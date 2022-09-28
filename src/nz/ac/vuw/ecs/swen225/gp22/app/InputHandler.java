@@ -13,20 +13,16 @@ class InputHandler implements KeyListener {
     private final HashMap<Integer, Runnable> released;
 
     protected void mvUp() {
-        System.out.println("UP");
-        // domain.movePlayer(Direction.Up);
+        domain.movePlayer(Direction.Up);
     }
     protected void mvDown() {
-        System.out.println("DOWN");
-        // domain.movePlayer(Direction.Down);
+        domain.movePlayer(Direction.Down);
     }
     protected void mvLeft() {
-        System.out.println("LEFT");
-        // domain.movePlayer(Direction.Left);
+        domain.movePlayer(Direction.Left);
     }
     protected void mvRight() {
-        System.out.println("RIGHT");
-        // domain.movePlayer(Direction.Right);
+        domain.movePlayer(Direction.Right);
     }
 
     protected void addBinding(Integer key, Runnable pressed, Runnable released) {

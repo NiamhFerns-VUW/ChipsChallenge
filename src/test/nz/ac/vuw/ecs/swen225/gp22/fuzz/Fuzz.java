@@ -13,16 +13,15 @@ import java.io.*;
 
 class Fuzz{
     static final Random random = new Random();
+    private List<KeyEvent> keys = List.of(  KeyEvent.VK_UP,
+            KeyEvent.VK_DOWN,
+            KeyEvent.VK_LEFT,
+            KeyEvent.VK_RIGHT );
     public static void randomKeys(int size){
         GameHandler game = new GameHandler();
         Robot robot = new Robot();
 
         // game.run().newApp();  // skip to first level
-
-        List<KeyEvent> keys = List.of(  KeyEvent.VK_UP,
-                                        KeyEvent.VK_DOWN,
-                                        KeyEvent.VK_LEFT,
-                                        KeyEvent.VK_RIGHT );
 
         robot.delay(100);
 

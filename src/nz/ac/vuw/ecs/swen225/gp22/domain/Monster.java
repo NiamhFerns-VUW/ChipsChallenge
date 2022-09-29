@@ -5,9 +5,12 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public class Monster extends MovingEntity{
 	Direction facingDir;
-	
-	public Monster(Direction facingDir) {
-		super(facingDir);
+
+	public Monster() {
+		super(Direction.Down, new Coord(-1, -1));
+	}
+	public Monster(Direction facingDir, Coord c) {
+		super(facingDir, c);
 	}
 
 	@Override

@@ -6,11 +6,12 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public abstract class MovingEntity implements Entity {
 	Direction facingDir;
-	Coord coords;
-	Level level;
+	public Coord coords;
+	public Level level;
 
-	public MovingEntity(Direction facingDir) {
+	public MovingEntity(Direction facingDir, Coord coords) {
 		this.facingDir = facingDir;
+		this.coords = coords;
 	}
 	
 	public Direction getDir() {

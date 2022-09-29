@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.renderer;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
 import nz.ac.vuw.ecs.swen225.gp22.domain.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Wall;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.images.Img;
@@ -9,13 +10,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Render extends JPanel {
-    public Render() {
-
+    private Domain domain;
+    public Render(Domain d) {
+        this.domain = d;
     }
 
     public void paintComponent(Graphics g) {
         Cell[][] ar = {{
-                new Cell(new FreeTile()),
+            new Cell(new FreeTile()),
                 new Cell(new FreeTile()),
                 new Cell(new FreeTile()),
                 new Cell(new FreeTile()),
@@ -26,18 +28,19 @@ public class Render extends JPanel {
                 new Cell(new FreeTile()),
                 new Cell(new FreeTile()),
         },
-                {
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                        new Cell(new FreeTile()),
-                }};
+            {
+                new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+                    new Cell(new FreeTile()),
+            }
+        };
 
         for(int i=0; i < ar.length; i++){
             for(int j=0; j < ar[i].length; j++){

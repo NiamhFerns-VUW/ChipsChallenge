@@ -29,12 +29,14 @@ public class GameHandler implements Observer {
         var input = new InputHandler(domain);
         setBindings(input);
 
-        viewport = new Viewport(input);
+        viewport = new Viewport(this, input);
 
         // Start the game and game clock.
         start();
         GameClock.get().start();
     }
+
+    public Domain getDomain() { return domain; }
 
     public void start() {
         GameClock.get().register(this);

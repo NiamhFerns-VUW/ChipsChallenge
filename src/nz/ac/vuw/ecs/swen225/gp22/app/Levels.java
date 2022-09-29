@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-record LevelOne(String levelName, Render render) implements GameState {
+record LevelOne(String levelName, Render gameplayPanel) implements GameState {
     @Override
     public Runnable action(Domain d) {
         return d::update;
@@ -22,8 +22,6 @@ record LevelOne(String levelName, Render render) implements GameState {
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
-
-        JPanel gameplayPanel = new Render();
 
         timerPanel.setMaximumSize(new Dimension(640, 75));
         gameplayPanel.setMaximumSize(new Dimension(640, 405));

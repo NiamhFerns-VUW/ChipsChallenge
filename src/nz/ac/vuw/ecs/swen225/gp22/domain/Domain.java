@@ -1,15 +1,20 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import java.util.Optional;
+
 /**
  * The domain class is the part of the domain package the other packages interact with.
  * It keeps track of the level and tells the other classes in this package what to do.
  */
 public class Domain {
-	Level currentLevel;
+	Level currentLevel = null;
 	//Persistency persist;
 	
 	public void update() {
 		System.out.println("Domain recieved update!");
+
+		if (!ok()) throw new Error("No current level to update.");
+
 		//throw new Error("Code not done!");	//TODO
 	}
 	
@@ -20,11 +25,20 @@ public class Domain {
 
 	public void movePlayer(Direction dir) {
 		System.out.println("Domain moving player!");
-		//throw new Error("Code not done!");	//TODO
+
+		if (!ok()) throw new Error("No current level for moving player.");
+
+		currentLevel.player.move(dir);
+	}
+
+	public boolean ok() {
+		return currentLevel == null;
 	}
 	
-	public Level getLevel() {
-		return currentLevel;
+	public Optional<Level> getLevel() {
+		if (!ok()) return Optional.empty();
+
+		return Optional.of(currentLevel);
 	}
 	public void setLevel(Level newLevel) {
 		currentLevel = newLevel;

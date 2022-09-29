@@ -9,12 +9,12 @@ public class Chip extends MovingEntity {
 	}
 
 	@Override
-	public boolean interactBefore(MovingEntity e, Direction d, Coord c) {
+	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
 		return false;
 	}
 
 	@Override
-	public boolean interactAfter(MovingEntity e, Direction d, Coord c) {
+	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
 		return false;
 	}
 

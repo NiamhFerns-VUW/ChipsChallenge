@@ -5,12 +5,11 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public class LockedDoor extends FreeTile {
 	public final String lockColour;
-	public LockedDoor(Cell myCell, String lockColour) {
-		super(myCell);
+	public LockedDoor(String lockColour) {
 		this.lockColour = lockColour;
 	}
 	@Override
-	public boolean onMoveInto(MovingEntity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		throw new Error("Code not done!");	//TODO
 	}
 }

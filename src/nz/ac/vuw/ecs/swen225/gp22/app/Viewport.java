@@ -41,11 +41,11 @@ class Viewport extends JFrame implements Observer {
 
     @Override
     public void update() {
-        validate();
         panels.forEach(JPanel::repaint);
 
         if (GameClock.get().currentTick() == 300) {
             onLevelChange.run();
+            validate();
         }
     }
     

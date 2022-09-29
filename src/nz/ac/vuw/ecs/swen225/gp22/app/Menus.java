@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +28,6 @@ record StartScreen(String levelName) implements GameState {
 
     @Override
     public GameState nextLevel() {
-        return new LevelOne("Level One");
+        return new LevelOne("Level One", new Renderer());
     }
 }

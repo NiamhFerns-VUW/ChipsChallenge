@@ -12,16 +12,16 @@ class InputHandler implements KeyListener {
     private final HashMap<Integer, Runnable> pressed;
     private final HashMap<Integer, Runnable> released;
 
-    protected void mvUp() {
+    public void mvUp() {
         domain.movePlayer(Direction.Up);
     }
-    protected void mvDown() {
+    public void mvDown() {
         domain.movePlayer(Direction.Down);
     }
-    protected void mvLeft() {
+    public void mvLeft() {
         domain.movePlayer(Direction.Left);
     }
-    protected void mvRight() {
+    public void mvRight() {
         domain.movePlayer(Direction.Right);
     }
 

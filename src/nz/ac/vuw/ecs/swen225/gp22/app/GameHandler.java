@@ -9,6 +9,7 @@ import java.util.List;
 
 public class GameHandler implements Observer {
     private GameState state;
+
     private Viewport currentViewport;
 
     Domain domain;
@@ -43,6 +44,6 @@ public class GameHandler implements Observer {
 
     @Override
     public void update() {
-        viewport.getGameState().action(domain).run();
+        // viewport.getGameState().action(domain).run();
     }
 }

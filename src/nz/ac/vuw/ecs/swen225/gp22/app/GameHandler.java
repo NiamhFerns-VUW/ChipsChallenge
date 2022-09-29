@@ -14,6 +14,7 @@ public class GameHandler implements Observer {
 
     Domain domain;
     Viewport viewport;
+    InputHandler input;
 
     protected void setBindings(InputHandler input) {
         input.addBinding(KeyEvent.VK_UP,    input::mvUp,    () -> {});
@@ -26,7 +27,7 @@ public class GameHandler implements Observer {
         // Create fields.
         domain = new Domain();
 
-        var input = new InputHandler(domain);
+        input = new InputHandler(domain);
         setBindings(input);
 
         viewport = new Viewport(this, input);

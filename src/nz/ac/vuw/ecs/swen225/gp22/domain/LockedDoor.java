@@ -12,7 +12,6 @@ public class LockedDoor extends FreeTile {
 	public LockedDoor(String lockColour) {
 		this.lockColour = lockColour;
 	}
-	public LockedDoor(){}
 	@Override
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		if (e instanceof Chip c &&

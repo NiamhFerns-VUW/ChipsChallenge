@@ -14,14 +14,37 @@ import org.dom4j.Element;
 
 public class GameSave {
 
-    public Cell[][] cells;
-    public int time;
-    public List<Entity> inventory;
+    private Cell[][] cells;
+    private int time;
+    private List<Entity> inventory;
     public GameSave(){
         cells = new Cell[16][17];
         inventory = new ArrayList<>();
     }
 
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public List<Entity> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<Entity> inventory) {
+        this.inventory = inventory;
+    }
     /**
      * converts current gameSave object to xml.
      * @return

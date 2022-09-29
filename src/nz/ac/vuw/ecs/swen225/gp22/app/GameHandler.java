@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +12,8 @@ public class GameHandler implements Observer {
     public static GameHandler instance;
     private GameState state;
 
-    private Viewport currentViewport;
-
     protected Domain domain;
+    protected Recorder recorder;
     protected Viewport viewport;
     protected InputHandler input;
 
@@ -28,8 +28,9 @@ public class GameHandler implements Observer {
     public GameHandler() {
         // Create fields.
         domain = new Domain();
+        recorder = new Recorder();
 
-        input = new InputHandler(domain);
+        input = new InputHandler(domain, recorder);
         setBindings(input);
 
         viewport = new Viewport(this, input);
@@ -46,6 +47,7 @@ public class GameHandler implements Observer {
     }
 
     public Domain getDomain() { return domain; }
+    public Recorder getRecorder() { return recorder; }
 
     public void start() {
         GameClock.get().register(this);
@@ -59,6 +61,6 @@ public class GameHandler implements Observer {
 
     @Override
     public void update() {
-        if (domain.ok()) viewport.getGameState().action(domain).run();
+        // if (domain.ok()) viewport.getGameState().action(domain).run();
     }
 }

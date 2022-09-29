@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 class Viewport extends JFrame implements Observer {
@@ -24,10 +25,11 @@ class Viewport extends JFrame implements Observer {
         setTitle("Chips Challenge");
         setLocationRelativeTo(null);
         setVisible(true);
+        setFocusable(true);
 
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
-        addKeyListener(this.input);
+        addKeyListener(input);
 
         setSize(new Dimension(640, 480));
         panels = List.of();
@@ -40,14 +42,15 @@ class Viewport extends JFrame implements Observer {
 
         onLevelChange = () -> {
             setState(state.nextLevel());
-            System.out.println(state.getClass().getSimpleName());
-            if (state instanceof LevelOne) owner.getDomain().startLevel(state.levelName());
-            System.out.println("Starting level " + state.levelName());
+            if (state instanceof LevelOne) {
+                owner.getDomain().startLevel(state.levelName());
+                owner.getRecorder().reset();
+                owner.getRecorder().setLevel("level1");
+            }
             if (state instanceof LevelOne) ((LevelOne) state).gameplayPanel().setUp(owner.getDomain());
-
-
             // Register for ticks after everything has loaded and the level can start.
             GameClock.get().register(this);
+            if (state instanceof LevelOne) owner.getRecorder().start();
             validate();
         };
     }
@@ -63,7 +66,6 @@ class Viewport extends JFrame implements Observer {
         this.state = state;
         panels = state.panels();
         panels.forEach(this::add);
-        panels.forEach(System.out::println);
     }
 
     GameState getGameState() {

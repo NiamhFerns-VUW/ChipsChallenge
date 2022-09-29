@@ -41,6 +41,7 @@ class StartScreen implements GameState, ActionListener {
         };
 
         menuframe.setLayout(null);
+        menuframe.setFocusable(false);
         menuframe.setSize(new Dimension(640, 480));
 
         JButton startGame = new JButton();

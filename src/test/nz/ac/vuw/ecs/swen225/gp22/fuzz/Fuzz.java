@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -20,15 +21,14 @@ class Fuzz extends GameHandler{
             KeyEvent.VK_LEFT,
             KeyEvent.VK_RIGHT );
 
-    private static List<InputHandler> actions = List.of(
-            input::moveUp,
-            input::moveDown,
-            input::moveLeft,
-            input::moveRight
-            );
+    private  List<Runnable> actions = List.of(
+            input::mvUp,
+            input::mvDown,
+            input::mvLeft,
+            input::mvRight );
 
     public static void randomKeys(int size) throws AWTException {
-        GameHandler game = new GameHandler();
+        GameHandler gHandler = new GameHandler();
         Robot robot = new Robot();
 
         // game.run().newApp();  // skip to first level
@@ -47,7 +47,7 @@ class Fuzz extends GameHandler{
         GameHandler game = new GameHandler();
 
         for (int i = 0; i < size; i++) {
-            input.get(random.nextInt(input.size())).run();
+            actions.get(random.nextInt(actions.size())).run();
             System.out.println("Action: " + i);
         }
     }

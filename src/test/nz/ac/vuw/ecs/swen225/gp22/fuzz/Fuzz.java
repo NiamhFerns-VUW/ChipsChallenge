@@ -1,17 +1,16 @@
 package nz.ac.vuw.ecs.swen225.gp22.fuzz;
-package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import java.util.ArrayList;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 
 import java.awt.AWTException;
-import games.GameHandler;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 import java.io.*;
 
-class Fuzz{
+class Fuzz extends GameHandler{
     static final Random random = new Random();
     private static List<KeyEvent> keys = List.of(
             KeyEvent.VK_UP,

@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 
-class InputHandler implements KeyListener {
+public class InputHandler implements KeyListener {
     private final Domain domain;
     private final HashMap<Integer, Runnable> pressed;
     private final HashMap<Integer, Runnable> released;

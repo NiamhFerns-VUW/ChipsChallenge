@@ -392,6 +392,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColour>Green</lockColour>
         </tile>
       </cell>
       <cell>
@@ -412,6 +413,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColour>Green</lockColour>
         </tile>
       </cell>
       <cell>
@@ -467,7 +469,7 @@
         </tile>
         <entity>
           <name>Key</name>
-          <keyColour></keyColour>
+          <keyColour>Yellow</keyColour>
         </entity>
       </cell>
       <cell>
@@ -478,6 +480,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColour>Blue</lockColour>
         </tile>
       </cell>
       <cell>
@@ -508,6 +511,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColour>Red</lockColour>
         </tile>
       </cell>
       <cell>
@@ -521,7 +525,7 @@
         </tile>
         <entity>
           <name>Key</name>
-          <keyColour></keyColour>
+          <keyColour>Yellow</keyColour>
         </entity>
       </cell>
       <cell>
@@ -580,7 +584,7 @@
         </tile>
         <entity>
           <name>Key</name>
-          <keyColour></keyColour>
+          <keyColour>Blue</keyColour>
         </entity>
       </cell>
       <cell>
@@ -605,7 +609,7 @@
         </tile>
         <entity>
           <name>Key</name>
-          <keyColour></keyColour>
+          <keyColour>Red</keyColour>
         </entity>
       </cell>
       <cell>
@@ -778,7 +782,7 @@
         </tile>
         <entity>
           <name>Key</name>
-          <keyColour></keyColour>
+          <keyColour>Blue</keyColour>
         </entity>
       </cell>
       <cell>
@@ -802,7 +806,7 @@
         </tile>
         <entity>
           <name>Key</name>
-          <keyColour></keyColour>
+          <keyColour>Red</keyColour>
         </entity>
       </cell>
       <cell>
@@ -868,6 +872,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColor>Red</lockColor>
         </tile>
       </cell>
       <cell>
@@ -901,6 +906,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColor>Blue</lockColor>
         </tile>
       </cell>
       <cell>
@@ -968,6 +974,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColour>Yellow</lockColour>
         </tile>
       </cell>
       <cell>
@@ -978,6 +985,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
+          <lockColour>Yellow</lockColour>
         </tile>
       </cell>
       <cell>
@@ -1248,7 +1256,7 @@
         </tile>
         <entity>
           <name>Key</name>
-          <keyColour></keyColour>
+          <keyColour>Green</keyColour>
         </entity>
       </cell>
       <cell>

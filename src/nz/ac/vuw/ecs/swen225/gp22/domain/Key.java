@@ -3,7 +3,16 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
 /**
  * The Key entity allows Chip to unlock LockedDoors of the same colour when the key is in the player's inventory.
  */
-public record Key(String keyColour) implements Entity {
+public class Key implements Entity {
+	public String keyColour;
+
+	public Key(String keyColour) {
+		this.keyColour = keyColour;
+	}
+	public Key() {
+		this.keyColour = "";
+	}
+
 	@Override
 	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
 		return true;

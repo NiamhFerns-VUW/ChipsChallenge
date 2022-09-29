@@ -13,7 +13,7 @@ public class Domain {
 	public void update() {
 		System.out.println("Domain recieved update!");
 
-		if (currentLevel == null) throw new Error("No current level to update.");
+		if (!ok()) throw new Error("No current level to update.");
 
 		//throw new Error("Code not done!");	//TODO
 	}
@@ -26,13 +26,17 @@ public class Domain {
 	public void movePlayer(Direction dir) {
 		System.out.println("Domain moving player!");
 
-		if (currentLevel == null) throw new Error("No current level for moving player.");
+		if (!ok()) throw new Error("No current level for moving player.");
 
 		currentLevel.player.move(dir);
 	}
+
+	public boolean ok() {
+		return currentLevel == null;
+	}
 	
 	public Optional<Level> getLevel() {
-		if (currentLevel == null) return Optional.empty();
+		if (!ok()) return Optional.empty();
 
 		return Optional.of(currentLevel);
 	}

@@ -6,7 +6,16 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  *
  * @param hazardType - Hazards with the same hazardType are cancelled out.
  */
-public record AntiHazard(String hazardType) implements Entity {
+public class AntiHazard implements Entity {
+	public String hazardType;
+
+	public AntiHazard(String hazardType) {
+		this.hazardType = hazardType;
+	}
+	public AntiHazard() {
+		this.hazardType = "";
+	}
+
 	@Override
 	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
 		return true;

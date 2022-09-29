@@ -87,7 +87,6 @@ public class Converter {
         return entityElement;
     }
     public static Entity xmlElementToEntity(Element element) {
-        System.out.println("xmlElementToEntity: \n" + elementString(element));
         Optional<Element> optionalName = element.elements().stream()
             .filter(e -> e.getName().equals("name"))
             .findAny();
@@ -201,7 +200,6 @@ public class Converter {
      * @return
      */
     public static Element cellToXmlElement(Cell cell) {
-        System.out.println("cellToXmlElement called on: " + cell);
         Document document = DocumentHelper.createDocument();
         Element cellElement = document.addElement("cell");
         FreeTile storedTile = cell.getStoredTile();
@@ -220,7 +218,6 @@ public class Converter {
      * @return
      */
     public static Cell xmlElementToCell(Element cellElement) {
-        System.out.println("xmlElementToCell called on: " + cellElement);
         Optional<Element> optionalTile = cellElement.elements().stream()
             .filter(e -> e.getName().equals("tile")).findFirst();
         List<Element> entityElementList = cellElement.elements().stream()

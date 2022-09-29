@@ -7,7 +7,8 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public interface Entity {
 	/**
-	 * The interact method causes the entity to perform an action based on its class.
+	 * The interactBefore method causes the entity to perform an action based on its class, before the player moves
+	 * onto this entity's tile.
 	 * 
 	 * @param e - The Entity interacting with this Entity.
 	 * @param d - The direction the interacting Entity is moving.
@@ -16,7 +17,19 @@ public interface Entity {
 	 * @return Returns true if the interaction is successful, false if there is a failure
 	 * (such as the interaction causing a box to attempt to move into a wall).
 	 */
-	boolean interact(Entity e, Direction d, Coord c);
+	boolean interactBefore(MovingEntity e, Direction d, Cell myCell);
+	/**
+	 * The interactAfter method causes the entity to perform an action based on its class, after the player moves
+	 * onto this entity's tile.
+	 *
+	 * @param e - The Entity interacting with this Entity.
+	 * @param d - The direction the interacting Entity is moving.
+	 * @param c - The current coordinates of this entity.
+	 *
+	 * @return Returns true if the interaction is successful, false if there is a failure
+	 * (such as the interaction causing a box to attempt to move into a wall).
+	 */
+	boolean interactAfter(MovingEntity e, Direction d, Cell myCell);
 	
 	/**
 	 * @return Returns an integer with the class' position in the draw hierarchy,

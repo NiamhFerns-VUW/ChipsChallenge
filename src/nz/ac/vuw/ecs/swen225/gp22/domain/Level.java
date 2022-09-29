@@ -1,18 +1,26 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import java.util.ArrayList;
+
+/**
+ * The level keeps track of the board, Chip, Chip's inventory, and the remaining treasures to be picked up.
+ */
 public class Level {
 	private int remainingTreasures;
-	private Cell[][] cells;
-	private Entity[] inventory;
+	public final Cell[][] cells;
+	private ArrayList<Entity> inventory;
+	public final Chip player;
 	
-	public Level(int remainingTreasures, Cell[][] cells) {
+	public Level(int remainingTreasures, Cell[][] cells, Chip player) {
 		this.remainingTreasures = remainingTreasures;
 		this.cells = cells;
-		this.inventory = new Entity[8];
+		this.player = player;
+		this.inventory = new ArrayList<Entity>();
 	}
-	public Level(int remainingTreasures, Cell[][] cells, Entity[] inventory) {
+	public Level(int remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory) {
 		this.remainingTreasures = remainingTreasures;
 		this.cells = cells;
+		this.player = player;
 		this.inventory = inventory;
 	}
 	
@@ -22,10 +30,20 @@ public class Level {
 	public void setRemainingTreasures(int newTreasures) {
 		remainingTreasures = newTreasures;
 	}
-	public Cell[][] getCells() {
-		return cells;
-	}
-	public Entity[] getInventory() {
+	public ArrayList<Entity> getInventory() {
 		return inventory;
+	}
+
+	/**
+	 * Adds an entity to this level's inventory if the inventory has room, returning false if it does not.
+	 *
+	 * @param e - The Entity to add to the inventory.
+	 * @return boolean - Whether or not the entity was successfully added.
+	 */
+	public boolean addToInventory(Entity e) {
+		if (inventory.size() > 7) return false;
+
+		inventory.add(e);
+		return true;
 	}
 }

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This is a XML comment. -->
+
 <game>
   <time>100</time>
-  <!-- This is a XML comment. -->
-  <inventory>
-  </inventory>
+  <inventory/>
   <cells>
     <row>
       <cell>
@@ -294,12 +292,12 @@
         </tile>
       </cell>
       <cell>
-        <entity>
-          <name>Treasure</name>
-        </entity>
         <tile>
           <name>FreeTile</name>
         </tile>
+        <entity>
+          <name>Treasure</name>
+        </entity>
       </cell>
       <cell>
         <tile>
@@ -327,12 +325,12 @@
         </tile>
       </cell>
       <cell>
-        <entity>
-          <name>Treasure</name>
-        </entity>
         <tile>
           <name>FreeTile</name>
         </tile>
+        <entity>
+          <name>Treasure</name>
+        </entity>
       </cell>
       <cell>
         <tile>
@@ -394,7 +392,6 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Green</lockColor>
         </tile>
       </cell>
       <cell>
@@ -415,7 +412,6 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Green</lockColor>
         </tile>
       </cell>
       <cell>
@@ -466,10 +462,40 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Key</name>
-          <keyColor>Yellow</keyColor>
+          <keyColour></keyColour>
         </entity>
+      </cell>
+      <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
+      </cell>
+      <cell>
+        <tile>
+          <name>LockedDoor</name>
+        </tile>
+      </cell>
+      <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
+      </cell>
+      <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
+      </cell>
+      <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
+      </cell>
+      <cell>
         <tile>
           <name>FreeTile</name>
         </tile>
@@ -482,7 +508,6 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Blue</lockColor>
         </tile>
       </cell>
       <cell>
@@ -494,41 +519,10 @@
         <tile>
           <name>FreeTile</name>
         </tile>
-      </cell>
-      <cell>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
-      </cell>
-      <cell>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
-      </cell>
-      <cell>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
-      </cell>
-      <cell>
-        <tile>
-          <name>LockedDoor</name>
-          <lockColor>Red</lockColor>
-        </tile>
-      </cell>
-      <cell>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
-      </cell>
-      <cell>
         <entity>
           <name>Key</name>
-          <keyColor>Yellow</keyColor>
+          <keyColour></keyColour>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -563,12 +557,12 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Treasure</name>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -581,13 +575,13 @@
         </tile>
       </cell>
       <cell>
-        <entity>
-          <name>Key</name>
-          <keyColor>Blue</keyColor>
-        </entity>
         <tile>
           <name>FreeTile</name>
         </tile>
+        <entity>
+          <name>Key</name>
+          <keyColour></keyColour>
+        </entity>
       </cell>
       <cell>
         <tile>
@@ -606,13 +600,13 @@
         </tile>
       </cell>
       <cell>
-        <entity>
-          <name>Key</name>
-          <keyColor>Red</keyColor>
-        </entity>
         <tile>
           <name>FreeTile</name>
         </tile>
+        <entity>
+          <name>Key</name>
+          <keyColour></keyColour>
+        </entity>
       </cell>
       <cell>
         <tile>
@@ -625,12 +619,12 @@
         </tile>
       </cell>
       <cell>
-        <entity>
-          <name>Treasure</name>
-        </entity>
         <tile>
           <name>FreeTile</name>
         </tile>
+        <entity>
+          <name>Treasure</name>
+        </entity>
       </cell>
       <cell>
         <tile>
@@ -680,12 +674,12 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Treasure</name>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -693,13 +687,12 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Chip</name>
-          <direction>North</direction>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -707,12 +700,12 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Treasure</name>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -762,12 +755,12 @@
         </tile>
       </cell>
       <cell>
-        <entity>
-          <name>Treasure</name>
-        </entity>
         <tile>
           <name>FreeTile</name>
         </tile>
+        <entity>
+          <name>Treasure</name>
+        </entity>
       </cell>
       <cell>
         <tile>
@@ -780,13 +773,13 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Key</name>
-          <keyColor>Blue</keyColor>
+          <keyColour></keyColour>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -804,13 +797,13 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Key</name>
-          <keyColor>Red</keyColor>
+          <keyColour></keyColour>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -823,12 +816,12 @@
         </tile>
       </cell>
       <cell>
-        <entity>
-          <name>Treasure</name>
-        </entity>
         <tile>
           <name>FreeTile</name>
         </tile>
+        <entity>
+          <name>Treasure</name>
+        </entity>
       </cell>
       <cell>
         <tile>
@@ -875,7 +868,6 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Red</lockColor>
         </tile>
       </cell>
       <cell>
@@ -889,12 +881,12 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Treasure</name>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -909,7 +901,6 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Blue</lockColor>
         </tile>
       </cell>
       <cell>
@@ -977,7 +968,6 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Yellow</lockColor>
         </tile>
       </cell>
       <cell>
@@ -988,7 +978,6 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Yellow</lockColor>
         </tile>
       </cell>
       <cell>
@@ -1151,12 +1140,12 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Treasure</name>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -1164,12 +1153,12 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Treasure</name>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>
@@ -1206,7 +1195,6 @@
           <name>FreeTile</name>
         </tile>
       </cell>
-
     </row>
     <row>
       <cell>
@@ -1255,13 +1243,13 @@
         </tile>
       </cell>
       <cell>
+        <tile>
+          <name>FreeTile</name>
+        </tile>
         <entity>
           <name>Key</name>
-          <keyColor>Green</keyColor>
+          <keyColour></keyColour>
         </entity>
-        <tile>
-          <name>FreeTile</name>
-        </tile>
       </cell>
       <cell>
         <tile>

@@ -1,16 +1,28 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+/**
+ * Blocks movement until it is unlocked by Chip with a Key of the same colour.
+ */
 public class LockedDoor extends FreeTile {
+	public final String lockColour;
 
-	public String doorColor;
-
-	public LockedDoor(String doorColor) {
-		super();
-		this.doorColor = doorColor;
+	public LockedDoor() {
+		this.lockColour = "";
+	}
+	public LockedDoor(String lockColour) {
+		this.lockColour = lockColour;
 	}
 	public LockedDoor(){}
 	@Override
-	public boolean onMoveInto(Entity e, Direction d) {
-		throw new Error("Code not done!");	//TODO
+	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
+		if (e instanceof Chip c &&
+				c.level.getInventory().stream()
+						.filter(t->t instanceof Key)
+						.anyMatch(t->((Key) t).keyColour == lockColour)) {
+			myCell.setStoredTile(new FreeTile());
+			return true;
+		}
+
+		return false;
 	}
 }

@@ -1,18 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
-import java.util.Optional;
-
+/**
+ * The FreeTile is an empty tile that doesn't prevent movement.
+ */
 public class FreeTile {
-	public final Coord coords;
-	
-	public FreeTile(Coord coords) {
-		this.coords = coords;
-	}
-	public FreeTile(){
-		this.coords = null;
-	}
-
-	public boolean onMoveInto(Entity e, Direction d) {
+	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		return true;
 	}
 }

@@ -1,18 +1,26 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+/**
+ * Chip is the player's character, it can move and interact with entities and tiles.
+ */
 public class Chip extends MovingEntity {
-	
-	public Chip(Direction facingDir){
-		super(facingDir);
-	}
 	public Chip(){
-		super(Direction.None);
+		super(Direction.Down, new Coord(-1,-1));
+	}
+	public Chip(Direction facingDir, Coord c){
+		super(facingDir, c);
 	}
 
 	@Override
-	public boolean interact(Entity e, Direction d, Coord c) {
-		throw new Error("Code not done!");	//TODO
+	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
+		return false;
 	}
+
+	@Override
+	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
+		return false;
+	}
+
 	@Override
 	public int drawHierarchy() {
 		throw new Error("Code not done!");	//TODO

@@ -8,7 +8,14 @@ import java.util.ArrayList;
 public class Cell {
 	private FreeTile storedTile;
 	private ArrayList<Entity> entities;
-	
+
+	/**
+	 * Default Constructor for the cell leaves the tile as a blank FreeTile
+	 */
+	public Cell() {
+		this.storedTile = new FreeTile();
+		entities = new ArrayList<Entity>();
+	}
 	public Cell(FreeTile storedTile) {
 		this.storedTile = storedTile;
 		entities = new ArrayList<Entity>();
@@ -29,6 +36,9 @@ public class Cell {
 	}
 	public ArrayList<Entity> getEntities() {
 		return entities;
+	}
+	public void setEntities(ArrayList<Entity> entList) {
+		entities = entList;
 	}
 
 	public void removeEntity(Entity e) {

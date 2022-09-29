@@ -24,7 +24,7 @@ public class Domain {
 	}
 
 	public void movePlayer(Direction dir) {
-		System.out.println("Domain moving player!");
+		System.out.println("Domain moving player in direction " + dir + "!");
 
 		if (!ok()) throw new Error("No current level for moving player.");
 

@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -15,9 +16,10 @@ public class GameSave {
 
     public Cell[][] cells;
     public int time;
-    public List<Entity> inventory = List.of();
+    public List<Entity> inventory;
     public GameSave(){
         cells = new Cell[16][17];
+        inventory = new ArrayList<>();
     }
 
     /**
@@ -64,7 +66,8 @@ public class GameSave {
             throw new RuntimeException("hey! inventory element can't be null!");
         }
         inventoryElement.elements().forEach(inventoryItemElement->{
-            System.out.println("ie: " + inventoryItemElement);
+            Entity entity = Converter.xmlElementToEntity(inventoryItemElement);
+            inventory.add(entity);
         });
         IntStream.range(0,cellsElement.elements().size()).forEach(rowInd->{
             Element rowElement = cellsElement.elements().get(rowInd);

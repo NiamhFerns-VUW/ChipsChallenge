@@ -8,6 +8,9 @@ public class Hazard extends FreeTile {
 	public Hazard(String hazardType) {
 		this.hazardType = hazardType;
 	}
+	public Hazard(){
+		this.hazardType=null;
+	}
 	@Override
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		throw new Error("Code not done!");	//TODO

@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -13,13 +14,37 @@ import org.dom4j.Element;
 
 public class GameSave {
 
-    public Cell[][] cells;
-    public int time;
-    public List<Entity> inventory = List.of();
+    private Cell[][] cells;
+    private int time;
+    private List<Entity> inventory;
     public GameSave(){
         cells = new Cell[16][17];
+        inventory = new ArrayList<>();
     }
 
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
+    }
+
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public List<Entity> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(List<Entity> inventory) {
+        this.inventory = inventory;
+    }
     /**
      * converts current gameSave object to xml.
      * @return
@@ -64,7 +89,8 @@ public class GameSave {
             throw new RuntimeException("hey! inventory element can't be null!");
         }
         inventoryElement.elements().forEach(inventoryItemElement->{
-            System.out.println("ie: " + inventoryItemElement);
+            Entity entity = Converter.xmlElementToEntity(inventoryItemElement);
+            inventory.add(entity);
         });
         IntStream.range(0,cellsElement.elements().size()).forEach(rowInd->{
             Element rowElement = cellsElement.elements().get(rowInd);

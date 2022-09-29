@@ -20,7 +20,7 @@ class Fuzz extends GameHandler{
             KeyEvent.VK_LEFT,
             KeyEvent.VK_RIGHT );
 
-    static List<InputHandler> actions = List.of(
+    private static List<InputHandler> actions = List.of(
             input::moveUp,
             input::moveDown,
             input::moveLeft,
@@ -34,8 +34,6 @@ class Fuzz extends GameHandler{
         // game.run().newApp();  // skip to first level
 
         robot.delay(100);
-
-        Field[] f = game.getClass().getDeclaredFields().getClass().getDeclaredFields();
 
         for (int i = 0; i < size; i++) {
             robot.keyPress(keys.get(random.nextInt(keys.size())));

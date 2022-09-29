@@ -48,17 +48,13 @@ class Viewport extends JFrame implements Observer {
 
             // Register for ticks after everything has loaded and the level can start.
             GameClock.get().register(this);
+            validate();
         };
     }
 
     @Override
     public void update() {
         panels.forEach(JPanel::repaint);
-
-        if (GameClock.get().currentTick() == 300) {
-            onLevelChange.run();
-            validate();
-        }
     }
     
     protected void setState(GameState state) {
@@ -67,6 +63,7 @@ class Viewport extends JFrame implements Observer {
         this.state = state;
         panels = state.panels();
         panels.forEach(this::add);
+        panels.forEach(System.out::println);
     }
 
     GameState getGameState() {

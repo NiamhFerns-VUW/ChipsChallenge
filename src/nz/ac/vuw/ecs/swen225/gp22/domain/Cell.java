@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Each Cell keeps track of the tile it is made up of and the entities on it.
@@ -34,7 +35,7 @@ public class Cell {
 	public void setStoredTile(FreeTile newTile) {
 		storedTile = newTile;
 	}
-	public ArrayList<Entity> getEntities() {
+	public List<Entity> getEntities() {
 		return entities;
 	}
 	public void setEntities(ArrayList<Entity> entList) {

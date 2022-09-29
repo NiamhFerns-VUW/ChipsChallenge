@@ -21,7 +21,7 @@ class Fuzz extends GameHandler{
             KeyEvent.VK_LEFT,
             KeyEvent.VK_RIGHT );
 
-    private  List<Runnable> actions = List.of(
+    private List<Runnable> actions = List.of(
             input::mvUp,
             input::mvDown,
             input::mvLeft,
@@ -43,7 +43,7 @@ class Fuzz extends GameHandler{
         }
     }
 
-    public static void actiontest(int size){
+    public void actiontest(int size){
         GameHandler game = new GameHandler();
 
         for (int i = 0; i < size; i++) {
@@ -52,10 +52,11 @@ class Fuzz extends GameHandler{
         }
     }
 
-    public static void main(String[] args) throws InterruptedException, AWTException {
+    public void main(String[] args) throws InterruptedException, AWTException {
         randomKeys(100);
         actiontest(100);
     }
+
 
 //    @Test
 //    public void testLevel1() {

@@ -11,8 +11,16 @@ import java.awt.*;
 
 public class Render extends JPanel {
     private Domain domain;
-    public Render(Domain d) {
+    public Render() {
+
+    }
+
+    public void setUp(Domain d){
         this.domain = d;
+    }
+
+    public boolean domainSet(){
+        return (domain != null);
     }
 
     public void paintComponent(Graphics g) {

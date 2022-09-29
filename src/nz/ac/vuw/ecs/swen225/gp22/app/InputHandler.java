@@ -7,26 +7,22 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 
-class InputHandler implements KeyListener {
+public class InputHandler implements KeyListener {
     private final Domain domain;
     private final HashMap<Integer, Runnable> pressed;
     private final HashMap<Integer, Runnable> released;
 
-    protected void mvUp() {
-        System.out.println("UP");
-        // domain.movePlayer(Direction.Up);
+    public void mvUp() {
+        domain.movePlayer(Direction.Up);
     }
-    protected void mvDown() {
-        System.out.println("DOWN");
-        // domain.movePlayer(Direction.Down);
+    public void mvDown() {
+        domain.movePlayer(Direction.Down);
     }
-    protected void mvLeft() {
-        System.out.println("LEFT");
-        // domain.movePlayer(Direction.Left);
+    public void mvLeft() {
+        domain.movePlayer(Direction.Left);
     }
-    protected void mvRight() {
-        System.out.println("RIGHT");
-        // domain.movePlayer(Direction.Right);
+    public void mvRight() {
+        domain.movePlayer(Direction.Right);
     }
 
     protected void addBinding(Integer key, Runnable pressed, Runnable released) {

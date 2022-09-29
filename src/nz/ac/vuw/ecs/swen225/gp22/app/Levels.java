@@ -24,7 +24,9 @@ record LevelOne(String levelName, Render gameplayPanel) implements GameState {
         };
 
         timerPanel.setMaximumSize(new Dimension(640, 75));
+        timerPanel.setFocusable(false);
         gameplayPanel.setMaximumSize(new Dimension(640, 405));
+        gameplayPanel.setFocusable(false);
         return List.of(timerPanel, gameplayPanel);
     }
 

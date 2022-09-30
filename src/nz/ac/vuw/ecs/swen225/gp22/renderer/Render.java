@@ -31,14 +31,13 @@ public class Render extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-//        boolean cells2 = this.domain.getLevel().isPresent();
-//        if(cells2){
-//            Cell[][] cells3 = this.domain.getLevel().get().cells;
-//            System.out.println(cells3);
-//        }
+        boolean cells2 = this.domain.getLevel().isPresent();
+        Cell[][] cells;
+        if(cells2){
+            cells = this.domain.getLevel().get().cells;
 
         GameSave gameSave = Persistency.loadGameSave(Path.of("./src/levels/level1.xml"));
-        Cell[][] cells = gameSave.getCells();
+        Cell[][] cells3 = gameSave.getCells();
 
         int tileSize = getHeight()/cells.length;
 
@@ -95,6 +94,7 @@ public class Render extends JPanel {
                 }
 
             }
+        }
         }
     }
 }

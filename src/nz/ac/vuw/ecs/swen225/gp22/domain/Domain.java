@@ -51,9 +51,6 @@ public class Domain {
 
 		player.get().setLevel(currentLevel);
 
-		System.out.println(currentLevel);
-		System.out.println(currentLevel == null);
-
 		//throw new Error("Code not done!");	//TODO
 	}
 

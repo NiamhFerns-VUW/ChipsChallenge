@@ -6,28 +6,28 @@ import java.util.ArrayList;
  * The level keeps track of the board, Chip, Chip's inventory, and the remaining treasures to be picked up.
  */
 public class Level {
-	private int remainingTreasures;
+	private long remainingTreasures;
 	public final Cell[][] cells;
 	private ArrayList<Entity> inventory;
 	public final Chip player;
 	
-	public Level(int remainingTreasures, Cell[][] cells, Chip player) {
+	public Level(long remainingTreasures, Cell[][] cells, Chip player) {
 		this.remainingTreasures = remainingTreasures;
 		this.cells = cells;
 		this.player = player;
 		this.inventory = new ArrayList<Entity>();
 	}
-	public Level(int remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory) {
+	public Level(long remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory) {
 		this.remainingTreasures = remainingTreasures;
 		this.cells = cells;
 		this.player = player;
 		this.inventory = inventory;
 	}
 	
-	public int getRemainingTreasures() {
+	public long getRemainingTreasures() {
 		return remainingTreasures;
 	}
-	public void setRemainingTreasures(int newTreasures) {
+	public void setRemainingTreasures(long newTreasures) {
 		remainingTreasures = newTreasures;
 	}
 	public ArrayList<Entity> getInventory() {

@@ -1,5 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import nz.ac.vuw.ecs.swen225.gp22.persistency.GameSave;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -8,7 +14,7 @@ import java.util.Optional;
  */
 public class Domain {
 	Level currentLevel = null;
-	//Persistency persist;
+	Persistency persist = new Persistency();
 	
 	public void update() {
 		System.out.println("Domain recieved update!");
@@ -20,6 +26,30 @@ public class Domain {
 	
 	public void startLevel(String levelname) {
 		System.out.println("Domain starting level '" + levelname + "'!");
+		//GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
+		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));
+
+		Cell[][] cells = save.getCells();
+
+		long remainingTreasures = Arrays.stream(cells)
+				.flatMap(cArray-> Arrays.stream(cArray))
+				.flatMap(c->c.getEntities().stream())
+				.filter(e -> e instanceof Treasure)
+				.count();
+
+		Optional<Chip> player = Arrays.stream(cells)
+				.flatMap(cArray -> Arrays.stream(cArray))
+				.flatMap(c->c.getEntities().stream())
+				.filter(e -> e instanceof Chip)
+				.map(e -> (Chip) e)
+				.findFirst();
+
+		System.out.println("test");
+
+		if (player.isEmpty()) { throw new Error("No Chip in level!"); }
+
+		Level currentLevel = new Level(remainingTreasures, cells, player.get(), (ArrayList<Entity>) save.getInventory());
+
 		//throw new Error("Code not done!");	//TODO
 	}
 
@@ -32,7 +62,7 @@ public class Domain {
 	}
 
 	public boolean ok() {
-		return currentLevel == null;
+		return currentLevel != null;
 	}
 	
 	public Optional<Level> getLevel() {

@@ -872,7 +872,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Red</lockColor>
+          <lockColour>Red</lockColour>
         </tile>
       </cell>
       <cell>
@@ -906,7 +906,7 @@
       <cell>
         <tile>
           <name>LockedDoor</name>
-          <lockColor>Blue</lockColor>
+          <lockColour>Blue</lockColour>
         </tile>
       </cell>
       <cell>

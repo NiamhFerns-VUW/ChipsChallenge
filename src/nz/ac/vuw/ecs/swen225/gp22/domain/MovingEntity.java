@@ -30,6 +30,10 @@ public abstract class MovingEntity implements Entity {
 
 		if (!nextCell.beforeMoveInto(this, d)) return false;
 
+		coords = new Coord(coords.x()+d.x, coords.y()+d.y);
+
+		System.out.println(coords.x() + ":" + coords.y());
+
 		level.cells[coords.x()][coords.y()].removeEntity(this);
 		nextCell.getEntities().add(this);
 		nextCell.afterMoveInto(this, d);

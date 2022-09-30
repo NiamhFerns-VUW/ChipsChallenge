@@ -43,6 +43,6 @@ public class Cell {
 	}
 
 	public void removeEntity(Entity e) {
-		entities = (ArrayList<Entity>) entities.stream().filter(entity -> entity != e).toList();
+		entities = new ArrayList<Entity>(entities.stream().filter(entity -> entity != e).toList());
 	}
 }

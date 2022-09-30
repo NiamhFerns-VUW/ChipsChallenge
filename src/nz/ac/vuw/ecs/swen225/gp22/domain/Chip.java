@@ -5,7 +5,7 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public class Chip extends MovingEntity {
 	public Chip(){
-		super(Direction.Down, new Coord(-1,-1));
+		super(Direction.Down, new Coord(7,8));
 	}
 	public Chip(Direction facingDir, Coord c){
 		super(facingDir, c);
@@ -19,6 +19,10 @@ public class Chip extends MovingEntity {
 	@Override
 	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
 		return false;
+	}
+
+	public void setLevel(Level l) {
+		this.level = l;
 	}
 
 	@Override

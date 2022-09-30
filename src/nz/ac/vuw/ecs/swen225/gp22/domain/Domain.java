@@ -44,11 +44,15 @@ public class Domain {
 				.map(e -> (Chip) e)
 				.findFirst();
 
-		System.out.println("test");
 
 		if (player.isEmpty()) { throw new Error("No Chip in level!"); }
 
-		Level currentLevel = new Level(remainingTreasures, cells, player.get(), (ArrayList<Entity>) save.getInventory());
+		currentLevel = new Level(remainingTreasures, cells, player.get(), (ArrayList<Entity>) save.getInventory());
+
+		player.get().setLevel(currentLevel);
+
+		System.out.println(currentLevel);
+		System.out.println(currentLevel == null);
 
 		//throw new Error("Code not done!");	//TODO
 	}
@@ -62,6 +66,7 @@ public class Domain {
 	}
 
 	public boolean ok() {
+		System.out.println(currentLevel == null);
 		return currentLevel != null;
 	}
 	

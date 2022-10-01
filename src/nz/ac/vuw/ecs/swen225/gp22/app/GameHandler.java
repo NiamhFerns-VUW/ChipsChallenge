@@ -3,22 +3,17 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class GameHandler implements Observer {
     public static GameHandler instance;
-    private GameState state;
-
-    protected Domain domain;
-    protected Recorder recorder;
-    protected Viewport viewport;
-    protected InputHandler input;
+    private final Domain domain;
+    private final Recorder recorder;
+    private final Viewport viewport;
+    private final InputHandler input;
 
     public InputHandler getInputs() { return input; }
-    protected void setBindings(InputHandler input) {
+    private void setBindings(InputHandler input) {
         input.addBinding(KeyEvent.VK_UP,    input::mvUp,    () -> {});
         input.addBinding(KeyEvent.VK_DOWN,  input::mvDown,  () -> {});
         input.addBinding(KeyEvent.VK_LEFT,  input::mvLeft,  () -> {});
@@ -46,17 +41,58 @@ public class GameHandler implements Observer {
         return instance;
     }
 
-    public Domain getDomain() { return domain; }
-    public Recorder getRecorder() { return recorder; }
+    public void skipTo(String str) {
+        switch(str) {
+            case "Level1":
+                System.out.println("You are now at level one.");
 
-    public void start() {
-        GameClock.get().register(this);
-        GameClock.get().register(viewport);
-        viewport.onStart.run();
+
+            case "Level2":
+                System.out.println("You are now at level two.");
+        }
     }
 
-    public void onLevelChange() {
-        viewport.onLevelChange.run();
+    private void start() {
+        GameClock.get().register(this);
+        GameClock.get().register(viewport);
+        viewport.setState(new StartScreen());
+    }
+
+    protected void onLevelChange() {
+        GameClock.get().unregister(viewport);
+        viewport.setState(viewport.getGameState().nextLevel());
+
+        if (viewport.getGameState() instanceof Level)
+            setComponents((Level) viewport.getGameState());
+
+        GameClock.get().register(viewport);
+
+        viewport.validate();
+    }
+
+    public void setGameState(GameState state) {
+        GameClock.get().unregister(viewport);
+        viewport.setState(state);
+
+        if (state instanceof Level)
+            setComponents((Level) state);
+
+        GameClock.get().register(viewport);
+
+        viewport.validate();
+    }
+
+    private void setComponents(Level level) {
+            // Start the next level in domain.
+            domain.startLevel(level.levelName());
+
+            // Reset the recorder.
+            recorder.reset();
+            recorder.setLevel(level.levelName());
+            recorder.start();
+
+            // Register domain to the renderer instance.
+            level.gameplayPanel().setUp(domain);
     }
 
     @Override

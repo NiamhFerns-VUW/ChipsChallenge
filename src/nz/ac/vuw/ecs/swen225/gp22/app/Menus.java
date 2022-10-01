@@ -16,14 +16,8 @@ import java.util.List;
 import static java.lang.System.exit;
 
 class StartScreen implements GameState, ActionListener {
-    private final String levelName;
 
     private List<JButton> buttons;
-
-    @Override
-    public String levelName() {
-        return levelName;
-    }
 
     @Override
     public Runnable action(Domain d) {
@@ -32,13 +26,7 @@ class StartScreen implements GameState, ActionListener {
 
     @Override
     public List<JPanel> panels() {
-        JPanel menuframe = new JPanel() {
-            @Override
-            public void paintComponent(Graphics g) {
-//                g.setColor(Color.GRAY);
-//                g.fillRect(0, 0, getWidth(), getHeight());
-            }
-        };
+        JPanel menuframe = new JPanel();
 
         menuframe.setLayout(null);
         menuframe.setFocusable(false);
@@ -46,21 +34,20 @@ class StartScreen implements GameState, ActionListener {
 
         JButton startGame = new JButton();
         startGame.setBounds(220, 100, 200, 50);
-        startGame.addActionListener(l -> GameHandler.get().onLevelChange());
         startGame.setText("Start Game");
+        startGame.addActionListener(l -> GameHandler.get().onLevelChange());
 
         JButton loadGame = new JButton();
         loadGame.setBounds(220, 175, 200, 50);
+        loadGame.setText("Load Game");
         loadGame.addActionListener(l -> {
             GameSave save = Persistency.loadGameSave(Path.of("./src/levels/level1.xml"));
-            System.out.println(save.getClass().getSimpleName());
         });
-        loadGame.setText("Load Game");
 
         JButton quitGame = new JButton();
         quitGame.setBounds(220, 250, 200, 50);
-        quitGame.addActionListener(l -> exit(0));
         quitGame.setText("Quit Game");
+        quitGame.addActionListener(l -> exit(0));
 
         buttons = List.of(startGame, loadGame, quitGame);
 
@@ -69,8 +56,7 @@ class StartScreen implements GameState, ActionListener {
         return List.of(menuframe);
     }
 
-    public StartScreen(String levelName) {
-        this.levelName = levelName;
+    public StartScreen() {
         buttons = new ArrayList<>();
     }
 

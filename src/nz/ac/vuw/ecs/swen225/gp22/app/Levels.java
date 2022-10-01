@@ -7,7 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-record LevelOne(String levelName, Render gameplayPanel) implements GameState {
+interface Level {
+    String levelName();
+    Render gameplayPanel();
+}
+
+record LevelOne(String levelName, Render gameplayPanel) implements GameState, Level {
     @Override
     public Runnable action(Domain d) {
         return d::update;
@@ -32,11 +37,11 @@ record LevelOne(String levelName, Render gameplayPanel) implements GameState {
 
     @Override
     public GameState nextLevel() {
-        return new LevelTwo("Level Two");
+        return new LevelTwo("Level Two", new Render());
     }
 }
 
-record LevelTwo(String levelName) implements GameState {
+record LevelTwo(String levelName, Render gameplayPanel) implements GameState, Level {
     @Override
     public Runnable action(Domain d) {
         return d::update;

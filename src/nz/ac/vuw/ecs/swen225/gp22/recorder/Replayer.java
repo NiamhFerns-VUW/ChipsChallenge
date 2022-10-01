@@ -26,7 +26,7 @@ public class Replayer {
         while(!history.isEmpty()){
             Step currentStep = history.pop();
             prev.push(currentStep);
-            System.out.println(currentStep.replayerToString());
+            //System.out.println(currentStep.replayerToString());
             try {
                 Thread.sleep(2000/replaySpeed);
             } catch (InterruptedException e) {

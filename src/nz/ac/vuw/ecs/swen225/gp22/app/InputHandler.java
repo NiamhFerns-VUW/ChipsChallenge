@@ -8,25 +8,25 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 
-public class InputHandler implements KeyListener {
+class InputHandler implements KeyListener {
     private final Domain domain;
     private final Recorder recorder;
     private final HashMap<Integer, Runnable> pressed;
     private final HashMap<Integer, Runnable> released;
 
-    public void mvUp() {
+    protected void mvUp() {
         domain.movePlayer(Direction.Up);
         recorder.up();
     }
-    public void mvDown() {
+    protected void mvDown() {
         domain.movePlayer(Direction.Down);
         recorder.down();
     }
-    public void mvLeft() {
+    protected void mvLeft() {
         domain.movePlayer(Direction.Left);
         recorder.left();
     }
-    public void mvRight() {
+    protected void mvRight() {
         domain.movePlayer(Direction.Right);
         recorder.right();
     }

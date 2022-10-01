@@ -1,7 +1,18 @@
+# RECORDER BREAK POINTS
+## Recorder
+60 Recorder - App
+51 Recorder - App
+
+
+# FUZZ BREAK POINTS
+## Fuzz
+34 - APP
+52 - APP
+69 - APP
 
 
 # APP BREAK POINTS
-InputHandler - LINES
+## InputHandler
 18 - DOMAIN
 19 - RECORDER
 22 - DOMAIN
@@ -11,8 +22,8 @@ InputHandler - LINES
 30 - DOMAIN
 31 - RECORDER
 
-Viewport - LINES
+## Viewport
 46 - RENDERER
 
-Menus - LINES
+## Menus
 55 - Persistency

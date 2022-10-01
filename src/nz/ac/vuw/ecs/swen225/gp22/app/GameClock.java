@@ -1,8 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameClock extends Subject {
     private static GameClock clock;

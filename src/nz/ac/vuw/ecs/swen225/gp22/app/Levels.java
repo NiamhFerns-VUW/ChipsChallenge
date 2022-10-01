@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import javax.swing.*;
@@ -13,11 +12,6 @@ interface Level {
 }
 
 record LevelOne(String levelName, Render gameplayPanel) implements GameState, Level {
-    @Override
-    public Runnable action(Domain d) {
-        return d::update;
-    }
-
     @Override
     public List<JPanel> panels() {
         JPanel timerPanel = new JPanel() {
@@ -42,11 +36,6 @@ record LevelOne(String levelName, Render gameplayPanel) implements GameState, Le
 }
 
 record LevelTwo(String levelName, Render gameplayPanel) implements GameState, Level {
-    @Override
-    public Runnable action(Domain d) {
-        return d::update;
-    }
-
     @Override
     public List<JPanel> panels() {
         return null;

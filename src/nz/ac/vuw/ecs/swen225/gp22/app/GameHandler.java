@@ -5,14 +5,46 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 
 import java.awt.event.KeyEvent;
 
-public class GameHandler implements Observer {
+public class GameHandler {
     public static GameHandler instance;
-    private final Domain domain;
+    private final ObserverAdapter domain;
     private final Recorder recorder;
     private final Viewport viewport;
     private final InputHandler input;
 
-    public InputHandler getInputs() { return input; }
+    public GameHandler() {
+        // Create fields.
+        domain = new ObserverAdapter(new Domain());
+        recorder = new Recorder();
+
+        input = new InputHandler(domain.get(), recorder);
+        setBindings(input);
+
+        viewport = new Viewport(input);
+
+        // Start the game and game clock.
+        start();
+        GameClock.get().start();
+        if (instance == null) instance = this;
+        else throw new IllegalStateException("GameHandler has already been assigned elsewhere.");
+    }
+
+    protected static GameHandler get() {
+        return instance;
+    }
+
+    protected InputHandler getInput() {
+        return input;
+    }
+
+
+    class ObserverAdapter implements Observer {
+        Domain d;
+        protected Domain get() { return d; }
+        protected ObserverAdapter(Domain d) { this.d = d; }
+        @Override public void update() { domain.get().update(); }
+    }
+
     private void setBindings(InputHandler input) {
         input.addBinding(KeyEvent.VK_UP,    input::mvUp,    () -> {});
         input.addBinding(KeyEvent.VK_DOWN,  input::mvDown,  () -> {});
@@ -20,26 +52,11 @@ public class GameHandler implements Observer {
         input.addBinding(KeyEvent.VK_RIGHT, input::mvRight, () -> {});
     }
 
-    public GameHandler() {
-        // Create fields.
-        domain = new Domain();
-        recorder = new Recorder();
-
-        input = new InputHandler(domain, recorder);
-        setBindings(input);
-
-        viewport = new Viewport(this, input);
-
-        // Start the game and game clock.
-        start();
-        GameClock.get().start();
-        if (instance == null) instance = this;
-        else throw new Error("She's fucked mate. You have permission to scream and Neem.");
+    private void start() {
+        GameClock.get().register(viewport);
+        viewport.setState(new StartScreen());
     }
 
-    public static GameHandler get() {
-        return instance;
-    }
 
     public void skipTo(String str) {
         switch(str) {
@@ -52,26 +69,9 @@ public class GameHandler implements Observer {
         }
     }
 
-    private void start() {
-        GameClock.get().register(this);
-        GameClock.get().register(viewport);
-        viewport.setState(new StartScreen());
-    }
-
-    protected void onLevelChange() {
-        GameClock.get().unregister(viewport);
-        viewport.setState(viewport.getGameState().nextLevel());
-
-        if (viewport.getGameState() instanceof Level)
-            setComponents((Level) viewport.getGameState());
-
-        GameClock.get().register(viewport);
-
-        viewport.validate();
-    }
-
     public void setGameState(GameState state) {
         GameClock.get().unregister(viewport);
+        GameClock.get().unregister(domain);
         viewport.setState(state);
 
         if (state instanceof Level)
@@ -82,9 +82,27 @@ public class GameHandler implements Observer {
         viewport.validate();
     }
 
+
+    protected void onLevelChange() {
+        GameClock.get().unregister(domain);
+        GameClock.get().unregister(viewport);
+        viewport.setState(viewport.getGameState().nextLevel());
+
+        if (viewport.getGameState() instanceof Level) {
+            recorder.saveRecording();
+            setComponents((Level) viewport.getGameState());
+        }
+
+        GameClock.get().register(viewport);
+
+        viewport.validate();
+    }
+
     private void setComponents(Level level) {
             // Start the next level in domain.
-            domain.startLevel(level.levelName());
+            domain.get().startLevel(level.levelName());
+            assert domain.get().ok();
+            GameClock.get().register(domain);
 
             // Reset the recorder.
             recorder.reset();
@@ -92,11 +110,6 @@ public class GameHandler implements Observer {
             recorder.start();
 
             // Register domain to the renderer instance.
-            level.gameplayPanel().setUp(domain);
-    }
-
-    @Override
-    public void update() {
-        // if (domain.ok()) viewport.getGameState().action(domain).run();
+            level.gameplayPanel().setUp(domain.get());
     }
 }

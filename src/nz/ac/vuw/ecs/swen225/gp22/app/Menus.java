@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.GameSave;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
@@ -18,12 +17,6 @@ import static java.lang.System.exit;
 class StartScreen implements GameState, ActionListener {
 
     private List<JButton> buttons;
-
-    @Override
-    public Runnable action(Domain d) {
-        return () -> {};
-    }
-
     @Override
     public List<JPanel> panels() {
         JPanel menuframe = new JPanel();

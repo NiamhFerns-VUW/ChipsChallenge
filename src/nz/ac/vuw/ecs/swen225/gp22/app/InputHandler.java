@@ -2,27 +2,33 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
 
-class InputHandler implements KeyListener {
+public class InputHandler implements KeyListener {
     private final Domain domain;
+    private final Recorder recorder;
     private final HashMap<Integer, Runnable> pressed;
     private final HashMap<Integer, Runnable> released;
 
     public void mvUp() {
         domain.movePlayer(Direction.Up);
+        recorder.up();
     }
     public void mvDown() {
         domain.movePlayer(Direction.Down);
+        recorder.down();
     }
     public void mvLeft() {
         domain.movePlayer(Direction.Left);
+        recorder.left();
     }
     public void mvRight() {
         domain.movePlayer(Direction.Right);
+        recorder.right();
     }
 
     protected void addBinding(Integer key, Runnable pressed, Runnable released) {
@@ -32,7 +38,6 @@ class InputHandler implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        System.out.println("Hello");
     }
 
     @Override
@@ -45,8 +50,9 @@ class InputHandler implements KeyListener {
         released.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
     }
 
-    InputHandler(Domain domain) {
+    InputHandler(Domain domain, Recorder recorder) {
         this.domain = domain;
+        this.recorder = recorder;
         pressed = new HashMap<>();
         released = new HashMap<>();
 

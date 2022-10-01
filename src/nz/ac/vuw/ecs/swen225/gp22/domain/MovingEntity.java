@@ -6,11 +6,12 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public abstract class MovingEntity implements Entity {
 	Direction facingDir;
-	Coord coords;
-	Level level;
+	public Coord coords;
+	public Level level;
 
-	public MovingEntity(Direction facingDir) {
+	public MovingEntity(Direction facingDir, Coord coords) {
 		this.facingDir = facingDir;
+		this.coords = coords;
 	}
 	
 	public Direction getDir() {
@@ -25,11 +26,12 @@ public abstract class MovingEntity implements Entity {
 	 */
 	public boolean move(Direction d) {
 		facingDir = d;
-		Cell nextCell = level.cells[coords.x()+d.x][coords.y()+d.y];
+		Cell nextCell = level.cells[coords.x()+d.y][coords.y()+d.x];
 
 		if (!nextCell.beforeMoveInto(this, d)) return false;
 
 		level.cells[coords.x()][coords.y()].removeEntity(this);
+		coords = new Coord(coords.x()+d.y, coords.y()+d.x);
 		nextCell.getEntities().add(this);
 		nextCell.afterMoveInto(this, d);
 		return true;

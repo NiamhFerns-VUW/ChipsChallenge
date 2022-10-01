@@ -1,13 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.Renderer;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-record LevelOne(String levelName, Renderer renderer) implements GameState {
+record LevelOne(String levelName, Render gameplayPanel) implements GameState {
     @Override
     public Runnable action(Domain d) {
         return d::update;
@@ -23,10 +23,10 @@ record LevelOne(String levelName, Renderer renderer) implements GameState {
             }
         };
 
-        JPanel gameplayPanel = new Renderer();
-
         timerPanel.setMaximumSize(new Dimension(640, 75));
+        timerPanel.setFocusable(false);
         gameplayPanel.setMaximumSize(new Dimension(640, 405));
+        gameplayPanel.setFocusable(false);
         return List.of(timerPanel, gameplayPanel);
     }
 

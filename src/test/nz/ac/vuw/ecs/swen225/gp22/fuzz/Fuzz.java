@@ -74,7 +74,7 @@ class Fuzz extends GameHandler{
 
         game.reset();
         game.start();
-        game.skipTo("Level1");
+        game.skipTo("level1");
 
         InputGenerator input = new InputGenerator(game);
         System.out.println("inputG created");
@@ -94,7 +94,7 @@ class Fuzz extends GameHandler{
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
         Fuzz f = new Fuzz();
-        //f.actiontest(100);
-        f.randomKeys(100);
+        f.actiontest(100);
+        //f.randomKeys(100);
     }
 }

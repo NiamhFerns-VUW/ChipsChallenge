@@ -68,11 +68,11 @@ class Fuzz extends GameHandler{
      */
     public void actiontest(int size){
 
-        GameHandler game = null;
+        GameHandler game = new GameHandler();
         System.out.println("game created");
 
         InputGenerator input = new InputGenerator(game);
-        System.out.println("inputH created");
+        System.out.println("inputG created");
 
         actions = List.of(
                 input::up,

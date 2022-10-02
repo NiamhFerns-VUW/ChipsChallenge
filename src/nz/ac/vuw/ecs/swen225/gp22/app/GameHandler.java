@@ -5,13 +5,15 @@ import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 
 import java.awt.event.KeyEvent;
 
+import static java.lang.System.exit;
+
 /**
  * The primary game management class for a game of chips challenge that is responsible for the lifetime and handling
  * of all major components.
  *
  * @author niamh
  */
-public class GameHandler {
+public class GameHandler implements Observer {
     public static GameHandler instance;
     private final ObserverAdapter domain;
     private final Recorder recorder;
@@ -58,6 +60,15 @@ public class GameHandler {
      */
     protected InputHandler getInput() {
         return input;
+    }
+    protected Domain getDomain() {
+        return domain.get();
+    }
+
+    @Override
+    public void update() {
+        if (GameClock.get().currentLevelTime() <= 0)
+            onFail();
     }
 
     /**
@@ -137,6 +148,7 @@ public class GameHandler {
      * @author niamh
      */
     protected void onLevelChange() {
+        GameClock.get().unregister(this);
         GameClock.get().unregister(domain);
         GameClock.get().unregister(viewport);
         viewport.setState(viewport.getGameState().nextLevel());
@@ -146,9 +158,16 @@ public class GameHandler {
             setComponents((Level) viewport.getGameState());
         }
 
+        GameClock.get().setLevelTime(90000);
+        GameClock.get().register(this);
         GameClock.get().register(viewport);
 
         viewport.validate();
+    }
+
+    protected  void onFail() {
+        GameClock.get().unregister(this);
+        setGameState(new StartScreen());
     }
 
     /**

@@ -9,6 +9,8 @@ import java.util.Random;
 import javax.swing.*;
 
 class Fuzz extends GameHandler{
+
+    private GameHandler game;
     static final Random random = new Random();
     // keys to be pressed
     private static List<Integer> keys = List.of(
@@ -18,6 +20,12 @@ class Fuzz extends GameHandler{
             KeyEvent.VK_RIGHT );
     // actions to be performed
     private List<Runnable> actions = List.of();
+
+    Fuzz() {
+        super();
+        game = GameHandler.get();
+    }
+
     /**
      * @param size the number of random inputs to generate
      * this method generates a random sequence of inputs
@@ -68,8 +76,11 @@ class Fuzz extends GameHandler{
      */
     public void actiontest(int size){
 
-        GameHandler game = new GameHandler();
-        System.out.println("game created");
+//        game.reset();
+//        game.start();
+
+//        GameHandler game = new GameHandler();
+//        System.out.println("game created");
 
         InputGenerator input = new InputGenerator(game);
         System.out.println("inputG created");
@@ -90,6 +101,7 @@ class Fuzz extends GameHandler{
         }
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
+        SwingUtilities.invokeLater(GameHandler::new);
         Fuzz f = new Fuzz();
         f.actiontest(100);
         //f.mouseTest();

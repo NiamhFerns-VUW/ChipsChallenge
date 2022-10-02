@@ -1,23 +1,33 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Represents a level of chip's challenge.
+ *
+ * @author niamh
+ */
 interface Level {
     String levelName();
     Render gameplayPanel();
 }
 
-record LevelOne(String levelName, Render gameplayPanel) implements GameState, Level {
-    @Override
-    public Runnable action(Domain d) {
-        return d::update;
-    }
+// ------------------------------------------------
+// NEEDS MAJOR REFACTORING TO REMOVE DUPLICATE CODE
+// You should not need an interface here. A single
+// record called "Level" should be enough.
+// ------------------------------------------------
 
+/**
+ * Represents level one of chip's challenge.
+ *
+ * @author niamh
+ */
+record LevelOne(String levelName, Render gameplayPanel) implements GameState, Level {
     @Override
     public List<JPanel> panels() {
         JPanel timerPanel = new JPanel() {
@@ -41,12 +51,12 @@ record LevelOne(String levelName, Render gameplayPanel) implements GameState, Le
     }
 }
 
+/**
+ * Represents level two of chip's challenge.
+ *
+ * @author niamh
+ */
 record LevelTwo(String levelName, Render gameplayPanel) implements GameState, Level {
-    @Override
-    public Runnable action(Domain d) {
-        return d::update;
-    }
-
     @Override
     public List<JPanel> panels() {
         return null;

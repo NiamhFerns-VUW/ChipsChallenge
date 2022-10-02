@@ -17,7 +17,7 @@ public class Domain {
 	Persistency persist = new Persistency();
 	
 	public void update() {
-		System.out.println("Domain recieved update!");
+		//System.out.println("Domain recieved update!");
 
 		if (!ok()) throw new Error("No current level to update.");
 

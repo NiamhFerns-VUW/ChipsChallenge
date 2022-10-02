@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import java.awt.event.KeyEvent;
 
@@ -37,7 +38,6 @@ public class GameHandler implements Observer {
 
         // Start the game and game clock.
         start();
-        GameClock.get().start();
         if (instance == null) instance = this;
         else throw new IllegalStateException("GameHandler has already been assigned elsewhere.");
     }
@@ -101,9 +101,22 @@ public class GameHandler implements Observer {
      *
      * @author niamh
      */
-    private void start() {
+    public void start() {
         GameClock.get().register(viewport);
         viewport.setState(new StartScreen());
+        GameClock.get().start();
+    }
+
+    /**
+     * Resets game cleanly and leaves it in a "stopped" state.
+     *
+     * @author niamh
+     */
+    public void reset() {
+        GameClock.get().stop();
+        GameClock.get().reset();
+        GameClock.get().unregister(this);
+        GameClock.get().unregister(viewport);
     }
 
     /**
@@ -113,13 +126,15 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     public void skipTo(String str) {
-        switch(str) {
-            case "Level1":
+        switch(str.toLowerCase()) {
+            case "level1":
                 System.out.println("You are now at level one.");
+                setGameState(new Level("Level 1", domain.get(), new Render()));
 
 
-            case "Level2":
+            case "level2":
                 System.out.println("You are now at level two.");
+                setGameState(new Level("Level 2", domain.get(), new Render()));
         }
     }
 

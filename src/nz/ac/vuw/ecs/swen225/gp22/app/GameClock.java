@@ -90,6 +90,7 @@ public class GameClock extends Subject {
     private  void tickIncrement() {
         levelTickCount++;
         tickCount++;
+        timeRemaining -= 16;
     }
 
     /**
@@ -112,6 +113,10 @@ public class GameClock extends Subject {
      */
     protected void stop() {
         timer.stop();
+    }
+
+    protected void reset() {
+        clock = new GameClock();
     }
 
     /**

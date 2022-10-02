@@ -27,7 +27,7 @@ public class Domain {
 	public void startLevel(String levelname) {
 		System.out.println("Domain starting level '" + levelname + "'!");
 		//GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
-		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));
+		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));	// TODO: change to proper name
 
 		Cell[][] cells = save.getCells();
 
@@ -50,12 +50,10 @@ public class Domain {
 		currentLevel = new Level(remainingTreasures, cells, player.get(), (ArrayList<Entity>) save.getInventory());
 
 		player.get().setLevel(currentLevel);
-
-		//throw new Error("Code not done!");	//TODO
 	}
 
 	public void movePlayer(Direction dir) {
-		System.out.println("Domain moving player in direction " + dir + "!");
+		//System.out.println("Domain moving player in direction " + dir + "!");
 
 		if (!ok()) throw new Error("No current level for moving player.");
 
@@ -63,7 +61,6 @@ public class Domain {
 	}
 
 	public boolean ok() {
-		System.out.println(currentLevel == null);
 		return currentLevel != null;
 	}
 	

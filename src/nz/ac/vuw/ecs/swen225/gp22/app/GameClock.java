@@ -114,6 +114,10 @@ public class GameClock extends Subject {
         timer.stop();
     }
 
+    protected void reset() {
+        clock = new GameClock();
+    }
+
     /**
      * Returns whether the clock is running.
      *

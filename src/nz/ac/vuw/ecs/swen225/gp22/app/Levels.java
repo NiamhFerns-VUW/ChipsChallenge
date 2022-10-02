@@ -6,11 +6,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Represents a level of chip's challenge.
+ *
+ * @author niamh
+ */
 interface Level {
     String levelName();
     Render gameplayPanel();
 }
 
+// ------------------------------------------------
+// NEEDS MAJOR REFACTORING TO REMOVE DUPLICATE CODE
+// You should not need an interface here. A single
+// record called "Level" should be enough.
+// ------------------------------------------------
+
+/**
+ * Represents level one of chip's challenge.
+ *
+ * @author niamh
+ */
 record LevelOne(String levelName, Render gameplayPanel) implements GameState, Level {
     @Override
     public List<JPanel> panels() {
@@ -35,6 +51,11 @@ record LevelOne(String levelName, Render gameplayPanel) implements GameState, Le
     }
 }
 
+/**
+ * Represents level two of chip's challenge.
+ *
+ * @author niamh
+ */
 record LevelTwo(String levelName, Render gameplayPanel) implements GameState, Level {
     @Override
     public List<JPanel> panels() {

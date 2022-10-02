@@ -2,6 +2,13 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import javax.swing.*;
 
+/**
+ * Represents a clock singleton that puts out ticks at an arbitrary time interval. You can register observers to this
+ * clock to be updated every tick cycle.
+ * Intended to work with chips challenge so also holds the current time played for the game and level.
+ *
+ * @author niamh
+ */
 public class GameClock extends Subject {
     private static GameClock clock;
     private Timer timer;
@@ -12,6 +19,12 @@ public class GameClock extends Subject {
     private long timePlayed;
     private long timeRemaining;
 
+    /**
+     * Retrieve the instance of GameClock or instantiate it if there isn't one.
+     * @return the instance of GameClock
+     *
+     * @author niamh
+     */
     public static GameClock get() {
         if (clock == null) {
             clock = new GameClock();
@@ -19,21 +32,71 @@ public class GameClock extends Subject {
         return clock;
     }
 
+    /**
+     * Retrieves the current total tick count since the clock has started.
+     * @return a long representing the tick count.
+     *
+     * @author niamh
+     */
     public long currentTick()      { return tickCount; }
+
+    /**
+     * Retrieves the current total time elapsed since the clock has started.
+     * @return a long representing the elapsed time in milliseconds.
+     *
+     * @author niamh
+     */
     public long currentTime()      { return timePlayed; }
+
+    /**
+     * Retrieves the tick count since the current level has started.
+     * @return a long representing the tick count.
+     *
+     * @author niamh
+     */
     public long currentLevelTick() { return levelTickCount; }
+
+    /**
+     * Retrieves the current total time remaining in a level.
+     * @return a long representing the remaining time in milliseconds.
+     *
+     * @author niamh
+     */
     public long currentLevelTime() { return timeRemaining; }
 
+    /**
+     * Sets the time that the user has to complete a level.
+     * @param time a long representing the time in milliseconds.
+     *
+     * @author niamh
+     */
     protected void setLevelTime(long time) {
         this.timeRemaining = time;
     }
+
+    /**
+     * Resets the level tick counter to zero on starting a new level.
+     *
+     * @author niamh
+     */
     protected  void resetLevelTick() { levelTickCount = 0L; }
 
+    /**
+     * Increments both tick count variables by one and updates the time fields to match based on the length of a tick
+     * on an update of the timer.
+     *
+     * @author niamh
+     */
     private  void tickIncrement() {
         levelTickCount++;
         tickCount++;
     }
 
+    /**
+     * Starts the clock.
+     *
+     * @author niamh
+     */
     protected void start() {
             timer = new Timer(1000 / FRAMERATE, _e -> {
                 tickIncrement();
@@ -41,13 +104,32 @@ public class GameClock extends Subject {
             });
             timer.start();
     }
+
+    /**
+     * Stops the clock.
+     *
+     * @author niamh
+     */
     protected void stop() {
         timer.stop();
     }
+
+    /**
+     * Returns whether the clock is running.
+     *
+     * @return true if running, false if not running.
+     *
+     * @author niamh
+     */
     public boolean isRunning() {
         return timer.isRunning();
     }
 
+    /**
+     * Private constructor to instantiate a GameClock if get() determines that one does not yet exist.
+     *
+     * @author niamh
+     */
     private GameClock() {
         tickCount = 0;
         levelTickCount = 0;

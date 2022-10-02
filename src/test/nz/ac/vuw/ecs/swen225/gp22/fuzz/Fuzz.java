@@ -34,13 +34,11 @@ class Fuzz extends GameHandler{
      */
     public void randomKeys(int size) throws AWTException, IllegalArgumentException {
 
-//        GameHandler game = null;
         game.reset();
         game.start();
 
         Robot robot = new Robot();
 
-        //game.skipTo("Level1");
         robot.mouseMove(1050, 550);
         robot.delay(200);
         robot.mousePress(KeyEvent.BUTTON1_DOWN_MASK);
@@ -61,11 +59,7 @@ class Fuzz extends GameHandler{
     public void mouseTest() throws AWTException {
         GameHandler game = null;
         Robot robot = new Robot();
-//        try {
-//            robot = new Robot();
-//        } catch (AWTException e) {
-//            e.printStackTrace();
-//        }
+
         robot.mouseMove(1050, 550);
         robot.delay(200);
         robot.mousePress(KeyEvent.BUTTON1_DOWN_MASK);
@@ -82,9 +76,6 @@ class Fuzz extends GameHandler{
         game.start();
         game.skipTo("Level1");
 
-//        GameHandler game = new GameHandler();
-//        System.out.println("game created");
-
         InputGenerator input = new InputGenerator(game);
         System.out.println("inputG created");
 
@@ -96,17 +87,14 @@ class Fuzz extends GameHandler{
         );
         System.out.println("actions created");
 
-
-
         for (int i = 0; i < size; i++) {
             actions.get(random.nextInt(actions.size())).run();
             System.out.println("Action: " + actions.get(random.nextInt(actions.size())));
         }
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
-        //SwingUtilities.invokeLater(GameHandler::new);
         Fuzz f = new Fuzz();
-        f.actiontest(100);
-        //f.randomKeys(100);
+        //f.actiontest(100);
+        f.randomKeys(100);
     }
 }

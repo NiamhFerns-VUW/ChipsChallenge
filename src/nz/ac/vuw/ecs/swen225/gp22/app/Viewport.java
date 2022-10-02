@@ -48,6 +48,7 @@ class Viewport extends JFrame implements Observer {
     @Override
     public void update() {
         panels.forEach(JPanel::repaint);
+
     }
 
     /**

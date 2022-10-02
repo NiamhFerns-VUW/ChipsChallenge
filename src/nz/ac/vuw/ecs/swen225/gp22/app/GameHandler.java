@@ -2,8 +2,11 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import java.awt.event.KeyEvent;
+
+import static java.lang.System.exit;
 
 /**
  * The primary game management class for a game of chips challenge that is responsible for the lifetime and handling
@@ -11,7 +14,7 @@ import java.awt.event.KeyEvent;
  *
  * @author niamh
  */
-public class GameHandler {
+public class GameHandler implements Observer {
     public static GameHandler instance;
     private final ObserverAdapter domain;
     private final Recorder recorder;
@@ -35,7 +38,6 @@ public class GameHandler {
 
         // Start the game and game clock.
         start();
-        GameClock.get().start();
         if (instance == null) instance = this;
         else throw new IllegalStateException("GameHandler has already been assigned elsewhere.");
     }
@@ -58,6 +60,15 @@ public class GameHandler {
      */
     protected InputHandler getInput() {
         return input;
+    }
+    protected Domain getDomain() {
+        return domain.get();
+    }
+
+    @Override
+    public void update() {
+        if (GameClock.get().currentLevelTime() <= 0)
+            onFail();
     }
 
     /**
@@ -90,9 +101,22 @@ public class GameHandler {
      *
      * @author niamh
      */
-    private void start() {
+    public void start() {
         GameClock.get().register(viewport);
         viewport.setState(new StartScreen());
+        GameClock.get().start();
+    }
+
+    /**
+     * Resets game cleanly and leaves it in a "stopped" state.
+     *
+     * @author niamh
+     */
+    public void reset() {
+        GameClock.get().stop();
+        GameClock.get().reset();
+        GameClock.get().unregister(this);
+        GameClock.get().unregister(viewport);
     }
 
     /**
@@ -102,13 +126,15 @@ public class GameHandler {
      * @author niamh
      */
     public void skipTo(String str) {
-        switch(str) {
-            case "Level1":
+        switch(str.toLowerCase()) {
+            case "level1":
                 System.out.println("You are now at level one.");
+                setGameState(new Level("Level 1", domain.get(), new Render()));
 
 
-            case "Level2":
+            case "level2":
                 System.out.println("You are now at level two.");
+                setGameState(new Level("Level 2", domain.get(), new Render()));
         }
     }
 
@@ -137,6 +163,7 @@ public class GameHandler {
      * @author niamh
      */
     protected void onLevelChange() {
+        GameClock.get().unregister(this);
         GameClock.get().unregister(domain);
         GameClock.get().unregister(viewport);
         viewport.setState(viewport.getGameState().nextLevel());
@@ -146,9 +173,16 @@ public class GameHandler {
             setComponents((Level) viewport.getGameState());
         }
 
+        GameClock.get().setLevelTime(90000);
+        GameClock.get().register(this);
         GameClock.get().register(viewport);
 
         viewport.validate();
+    }
+
+    protected  void onFail() {
+        GameClock.get().unregister(this);
+        setGameState(new StartScreen());
     }
 
     /**

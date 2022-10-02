@@ -1,26 +1,46 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+/**
+ * Represents an external input system to send inputs to an instance of GameHandler without having to use key events.
+ *
+ * @author niamh
+ */
 public class InputGenerator {
-    GameHandler game;
+    private final GameHandler game;
 
-    public void up() {
-//        game.input.mvUp();
-        System.out.println("Generated input: mvUp()");
-    }
-    public void down() {
-//        game.input.mvDown();
-        System.out.println("Generated input: mvDown()");
-    }
-    public void left() {
-//        game.input.mvLeft();
-        System.out.println("Generated input: mvLeft()");
-    }
-    public void right() {
-//        game.input.mvRight();
-        System.out.println("Generated input: mvRight()");
-    }
+    /**
+     * Call move up on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void up() { game.getInput().mvUp(); }
 
-    public InputGenerator(GameHandler game) {
-        this.game = game;
-    }
+    /**
+     * Call move down on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void down() { game.getInput().mvDown(); }
+
+    /**
+     * Call move left on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void left() { game.getInput().mvLeft(); }
+
+    /**
+     * Call move right on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void right() { game.getInput().mvRight(); }
+
+    /**
+     * Constructs an instance of input generator and ties it to a Gamehandler instance.
+     * @param game Instance of GameHandler to bind with.
+     *
+     * @author niamh
+     */
+    public InputGenerator(GameHandler game) { this.game = game; }
 }

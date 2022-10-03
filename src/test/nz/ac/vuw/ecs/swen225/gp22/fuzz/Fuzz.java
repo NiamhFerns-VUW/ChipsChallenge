@@ -96,14 +96,14 @@ public class Fuzz extends GameHandler{
         }
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
-        FuzzTest f = new FuzzTest();
+        Fuzz f = new Fuzz();
         //f.actiontest(100);
         f.randomKeys(100);
 
     }
     @Test
     public void test1() throws AWTException {
-        FuzzTest f = new FuzzTest();
+        Fuzz f = new Fuzz();
         f.randomKeys(100);
     }
 }

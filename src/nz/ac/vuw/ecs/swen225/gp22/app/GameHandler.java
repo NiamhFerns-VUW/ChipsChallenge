@@ -4,7 +4,9 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 
 import static java.lang.System.exit;
 
@@ -18,7 +20,7 @@ public class GameHandler implements Observer {
     public static GameHandler instance;
     private final ObserverAdapter domain;
     private final Recorder recorder;
-    private final Viewport viewport;
+    private Viewport viewport;
     private final InputHandler input;
 
     /**
@@ -26,7 +28,7 @@ public class GameHandler implements Observer {
      *
      * @author niamh
      */
-    public GameHandler() {
+    private GameHandler() {
         // Create fields.
         domain = new ObserverAdapter(new Domain());
         recorder = new Recorder();
@@ -34,12 +36,14 @@ public class GameHandler implements Observer {
         input = new InputHandler(domain.get(), recorder);
         setBindings(input);
 
-        viewport = new Viewport(input);
+        try {
+            SwingUtilities.invokeAndWait(() -> { viewport = new Viewport(input); });
+        }
+        catch (InvocationTargetException | InterruptedException e) { e.printStackTrace(); }
 
         // Start the game and game clock.
         start();
-        if (instance == null) instance = this;
-        else throw new IllegalStateException("GameHandler has already been instantiated. Use GameHandler.get() to retrieve the instance.");
+        if (instance != null) throw new IllegalStateException("GameHandler has already been instantiated. Use GameHandler.get() to retrieve the instance.");
     }
 
     /**
@@ -48,7 +52,8 @@ public class GameHandler implements Observer {
      *
      * @author niamh
      */
-    protected static GameHandler get() {
+    public static GameHandler get() {
+        if (instance == null) instance = new GameHandler();
         return instance;
     }
 
@@ -130,11 +135,13 @@ public class GameHandler implements Observer {
             case "level1":
                 System.out.println("You are now at level one.");
                 setGameState(new Level("Level 1", domain.get(), new Render()));
+                break;
 
 
             case "level2":
                 System.out.println("You are now at level two.");
                 setGameState(new Level("Level 2", domain.get(), new Render()));
+                break;
         }
     }
 
@@ -153,6 +160,7 @@ public class GameHandler implements Observer {
             setComponents((Level) state);
 
         GameClock.get().register(viewport);
+        GameClock.get().setLevelTime(90000);
 
         viewport.validate();
     }

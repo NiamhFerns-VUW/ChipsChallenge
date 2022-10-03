@@ -102,7 +102,7 @@ public class FuzzTest extends GameHandler{
 
     }
 
-    @Test
+//    @Test
     public void test1() throws AWTException {
         FuzzTest f = new FuzzTest();
         f.randomKeys(100);

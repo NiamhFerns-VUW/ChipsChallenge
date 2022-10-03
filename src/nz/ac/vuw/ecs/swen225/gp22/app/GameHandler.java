@@ -39,7 +39,7 @@ public class GameHandler implements Observer {
         // Start the game and game clock.
         start();
         if (instance == null) instance = this;
-        else throw new IllegalStateException("GameHandler has already been assigned elsewhere.");
+        else throw new IllegalStateException("GameHandler has already been instantiated. Use GameHandler.get() to retrieve the instance.");
     }
 
     /**

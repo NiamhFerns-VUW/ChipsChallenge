@@ -39,10 +39,11 @@ class Fuzz extends GameHandler{
 
         Robot robot = new Robot();
 
-        robot.mouseMove(1050, 550);
-        robot.delay(200);
-        robot.mousePress(KeyEvent.BUTTON1_DOWN_MASK);
-        robot.mouseRelease(KeyEvent.BUTTON1_DOWN_MASK);
+        game.skipTo("level1");
+//        robot.mouseMove(1050, 550);
+//        robot.delay(200);
+//        robot.mousePress(KeyEvent.BUTTON1_DOWN_MASK);
+//        robot.mouseRelease(KeyEvent.BUTTON1_DOWN_MASK);
 
         robot.delay(100);
 
@@ -94,7 +95,7 @@ class Fuzz extends GameHandler{
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
         Fuzz f = new Fuzz();
-        f.actiontest(100);
-        //f.randomKeys(100);
+        //f.actiontest(100);
+        f.randomKeys(100);
     }
 }

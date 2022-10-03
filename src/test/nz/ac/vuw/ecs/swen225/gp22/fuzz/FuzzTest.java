@@ -8,7 +8,9 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import org.junit.Test;
 
-class Fuzz extends GameHandler{
+import static org.junit.Assert.*;
+
+public class FuzzTest extends GameHandler{
 
     private GameHandler game;
     static final Random random = new Random();
@@ -21,7 +23,7 @@ class Fuzz extends GameHandler{
     // actions to be performed
     private List<Runnable> actions = List.of();
 
-    Fuzz() {
+    public FuzzTest() {
         game = GameHandler.get();
     }
 
@@ -94,7 +96,7 @@ class Fuzz extends GameHandler{
         }
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
-        Fuzz f = new Fuzz();
+        FuzzTest f = new FuzzTest();
         //f.actiontest(100);
         f.randomKeys(100);
 
@@ -102,7 +104,7 @@ class Fuzz extends GameHandler{
 
     @Test
     public void test1() throws AWTException {
-        Fuzz f = new Fuzz();
+        FuzzTest f = new FuzzTest();
         f.randomKeys(100);
     }
 }

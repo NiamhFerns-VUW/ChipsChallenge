@@ -1,6 +1,7 @@
 /out
 .idea
 *.iml
+./target/
 /saves
 /bin/
 *.DS_Store

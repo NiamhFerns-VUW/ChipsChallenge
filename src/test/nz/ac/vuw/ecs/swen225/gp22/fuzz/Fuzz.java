@@ -42,10 +42,6 @@ public class Fuzz{
         Robot robot = new Robot();
 
         game.skipTo("level1");
-//        robot.mouseMove(1050, 550);
-//        robot.delay(200);
-//        robot.mousePress(KeyEvent.BUTTON1_DOWN_MASK);
-//        robot.mouseRelease(KeyEvent.BUTTON1_DOWN_MASK);
 
         robot.delay(100);
 
@@ -73,14 +69,14 @@ public class Fuzz{
      * this method generates a random sequence of actions functions from the
      *             list of actions and then executes them
      */
-    public void actiontest(int size){
+    public void actiontest(int size) throws AWTException {
 
         game.reset();
         game.start();
         game.skipTo("level1");
 
         InputGenerator input = new InputGenerator(game);
-        System.out.println("inputG created");
+        Robot robot = new Robot();
 
         actions = List.of(
                 input::up,
@@ -88,22 +84,25 @@ public class Fuzz{
                 input::left,
                 input::right
         );
-        System.out.println("actions created");
+
+        robot.delay(2000);
 
         for (int i = 0; i < size; i++) {
             actions.get(random.nextInt(actions.size())).run();
-            System.out.println("Action: " + actions.get(random.nextInt(actions.size())));
+            System.out.println("Action: " + actions.get(random.nextInt(actions.size())) );
+            robot.delay(500);
         }
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
         Fuzz f = new Fuzz();
-        //f.actiontest(100);
-        f.randomKeys(100);
+        f.actiontest(100);
+        //f.randomKeys(100);
 
     }
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
-        f.randomKeys(100);
+        //f.randomKeys(100);
+        f.actiontest(100);
     }
 }

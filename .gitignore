@@ -1,5 +1,7 @@
 /out
-.idea
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/shelf/
 *.iml
 /saves
 /bin/

@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp22.fuzz;
+package test.nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
@@ -6,7 +6,6 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-
 import org.junit.jupiter.api.Test;
 
 

@@ -29,4 +29,8 @@ public class Chip extends MovingEntity {
 	public int drawHierarchy() {
 		throw new Error("Code not done!");	//TODO
 	}
+
+	public String toString() {
+		return "c";
+	}
 }

@@ -36,4 +36,6 @@ public interface Entity {
 	 * for when multiple entities occupy the same tile.
 	 */
 	int drawHierarchy();
+
+	public String toString();
 }

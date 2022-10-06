@@ -78,19 +78,26 @@ public class Fuzz{
         InputGenerator input = new InputGenerator(game);
         Robot robot = new Robot();
 
-        actions = List.of(
-                input::up,
-                input::down,
-                input::left,
-                input::right
-        );
+        actions = List.of(input::up, input::down, input::left, input::right);
+        List<Runnable> actions_witout_up = List.of(input::down, input::down, input::left, input::right);
+        List<Runnable> actions_witout_down = List.of(input::up, input::up, input::left, input::right);
+        List<Runnable> actions_witout_left = List.of(input::up, input::down, input::right, input::right);
+        List<Runnable> actions_witout_right = List.of(input::up, input::down, input::left, input::left);
 
         robot.delay(2000);
-
+        int index = 3;
         for (int i = 0; i < size; i++) {
-            actions.get(random.nextInt(actions.size())).run();
-            System.out.println("Action: " + actions.get(random.nextInt(actions.size())) );
-            robot.delay(500);
+            List<Runnable> from = switch(index){
+                case 0 -> actions_witout_down;
+                case 1 -> actions_witout_up;
+                case 2 -> actions_witout_right;
+                default -> actions_witout_left;
+            };
+
+            from.get(index).run();
+            System.out.println("Action: " + from.get(index));
+            robot.delay(100);
+            index = random.nextInt(from.size());
         }
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {

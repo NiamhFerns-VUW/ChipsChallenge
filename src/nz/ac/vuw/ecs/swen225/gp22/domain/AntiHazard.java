@@ -32,4 +32,7 @@ public class AntiHazard implements Entity {
 		throw new Error("Code not done!");	//TODO
 	}
 
+	public String toString() {
+		return "a";
+	}
 }

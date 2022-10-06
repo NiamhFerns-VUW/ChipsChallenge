@@ -15,4 +15,8 @@ public class Hazard extends FreeTile {
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		throw new Error("Code not done!");	//TODO
 	}
+
+	public String toString() {
+		return "H";
+	}
 }

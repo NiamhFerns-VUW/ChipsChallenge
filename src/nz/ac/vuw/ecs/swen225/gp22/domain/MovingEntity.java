@@ -34,6 +34,7 @@ public abstract class MovingEntity implements Entity {
 		coords = new Coord(coords.x()+d.y, coords.y()+d.x);
 		nextCell.getEntities().add(this);
 		nextCell.afterMoveInto(this, d);
+
 		return true;
 	}
 }

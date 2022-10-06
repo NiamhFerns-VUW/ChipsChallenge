@@ -28,4 +28,8 @@ public class Key implements Entity {
 	public int drawHierarchy() {
 		throw new Error("Code not done!");	//TODO
 	}
+
+	public String toString() {
+		return "k";
+	}
 }

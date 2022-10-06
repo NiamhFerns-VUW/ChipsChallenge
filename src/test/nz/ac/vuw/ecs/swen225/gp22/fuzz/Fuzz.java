@@ -87,6 +87,8 @@ public class Fuzz{
         robot.delay(2000);
         int index = 3;
         for (int i = 0; i < size; i++) {
+
+            // prevent the player from making meaningless moves( like moving up and down at the same time)
             List<Runnable> from = switch(index){
                 case 0 -> actions_witout_down;
                 case 1 -> actions_witout_up;

@@ -1,5 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 /**
  * The MovingEntity is for Entities that can move outside of the cell they're in, such as
  * Chip moving or a block being pushed.
@@ -13,8 +20,8 @@ public abstract class MovingEntity implements Entity {
 		this.facingDir = facingDir;
 		this.coords = coords;
 	}
-	
-	public Direction getDir() {
+
+	public Direction getFacingDir() {
 		return facingDir;
 	}
 

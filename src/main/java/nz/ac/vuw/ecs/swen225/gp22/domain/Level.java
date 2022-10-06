@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 
 /**
@@ -7,9 +8,9 @@ import java.util.ArrayList;
  */
 public class Level {
 	private int remainingTreasures;
-	public final Cell[][] cells;
+	public Cell[][] cells;
 	private ArrayList<Entity> inventory;
-	public final Chip player;
+	public Chip player;
 	
 	public Level(int remainingTreasures, Cell[][] cells, Chip player) {
 		this.remainingTreasures = remainingTreasures;
@@ -23,7 +24,29 @@ public class Level {
 		this.player = player;
 		this.inventory = inventory;
 	}
-	
+	public Level() {
+
+	}
+
+	public void setInventory(ArrayList<Entity> inventory) {
+		this.inventory = inventory;
+	}
+	public Chip getPlayer() {
+		return player;
+	}
+
+	public void setCells(Cell[][] cells) {
+		this.cells = cells;
+	}
+
+	public void setPlayer(Chip player) {
+		this.player = player;
+	}
+
+	public Cell[][] getCells() {
+		return cells;
+	}
+
 	public int getRemainingTreasures() {
 		return remainingTreasures;
 	}

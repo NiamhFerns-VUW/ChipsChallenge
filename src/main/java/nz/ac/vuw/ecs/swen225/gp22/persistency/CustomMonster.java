@@ -8,7 +8,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 /**
  * interface for service providers to implement if they want a custom entity
  */
-public interface CustomEntity extends Entity {
+public interface CustomMonster extends Entity {
 
     /**
      *

@@ -1,10 +1,23 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 /**
  * The Entity interface is for the various things that the player could interact with.
  * Different from tiles, these can stack on top of each other (for example, a monster standing on the key, or a box pushed onto treasure).
  * 
  */
+@JsonTypeInfo(
+	use = JsonTypeInfo.Id.NAME,
+	include = As.PROPERTY,
+	property = "type")
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = MovingEntity.class, name = "movingentity"),
+})
 public interface Entity {
 	/**
 	 * The interactBefore method causes the entity to perform an action based on its class, before the player moves

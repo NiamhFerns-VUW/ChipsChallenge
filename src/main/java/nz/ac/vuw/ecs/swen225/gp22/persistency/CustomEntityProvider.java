@@ -6,7 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
 
-public class CustomEntityProvider implements CustomEntity  {
+public class CustomEntityProvider implements CustomMonster {
 
     @Override
     public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {

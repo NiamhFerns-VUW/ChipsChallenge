@@ -7,6 +7,9 @@ import java.util.Arrays;
  * the ExitLocks once it reaches 0.
  */
 public class Treasure implements Entity {
+	public Treasure() {
+
+	}
 	@Override
 	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
 		return true;

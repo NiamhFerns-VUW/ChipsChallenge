@@ -59,7 +59,7 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Up", time));
-            //System.out.println("Move UP recorded at time " +time);
+            System.out.println("Move UP recorded at time " +time);
         }
     }
 
@@ -70,7 +70,7 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Down", time));
-            //System.out.println("Move DOWN recorded at time " +time);
+            System.out.println("Move DOWN recorded at time " +time);
         }
     }
 
@@ -81,7 +81,7 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Left", time));
-            //System.out.println("Move LEFT recorded at time " +time);
+            System.out.println("Move LEFT recorded at time " +time);
         }
     }
 
@@ -92,7 +92,7 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Right", time));
-            //System.out.println("Move RIGHT recorded at time " +time);
+            System.out.println("Move RIGHT recorded at time " +time);
         }
     }
 

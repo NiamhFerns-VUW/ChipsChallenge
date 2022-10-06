@@ -6,12 +6,14 @@ import java.util.Stack;
 public class Replayer {
 
     private int replaySpeed = 1;
+    private final Stack<Step> setHistory;
     private Stack<Step> history;
     private Stack<Step> prev;
     boolean autoReplay = false;
 
 
     public Replayer(Stack<Step> gameHistory){
+        setHistory = gameHistory;
         history = gameHistory;
         prev = new Stack<>();
     }
@@ -38,9 +40,39 @@ public class Replayer {
     /**
      * Step by Step replay
      */
+    public Step stepByStep(){
+        autoReplay = false;
+        Step currentMove = history.pop();
+        prev.push(currentMove);
+        if(currentMove.move().equals("None")){
+            Step validMove = skipEmptySteps();
+            return validMove;
+        }
+        return currentMove;
+
+    }
+
     //peek at Stack to see if the Move is different/not NONE
     //if NONE, push(Step Stack.pop()) into other Stack until reaching a different Step
     //If not NONE, Step replay = Stack.pop(); OtherStack.push(replay); replay.draw();
+    public Step skipEmptySteps(){
+        while(!history.isEmpty()){
+            Step move = history.pop();
+            prev.push(move);
+            if(!move.move().equals("None")){
+                return move;
+            }
+        }
+        //takes the last move (Still None) off prev stack
+        history.push(prev.pop());
+        return history.pop();
+    }
+
+    public void resetReplayer(){
+        //display level back to the beginning (reload through app?)
+        history = setHistory;
+        prev = new Stack<>();
+    }
 
     public Stack<Step> getHistory(){
         return history;

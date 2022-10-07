@@ -21,6 +21,10 @@ public class Cell {
 		this.storedTile = storedTile;
 		entities = new ArrayList<Entity>();
 	}
+	public Cell(FreeTile storedTile, ArrayList<Entity> entities) {
+		this.storedTile = storedTile;
+		this.entities = entities;
+	}
 	public boolean beforeMoveInto(MovingEntity e, Direction d) {
 		return storedTile.onMoveInto(e, d, this) && entities.stream().allMatch(a -> a.interactBefore(e, d, this));
 	}

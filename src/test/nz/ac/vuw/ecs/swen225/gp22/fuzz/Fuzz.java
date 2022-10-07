@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp22.fuzz;
+package test.nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
@@ -7,7 +7,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
 
 public class Fuzz{
@@ -108,7 +108,7 @@ public class Fuzz{
         //f.randomKeys(100);
 
     }
-    @Test
+//    @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
         //f.randomKeys(100);

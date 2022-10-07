@@ -13,6 +13,8 @@ public abstract class MovingEntity implements Entity {
 		this.facingDir = facingDir;
 		this.coords = coords;
 	}
+	public MovingEntity() {
+	}
 	
 	public Direction getDir() {
 		return facingDir;

@@ -22,19 +22,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Wall;
 
 public class LevelMap {
 
-    private Map<Coord,Cell> map1;
-    private Map<Coord,Cell> map2;
-
-    public Map<Coord, Cell> getMap1() {
-        return map1;
-    }
-
-    public Map<Coord, Cell> getMap2() {
-        return map2;
-    }
-    public LevelMap() {
+    public static Map<Coord, Cell> getMap1() {
         HashMap<Coord, Cell> level1map = new HashMap<>();
-        this.map1 = level1map;
         // --------------------------------------------
         // Row 0
         // --------------------------------------------
@@ -1862,8 +1851,11 @@ public class LevelMap {
             new FreeTile(),
             new ArrayList<>(List.of())
         ));
+        return level1map;
+    }
+
+    public static Map<Coord, Cell> getMap2() {
         HashMap<Coord, Cell> level2map = new HashMap<>();
-        this.map2 = level2map;
         // --------------------------------------------
         // Row 0
         // --------------------------------------------
@@ -3691,6 +3683,6 @@ public class LevelMap {
             new FreeTile(),
             new ArrayList<>(List.of())
         ));
-
+        return level2map;
     }
 }

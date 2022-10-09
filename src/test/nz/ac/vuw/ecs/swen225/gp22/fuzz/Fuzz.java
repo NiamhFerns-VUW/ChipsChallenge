@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import java.awt.AWTException;
@@ -25,6 +26,8 @@ public class Fuzz{
 
     public Fuzz() {
         game = GameHandler.get();
+        game.reset();
+        game.start();
     }
 
     /**
@@ -72,8 +75,6 @@ public class Fuzz{
      */
     public void actiontest(int size) throws AWTException {
 
-        game.reset();
-        game.start();
         game.skipTo("level1");
 
         InputGenerator input = new InputGenerator(game);
@@ -97,21 +98,35 @@ public class Fuzz{
                 default -> actions_witout_left;
             };
 
+            testClock();
+
             from.get(index).run();
             System.out.println("Action: " + from.get(index));
             robot.delay(10);
             index = random.nextInt(from.size());
         }
     }
+    public void testClock() throws IllegalStateException {
+        if(GameClock.get().currentLevelTime() < 0) {
+            throw new IllegalStateException("Time is negative");
+        }
+    }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
         Fuzz f = new Fuzz();
-        f.actiontest(100);
         //f.randomKeys(100);
+        f.actiontest(100);
     }
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
         //f.randomKeys(100);
-        f.actiontest(100);
+        f.actiontest(10000);
+    }
+
+    @Test
+    public void test2() throws AWTException {
+        Fuzz f = new Fuzz();
+        //f.randomKeys(100);
+        f.actiontest(10000);
     }
 }

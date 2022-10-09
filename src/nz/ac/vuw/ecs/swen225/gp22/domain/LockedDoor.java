@@ -24,4 +24,8 @@ public class LockedDoor extends FreeTile {
 
 		return false;
 	}
+
+	public String toString() {
+		return "D";
+	}
 }

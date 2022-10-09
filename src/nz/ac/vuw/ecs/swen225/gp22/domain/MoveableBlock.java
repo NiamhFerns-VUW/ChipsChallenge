@@ -13,14 +13,19 @@ public class MoveableBlock extends MovingEntity {
 	}
 	@Override
 	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
-		throw new Error("Code not done!");    //TODO
+		//throw new Error("Code not done!");    //TODO
+		return move(d);
 	}
 	@Override
 	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
-		throw new Error("Code not done!");	//TODO
+		return true;
 	}
 	@Override
 	public int drawHierarchy() {
 		throw new Error("Code not done!");	//TODO
+	}
+
+	public String toString() {
+		return "n";
 	}
 }

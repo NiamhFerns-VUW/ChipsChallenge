@@ -21,7 +21,7 @@ public class Fuzz{
             KeyEvent.VK_LEFT,
             KeyEvent.VK_RIGHT );
     // actions to be performed
-    private List<Runnable> actions = List.of();
+    //private List<Runnable> actions = List.of();
 
     public Fuzz() {
         game = GameHandler.get();
@@ -46,9 +46,10 @@ public class Fuzz{
         robot.delay(100);
 
         for (int i = 0; i < size; i++) {
-            robot.keyPress(keys.get(random.nextInt(keys.size())));
-            System.out.println("Key: " + keys.get(random.nextInt(keys.size())));
-            robot.keyRelease(keys.get(random.nextInt(keys.size())));
+            int key = keys.get(random.nextInt(keys.size()));
+            robot.keyPress(key);
+            System.out.println("Key: " + key);
+            robot.keyRelease(key);
             robot.delay(100);
         }
     }
@@ -78,7 +79,7 @@ public class Fuzz{
         InputGenerator input = new InputGenerator(game);
         Robot robot = new Robot();
 
-        actions = List.of(input::up, input::down, input::left, input::right);
+        //actions = List.of(input::up, input::down, input::left, input::right);
         List<Runnable> actions_witout_up = List.of(input::down, input::down, input::left, input::right);
         List<Runnable> actions_witout_down = List.of(input::up, input::up, input::left, input::right);
         List<Runnable> actions_witout_left = List.of(input::up, input::down, input::right, input::right);
@@ -98,7 +99,7 @@ public class Fuzz{
 
             from.get(index).run();
             System.out.println("Action: " + from.get(index));
-            robot.delay(100);
+            robot.delay(10);
             index = random.nextInt(from.size());
         }
     }
@@ -106,7 +107,6 @@ public class Fuzz{
         Fuzz f = new Fuzz();
         f.actiontest(100);
         //f.randomKeys(100);
-
     }
     @Test
     public void test1() throws AWTException {

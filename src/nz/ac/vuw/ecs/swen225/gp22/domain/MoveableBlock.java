@@ -13,7 +13,6 @@ public class MoveableBlock extends MovingEntity {
 	}
 	@Override
 	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
-		//throw new Error("Code not done!");    //TODO
 		return move(d);
 	}
 	@Override
@@ -26,6 +25,6 @@ public class MoveableBlock extends MovingEntity {
 	}
 
 	public String toString() {
-		return "n";
+		return "b";
 	}
 }

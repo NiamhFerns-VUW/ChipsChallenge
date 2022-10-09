@@ -22,11 +22,13 @@ public class Cell {
 		entities = new ArrayList<Entity>();
 	}
 	public boolean beforeMoveInto(MovingEntity e, Direction d) {
-		return storedTile.onMoveInto(e, d, this) && entities.stream().allMatch(a -> a.interactBefore(e, d, this));
+		return storedTile.onMoveInto(e, d, this) &&
+				entities.stream().allMatch(a -> a.interactBefore(e, d, this));
 	}
 
 	public boolean afterMoveInto(MovingEntity e, Direction d) {
-		return entities.stream().allMatch(a -> a.interactAfter(e, d, this));
+		return storedTile.afterMoveInto(e, d, this) &&
+				entities.stream().allMatch(a -> a.interactAfter(e, d, this));
 	}
 	
 	public FreeTile getStoredTile() {

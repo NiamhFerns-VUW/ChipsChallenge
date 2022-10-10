@@ -20,7 +20,8 @@ public class Fuzz{
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,
-            KeyEvent.VK_RIGHT );
+            KeyEvent.VK_RIGHT);
+
     // actions to be performed
     //private List<Runnable> actions = List.of();
 
@@ -106,6 +107,10 @@ public class Fuzz{
             index = random.nextInt(from.size());
         }
     }
+    /**
+     * This method tests the clock
+     * @throws IllegalStateException
+     */
     public void testClock() throws IllegalStateException {
         if(GameClock.get().currentLevelTime() < 0) {
             throw new IllegalStateException("Time is negative");

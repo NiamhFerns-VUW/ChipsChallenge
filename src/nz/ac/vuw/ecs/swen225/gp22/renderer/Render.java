@@ -36,9 +36,6 @@ public class Render extends JPanel {
         if(cells2){
             cells = this.domain.getLevel().get().cells;
 
-        GameSave gameSave = Persistency.loadGameSave(Path.of("./src/levels/level1.xml"));
-        Cell[][] cells3 = gameSave.getCells();
-
         int tileSize = getHeight()/cells.length;
 
         for(int i=0; i < cells.length; i++){
@@ -78,17 +75,19 @@ public class Render extends JPanel {
                     for(int k=0; k<c.getEntities().size(); k++){
                         if(entities.get(k).getClass().equals(Chip.class)){
                             g.drawImage(Img.Chip.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
-
                         }
                         if(entities.get(k).getClass().equals(Key.class)) {
                             Key key = (Key) entities.get(k);
-
                             switch (key.keyColour) {
                                 case "Blue" -> g.drawImage(Img.Bluekey.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                                 case "Green" -> g.drawImage(Img.Greenkey.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                                 case "Yellow" -> g.drawImage(Img.Yellowkey.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                                 case "Red" -> g.drawImage(Img.Redkey.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                             }
+                        }
+                        if(entities.get(k).getClass().equals(Treasure.class)){
+                            g.drawImage(Img.Treasure.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
+
                         }
                     }
                 }

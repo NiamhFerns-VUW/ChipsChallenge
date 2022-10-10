@@ -27,12 +27,17 @@ public class CustomMonsterProvider extends CustomMonster {
     }
 
     @Override
-    Map<Direction, Path> getDirectionPathMap() {
+    public Path getAssociatedLevelPath() {
+        return Path.of("./levels/level2.xml");
+    }
+
+    @Override
+    public Map<Direction, Path> getDirectionPathMap() {
         return null;
     }
 
     @Override
-    List<Direction> getDirectionList() {
+    public List<Direction> getDirectionList() {
         return List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down);
     }
 }

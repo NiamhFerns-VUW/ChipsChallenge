@@ -1,34 +1,22 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Chip;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.CustomMonster;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.CustomMonsterProvider;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.FileHandler;
-import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.LevelMaps;
+import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.CustomMonster;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.CustomMonsterProvider;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.DefaultCustomMonsterProvider;
 import org.dom4j.Document;
 
 public class Persistency {
@@ -47,6 +35,62 @@ public class Persistency {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Like loadGameSave except we look for custom MonsterProviders and replace them with either default impl
+     * or impl in jar.
+     * @param levelPath
+     * @return
+     */
+    public static GameSave loadLevel(Path levelPath) {
+        GameSave gameSave = loadGameSave(levelPath);
+        ServiceLoader<CustomMonster> loader = ServiceLoader.load(CustomMonster.class);
+
+        // Looking for service providers
+        Optional<Provider<CustomMonster>> any = loader.stream().filter(e -> {
+            CustomMonster customMonster = e.get();
+            CustomMonsterProvider cm = (CustomMonsterProvider) customMonster;
+            // check that customMonster has same level path
+            Path associatedLevelPath = cm.getAssociatedLevelPath();
+            return associatedLevelPath.toString().equals(levelPath.toString());
+        }).findAny();
+        // TODO refactor as not very dry.
+        // found service provider
+        if (any.isPresent()) {
+            Provider<CustomMonster> customMonsterProvider = any.get();
+            // finding CustomMonster in entities and replacing with implementation from service loader
+            Map<Coord, Cell> cellMap = gameSave.getCellMap();
+            cellMap.keySet()
+                    .forEach(coord->{
+                        Cell cell = cellMap.get(coord);
+                        List<Entity> origEntities = cell.getEntities();
+                        List<Entity> customMonsterProviders = origEntities.stream()
+                            .filter(e -> e instanceof MovingEntity && e.getClass().getSimpleName().equals("CustomMonsterProvider")).toList();
+                        customMonsterProviders.forEach(e->{
+                            origEntities.set(origEntities.indexOf(e),customMonsterProvider.get());
+                        });
+                        cell.setEntities(origEntities);
+                    });
+            gameSave.setCellMap(cellMap);
+        }
+        // didn't find service provider
+        else {
+            Map<Coord, Cell> cellMap = gameSave.getCellMap();
+            cellMap.keySet()
+                .forEach(coord->{
+                    Cell cell = cellMap.get(coord);
+                    List<Entity> origEntities = cell.getEntities();
+                    List<Entity> customMonsterProviders = origEntities.stream()
+                        .filter(e -> e instanceof MovingEntity && e.getClass().getSimpleName().equals("CustomMonsterProvider")).toList();
+                    customMonsterProviders.forEach(e->{
+                        origEntities.set(origEntities.indexOf(e), new DefaultCustomMonsterProvider());
+                    });
+                    cell.setEntities(origEntities);
+                });
+            gameSave.setCellMap(cellMap);
+        }
+        return gameSave;
     }
 
     /**

@@ -1,22 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.nio.file.Path;
 
 /**
  * The MovingEntity is for Entities that can move outside of the cell they're in, such as
  * Chip moving or a block being pushed.
  */
 public abstract class MovingEntity implements Entity {
-
-//	private String name = "MovingEntity";
-//
-//	public String getName() {
-//		return name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
 
 	private Direction facingDir;
 	public Coord coords;

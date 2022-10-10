@@ -8,7 +8,10 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
 
 public abstract class CustomMonster extends MovingEntity {
 
-    abstract Map<Direction,Path> getDirectionPathMap();
-    abstract List<Direction> getDirectionList();
+    public CustomMonster() {
+    }
+    public abstract Path getAssociatedLevelPath();
+    public abstract Map<Direction,Path> getDirectionPathMap();
+    public abstract List<Direction> getDirectionList();
 
 }

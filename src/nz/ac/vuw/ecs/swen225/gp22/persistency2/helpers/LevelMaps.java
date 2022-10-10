@@ -28,26 +28,6 @@ public class LevelMaps {
     final static int LEVEL_HEIGHT = 20;
     final static int LEVEL_WIDTH = 20;
 
-    public static Map<Coord,Cell> getTestMap() {
-        HashMap<Coord,Cell> testMap = new HashMap<>();
-        testMap.put(new Coord(0,0),new Cell(
-            new FreeTile(),
-            new ArrayList<>(List.of())
-        ));
-        testMap.put(new Coord(0,1),new Cell(
-            new FreeTile(),
-            new ArrayList<>(List.of())
-        ));
-        testMap.put(new Coord(1,0),new Cell(
-            new FreeTile(),
-            new ArrayList<>(List.of())
-        ));
-        testMap.put(new Coord(1,1),new Cell(
-            new FreeTile(),
-            new ArrayList<>(List.of())
-        ));
-        return testMap;
-    }
     public static Map<Coord, Cell> getMap1() {
         HashMap<Coord, Cell> level1map = new HashMap<>();
         // --------------------------------------------

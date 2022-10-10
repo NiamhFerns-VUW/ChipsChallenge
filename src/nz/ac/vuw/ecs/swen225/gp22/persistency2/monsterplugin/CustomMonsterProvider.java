@@ -1,35 +1,14 @@
-package nz.ac.vuw.ecs.swen225.gp22.persistency;
+package nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chip;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
 
 public class CustomMonsterProvider extends CustomMonster {
-
-    private String customMonsterName;
-
-    public CustomMonsterProvider(Direction facingDir, Coord coords) {
-        this.setFacingDir(facingDir);
-        this.coords = coords;
-    }
-    public CustomMonsterProvider(String customMonsterName) {
-        this.customMonsterName = customMonsterName;
-    }
-    public CustomMonsterProvider() {
-    }
-
-    public String getCustomMonsterName() {
-        return customMonsterName;
-    }
-
-    public void setCustomMonsterName(String customMonsterName) {
-        this.customMonsterName = customMonsterName;
-    }
 
     @Override
     public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {

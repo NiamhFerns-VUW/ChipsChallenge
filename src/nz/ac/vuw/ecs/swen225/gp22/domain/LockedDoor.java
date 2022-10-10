@@ -4,7 +4,15 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  * Blocks movement until it is unlocked by Chip with a Key of the same colour.
  */
 public class LockedDoor extends FreeTile {
-	public String lockColour;
+	private String lockColour;
+
+	public String getLockColour() {
+		return lockColour;
+	}
+
+	public void setLockColour(String lockColour) {
+		this.lockColour = lockColour;
+	}
 
 	public LockedDoor() {
 		this.lockColour = "";

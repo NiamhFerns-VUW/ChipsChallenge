@@ -62,7 +62,7 @@ public class Render extends JPanel {
                 }
                 else if(c.getStoredTile().getClass().equals(LockedDoor.class)){
                     LockedDoor ld = ((LockedDoor) c.getStoredTile());
-                    switch (ld.lockColour) {
+                    switch (ld.getLockColour()) {
                         case "Blue" ->
                                 g.drawImage(Img.BlueLockeddoor.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                         case "Green" ->

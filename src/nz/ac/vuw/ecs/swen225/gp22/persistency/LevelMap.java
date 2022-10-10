@@ -2324,7 +2324,7 @@ public class LevelMap {
         ));
         level2map.put(new Coord(7,5),new Cell(
             new FreeTile(),
-            new ArrayList<>(List.of(new CustomMonsterProvider()))
+            new ArrayList<>(List.of(new CustomMonsterProvider("customMonsterProviderName")))
         ));
         level2map.put(new Coord(8,5),new Cell(
             new Wall(),

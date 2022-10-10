@@ -1,10 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 
 /**
  * The level keeps track of the board, Chip, Chip's inventory, and the remaining treasures to be picked up.
  */
+@JsonIgnoreProperties
 public class Level {
 	private long remainingTreasures;
 	public final Cell[][] cells;
@@ -22,6 +25,10 @@ public class Level {
 		this.cells = cells;
 		this.player = player;
 		this.inventory = inventory;
+	}
+	public Level() {
+		this.cells = null;
+		this.player = null;
 	}
 	
 	public long getRemainingTreasures() {

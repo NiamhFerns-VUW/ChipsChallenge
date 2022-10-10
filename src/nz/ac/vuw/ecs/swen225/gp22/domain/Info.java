@@ -8,6 +8,14 @@ public class Info extends FreeTile {
 	public Info(String infoText) {
 		this.infoText = infoText;
 	}
+	public String getInfoText() {
+		return infoText;
+	}
+
+	public void setInfoText(String infoText) {
+		this.infoText = infoText;
+	}
+
 	public Info() {
 		this.infoText = "";
 	}

@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.GameSave;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
@@ -15,52 +14,48 @@ import java.util.List;
 
 import static java.lang.System.exit;
 
+/**
+ * Represents the games start screen and holds the various actions that can be performed before beginning a game.
+ *
+ * @author niamh
+ */
 class StartScreen implements GameState, ActionListener {
-    private final String levelName;
-
     private List<JButton> buttons;
 
-    @Override
-    public String levelName() {
-        return levelName;
-    }
-
-    @Override
-    public Runnable action(Domain d) {
-        return () -> {};
-    }
-
+    /**
+     * Build and return the start screen as a single panel.
+     * @return returns a list containing a single panel holding the menu options.
+     *
+     * @author niamh
+     */
     @Override
     public List<JPanel> panels() {
-        JPanel menuframe = new JPanel() {
-            @Override
-            public void paintComponent(Graphics g) {
-//                g.setColor(Color.GRAY);
-//                g.fillRect(0, 0, getWidth(), getHeight());
-            }
-        };
+        JPanel menuframe = new JPanel();
 
+        // Menu frame settings.
         menuframe.setLayout(null);
         menuframe.setFocusable(false);
         menuframe.setSize(new Dimension(640, 480));
 
+        // Button to start the game.
         JButton startGame = new JButton();
         startGame.setBounds(220, 100, 200, 50);
-        startGame.addActionListener(l -> GameHandler.get().onLevelChange());
         startGame.setText("Start Game");
+        startGame.addActionListener(l -> GameHandler.get().onLevelChange());
 
+        // Button to load a save.
         JButton loadGame = new JButton();
         loadGame.setBounds(220, 175, 200, 50);
+        loadGame.setText("Load Game");
         loadGame.addActionListener(l -> {
             GameSave save = Persistency.loadGameSave(Path.of("./src/levels/level1.xml"));
-            System.out.println(save.getClass().getSimpleName());
         });
-        loadGame.setText("Load Game");
 
+        // Button to quit.
         JButton quitGame = new JButton();
         quitGame.setBounds(220, 250, 200, 50);
-        quitGame.addActionListener(l -> exit(0));
         quitGame.setText("Quit Game");
+        quitGame.addActionListener(l -> exit(0));
 
         buttons = List.of(startGame, loadGame, quitGame);
 
@@ -69,14 +64,22 @@ class StartScreen implements GameState, ActionListener {
         return List.of(menuframe);
     }
 
-    public StartScreen(String levelName) {
-        this.levelName = levelName;
+    /**
+     * Basic constructor to set field defaults.
+     */
+    public StartScreen() {
         buttons = new ArrayList<>();
     }
 
+    /**
+     * Holds the next level to be started.
+     * @return the following level in order.
+     *
+     * @author niamh
+     */
     @Override
     public GameState nextLevel() {
-        return new LevelOne("Level One", new Render());
+        return new Level("Level 1", GameHandler.get().getDomain(), new Render());
     }
 
     @Override

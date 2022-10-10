@@ -8,4 +8,8 @@ public class ExitLock extends FreeTile {
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		return false;
 	}
+
+	public String toString() {
+		return "L";
+	}
 }

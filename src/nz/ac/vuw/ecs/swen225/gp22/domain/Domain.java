@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * The domain class is the part of the domain package the other packages interact with.
@@ -17,20 +18,28 @@ public class Domain {
 	Persistency persist = new Persistency();
 	
 	public void update() {
-		System.out.println("Domain recieved update!");
+		//System.out.println("Domain recieved update!");
 
 		if (!ok()) throw new Error("No current level to update.");
 
 		//throw new Error("Code not done!");	//TODO
 	}
-	
+
+	/**
+	 * startLevel takes a file path, asks Persistency for the corresponding level, and then converts the
+	 * resulting GameSave into a useable level using createLevel
+	 *
+	 * @param levelname - the path to the level
+	 */
 	public void startLevel(String levelname) {
 		System.out.println("Domain starting level '" + levelname + "'!");
 		//GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
-		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));
+		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));	// TODO: change to proper name
 
 		Cell[][] cells = save.getCells();
-
+		createLevel(cells, (ArrayList<Entity>) save.getInventory());
+	}
+	public void createLevel(Cell[][] cells, ArrayList<Entity> inventory) {
 		long remainingTreasures = Arrays.stream(cells)
 				.flatMap(cArray-> Arrays.stream(cArray))
 				.flatMap(c->c.getEntities().stream())
@@ -42,20 +51,28 @@ public class Domain {
 				.flatMap(c->c.getEntities().stream())
 				.filter(e -> e instanceof Chip)
 				.map(e -> (Chip) e)
-				.findFirst();
+				.reduce((c1, c2)->{throw new Error("Too many Chips in level!");});
 
+		IntStream.range(0, cells.length)
+				.forEach((y)->{
+					IntStream.range(0, cells[y].length)
+							.forEach((x)->{
+								cells[y][x].getEntities().stream()
+										.filter(e -> e instanceof MovingEntity)
+										.map(e -> (MovingEntity) e)
+										.forEach(m -> m.coords = new Coord(y, x));
+							});
+				});
 
 		if (player.isEmpty()) { throw new Error("No Chip in level!"); }
 
-		currentLevel = new Level(remainingTreasures, cells, player.get(), (ArrayList<Entity>) save.getInventory());
+		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory);
 
 		player.get().setLevel(currentLevel);
-
-		//throw new Error("Code not done!");	//TODO
 	}
 
 	public void movePlayer(Direction dir) {
-		System.out.println("Domain moving player in direction " + dir + "!");
+		//System.out.println("Domain moving player in direction " + dir + "!");
 
 		if (!ok()) throw new Error("No current level for moving player.");
 
@@ -63,7 +80,6 @@ public class Domain {
 	}
 
 	public boolean ok() {
-		System.out.println(currentLevel == null);
 		return currentLevel != null;
 	}
 	

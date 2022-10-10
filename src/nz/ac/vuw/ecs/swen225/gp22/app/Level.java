@@ -7,12 +7,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-record LevelOne(String levelName, Render gameplayPanel) implements GameState {
-    @Override
-    public Runnable action(Domain d) {
-        return d::update;
-    }
+// ------------------------------------------------
+// NEEDS MAJOR REFACTORING TO REMOVE DUPLICATE CODE
+// You should not need an interface here. A single
+// record called "Level" should be enough.
+// ------------------------------------------------
 
+/**
+ * Represents level one of chip's challenge.
+ *
+ * @author niamh
+ */
+record Level(String levelName, Domain domain, Render gameplayPanel) implements GameState {
     @Override
     public List<JPanel> panels() {
         JPanel timerPanel = new JPanel() {
@@ -20,11 +26,16 @@ record LevelOne(String levelName, Render gameplayPanel) implements GameState {
             public void paintComponent(Graphics g) {
                 g.setColor(Color.GRAY);
                 g.fillRect(0, 0, getWidth(), getHeight());
+
+                g.setColor(Color.GREEN);
+                g.drawString(levelName, 20, getHeight() / 2);
+                g.drawString(GameClock.get().currentLevelTime() / 1000 + "", getWidth() / 2, getHeight() / 2);
+                g.drawString("Chips Level: " + 0, getWidth() - 100, getHeight() / 2);
             }
         };
-
         timerPanel.setMaximumSize(new Dimension(640, 75));
         timerPanel.setFocusable(false);
+
         gameplayPanel.setMaximumSize(new Dimension(640, 405));
         gameplayPanel.setFocusable(false);
         return List.of(timerPanel, gameplayPanel);
@@ -32,23 +43,6 @@ record LevelOne(String levelName, Render gameplayPanel) implements GameState {
 
     @Override
     public GameState nextLevel() {
-        return new LevelTwo("Level Two");
-    }
-}
-
-record LevelTwo(String levelName) implements GameState {
-    @Override
-    public Runnable action(Domain d) {
-        return d::update;
-    }
-
-    @Override
-    public List<JPanel> panels() {
-        return null;
-    }
-
-    @Override
-    public GameState nextLevel() {
-        return null;
+        return new Level("Level2", domain, new Render());
     }
 }

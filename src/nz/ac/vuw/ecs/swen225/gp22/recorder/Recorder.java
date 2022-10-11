@@ -5,8 +5,13 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
+
 
 public class Recorder {
 
@@ -131,23 +136,39 @@ public class Recorder {
      * @author Santino Gaeta
      */
     public void saveRecording(){
-        Stack<Step> gameHistory = new Stack<>();
+        if(currentRecording.size() == 0){return;}       //For changing from micro to Main State in App
+
+        //Convert using Persistency from ArrayList<Step> to Xml - returns XmlFile
+        //Save file to folder or Recordings/Level folder
+
+        Stack<Step> gameHistory = new Stack<>();                                //From Here
         for(int i = currentRecording.size()-1; i >= 0; i--){
             gameHistory.push(currentRecording.get(i));
         }
-        recordings.add(gameHistory);
-        //System.out.println(currentLevel+" recorded and saved.");
+        recordings.add(gameHistory);                                            //To here should be able to delete
+        //System.out.println(currentLevel+" recorded and saved."); //For Testing
+
         reset();
     }
 
     /**
-     *  For IntegrationDay will only pull the first Recording from the List
-     * @return Replayer  - automatically plays the Stack of all the moves from the recorded level
+     *  loadRecording brings up a file picker for the user to choose which recording to laod
+     *  The file choosen gets sent to Persistency to be converted into a Stack<Step>
+     *
+     * @return Replayer  - initialised with Stack from converted xmlFile using Persistency classes
      *
      * @author Santino Gaeta
      */
-    public Replayer loadRecording(){
-        return new Replayer(recordings.get(0));
+    public static Replayer loadRecording(){
+        JFileChooser jfc = new JFileChooser("./src/levels/");
+        jfc.setDialogTitle("Select XmlFile of Recording to Replay");
+        jfc.setFileFilter(new FileNameExtensionFilter("Extensible Markup Language", "xml"));
+        int check = jfc.showOpenDialog(null);
+        File xmlFile = new File("./src/levels/"); //just to initialise
+        if(check == JFileChooser.APPROVE_OPTION) {
+            xmlFile = jfc.getSelectedFile();
+        }
+        return new Replayer(Persistency.convertXmltoHistoryStack(xmlFile)); //Not implemented in Persistency yet
     }
 
     /**

@@ -1,5 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+import nz.ac.vuw.ecs.swen225.gp22.app.*;
+import java.util.Observer;
 import java.util.Stack;
 
 
@@ -20,6 +22,14 @@ public class Replayer {
         history = gameHistory;
         prev = new Stack<>();
     }
+
+    public void update(){
+
+    }
+
+
+
+
 
     /**
      * Automatic Replay

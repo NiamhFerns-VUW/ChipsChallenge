@@ -17,14 +17,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 	@Type(Pit.class),
 	@Type(LockedDoor.class) })
 public class FreeTile {
-//	private String name = "FreeTile";
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		return true;
 	}
-//	public String getName() {
-//		return name;
-//	}
-//	public void setName(String name) {
-//		this.name = name;
-//	}
 }

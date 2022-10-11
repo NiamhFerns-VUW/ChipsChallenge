@@ -4,45 +4,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Chip;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
-import nz.ac.vuw.ecs.swen225.gp22.domain.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Level;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.DefaultCustomMonsterProvider;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.GameSave.GameSaveDeserializer;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.GameSave.GameSaveSerializer;
-import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.LevelMaps;
 
 @JsonDeserialize(using = GameSaveDeserializer.class)
 @JsonSerialize(using = GameSaveSerializer.class)
@@ -87,6 +70,7 @@ public class GameSave {
     }
 
     public GameSave() {
+        this.inventory = List.of();
     }
 
     @Override

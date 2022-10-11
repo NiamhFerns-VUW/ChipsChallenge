@@ -48,11 +48,11 @@ public class Cell {
 		this.storedTile = storedTile;
 		entities = new ArrayList<Entity>();
 	}
-	public Cell(FreeTile storedTile, ArrayList<Entity> entities) {
+	public Cell(FreeTile storedTile, List<Entity> entities) {
 		this.storedTile = storedTile;
 		this.entities = entities;
 	}
-	public Cell(FreeTile storedTile, ArrayList<Entity> entities,Coord coord) {
+	public Cell(FreeTile storedTile, List<Entity> entities,Coord coord) {
 		this.storedTile = storedTile;
 		this.entities = entities;
 		this.coord = coord;

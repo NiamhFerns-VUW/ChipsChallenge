@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
 import java.util.Arrays;
 
 /**
@@ -28,10 +31,14 @@ public class Treasure implements Entity {
 	}
 	@Override
 	public int drawHierarchy() {
-		throw new Error("Code not done!");	//TODO
+		return 4;
 	}
 
 	public String toString() {
 		return "t";
+	}
+
+	public Image getImage() {
+		return Img.Treasure.image;
 	}
 }

@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,5 +51,11 @@ public class Teleporter extends FreeTile {
 
 	public String toString() {
 		return "T";
+	}
+
+	public Image getImage() {
+		throw new Error("No Teleporter image yet!");
+
+		//return Img.Freetile.image;
 	}
 }

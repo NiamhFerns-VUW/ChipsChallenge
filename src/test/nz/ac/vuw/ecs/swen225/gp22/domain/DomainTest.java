@@ -21,7 +21,7 @@ class DomainTest {
         Cell[][] cells = createTestCells(4,4);
         cells[2][2].getEntities().add(new Chip());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
         List<String> levelSlices = levelToStrings(dom.getLevel().get());
         List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
@@ -55,7 +55,7 @@ class DomainTest {
         cells[2][1].getEntities().add(new Treasure());
         cells[2][2].getEntities().add(new Chip());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
         List<String> levelSlices = levelToStrings(dom.getLevel().get());
         List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
@@ -94,7 +94,7 @@ class DomainTest {
         cells[3][2].setStoredTile(new ExitLock());
         cells[3][3].setStoredTile(new Teleporter());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
         List<String> levelSlices = levelToStrings(dom.getLevel().get());
         List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
@@ -125,7 +125,11 @@ class DomainTest {
     @Test
     void createLevel4() {
         Domain dom = new Domain();
-        dom.startLevel("./src/levels/level1.xml");
+<<<<<<< HEAD
+        dom.startLevel("level1",()->{}, ()->{});
+=======
+        dom.startLevel("level1", ()->{}, ()->{});
+>>>>>>> domain
 
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
         List<String> levelSlices = levelToStrings(dom.getLevel().get());
@@ -185,7 +189,7 @@ class DomainTest {
         Cell[][] cells = createTestCells(4,4);
         cells[2][2].getEntities().add(new Chip());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Up);
@@ -220,7 +224,7 @@ class DomainTest {
         Cell[][] cells = createTestCells(4,4);
         cells[1][1].getEntities().add(new Chip());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Down);
@@ -259,7 +263,7 @@ class DomainTest {
         cells[1][1].getEntities().add(new AntiHazard("Fire"));
         cells[1][2].getEntities().add(new Treasure());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Up);
@@ -302,7 +306,7 @@ class DomainTest {
 
         cells[2][2].getEntities().add(new MoveableBlock());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Down);
@@ -346,7 +350,7 @@ class DomainTest {
 
         cells[2][3].setStoredTile(new Pit());
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Down);
@@ -387,7 +391,7 @@ class DomainTest {
 
         cells[2][3].setStoredTile(new LockedDoor("Blue"));
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Down);
@@ -413,7 +417,6 @@ class DomainTest {
                         "|_|_|_|_|_|\n"+
                         "|_|_|_|_|_|");
         List<String> expectedInventory = new ArrayList<String>();
-        expectedInventory.add("k:Blue");
         int expectedTreasure = 0;
 
         assertEquals(expectedLevel, levelSlices);
@@ -432,7 +435,7 @@ class DomainTest {
 
         cells[2][3].setStoredTile(new LockedDoor("Blue"));
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Down);
@@ -459,7 +462,6 @@ class DomainTest {
                         "|_|_|_|_|_|");
         List<String> expectedInventory = new ArrayList<String>();
         expectedInventory.add("k:Blue");
-        expectedInventory.add("k:Blue");
         int expectedTreasure = 0;
 
         assertEquals(expectedLevel, levelSlices);
@@ -476,7 +478,7 @@ class DomainTest {
         cells[2][1].setStoredTile(new Teleporter("Blue"));
         cells[2][3].setStoredTile(new Teleporter("Blue"));
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Right);
@@ -518,7 +520,7 @@ class DomainTest {
         cells[1][2].setStoredTile(new Teleporter("Red"));
         cells[3][3].setStoredTile(new Teleporter("Red"));
 
-        dom.createLevel(cells, new ArrayList<Entity>());
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
 
         dom.movePlayer(Direction.Left);

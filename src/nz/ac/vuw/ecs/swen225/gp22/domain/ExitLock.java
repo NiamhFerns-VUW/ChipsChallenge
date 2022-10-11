@@ -10,7 +10,17 @@ import java.awt.*;
 public class ExitLock extends FreeTile {
 	@Override
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
+		if (e.level.getRemainingTreasures() == 0 && e instanceof Chip) return true;
+
 		return false;
+	}
+
+	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
+		if (!(e instanceof Chip) || e.level.getRemainingTreasures() != 0){
+			throw new Error("Only Chip can move onto exit locks when no treasures are left!");
+		}
+		myCell.setStoredTile(new FreeTile());
+		return true;
 	}
 
 	public String toString() {

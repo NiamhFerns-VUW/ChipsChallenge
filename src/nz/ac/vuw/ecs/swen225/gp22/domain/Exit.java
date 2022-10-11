@@ -11,8 +11,13 @@ public class Exit extends FreeTile {
     public String toString() {
         return "E";
     }
-
     public Image getImage() {
         return Img.Exittile.image;
+    }
+
+    @Override
+    public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
+        if (e instanceof Chip) e.level.onWin.run();
+        return true;
     }
 }

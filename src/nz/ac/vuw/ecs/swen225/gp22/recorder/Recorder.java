@@ -1,14 +1,37 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -138,14 +161,10 @@ public class Recorder {
     public void saveRecording(){
         if(currentRecording.size() == 0){return;}       //For changing from micro to Main State in App
 
+        saveStepArrayListToXml(currentRecording);
         //Convert using Persistency from ArrayList<Step> to Xml - returns XmlFile
         //Save file to folder or Recordings/Level folder
-
-        Stack<Step> gameHistory = new Stack<>();                                //From Here
-        for(int i = currentRecording.size()-1; i >= 0; i--){
-            gameHistory.push(currentRecording.get(i));
-        }
-        recordings.add(gameHistory);                                            //To here should be able to delete
+        
         //System.out.println(currentLevel+" recorded and saved."); //For Testing
 
         reset();
@@ -168,7 +187,8 @@ public class Recorder {
         if(check == JFileChooser.APPROVE_OPTION) {
             xmlFile = jfc.getSelectedFile();
         }
-        return new Replayer(Persistency.convertXmltoHistoryStack(xmlFile)); //Not implemented in Persistency yet
+        //TODO implement this method into Persistency?
+        return new Replayer(convertXmlToHistoryStack(xmlFile)); //Not implemented in Persistency yet
     }
 
     /**
@@ -189,4 +209,39 @@ public class Recorder {
         return recordings;
     }
 
+
+
+
+    public void saveStepArrayListToXml(ArrayList<Step> chipMoves){
+        XmlMapper mapper = new XmlMapper();
+        try{
+            mapper.writeValue(new File("./src/levels/levelOneRec.xml"), chipMoves);
+        }catch(IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    public static Stack<Step> convertXmlToHistoryStack(File xmlFile){
+        XmlMapper mapper = new XmlMapper();
+        try{
+            InputStream input = new FileInputStream(xmlFile);
+            TypeReference<ArrayList<Step>> step = new TypeReference<ArrayList<Step>>(){};
+            ArrayList<Step> chipHistory = mapper.readValue(input, step);
+            Stack<Step> history = new Stack<>();
+            for(int i = chipHistory.size()-1; i >= 0; i--){
+                history.push(chipHistory.get(i));
+            }
+            return history;
+        }catch(IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
 }
+

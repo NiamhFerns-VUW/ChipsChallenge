@@ -39,18 +39,18 @@ public class Replayer {
      * @author Santino Gaeta
      */
     public void autoReplay(){
-        int count = 0;
+        //int count = 0;
         while(!history.isEmpty() && autoReplayState){
             //if(count == 6){this.stepByStep(); System.out.println("Starting some StepBystep"); break;} //Used for TESTING
-            Step currentStep = history.pop();
-            prev.push(currentStep);
             //count++;              //Used for TESTING
-            System.out.println(currentStep.replayerToString());
+            //System.out.println(currentStep.replayerToString());
             try {
                 Thread.sleep(2000/replaySpeed);
             } catch (InterruptedException e) {
                 System.out.println("InterruptedException Exception" + e.getMessage());
             }
+            Step currentStep = history.pop();
+            prev.push(currentStep);
         }
     }
 

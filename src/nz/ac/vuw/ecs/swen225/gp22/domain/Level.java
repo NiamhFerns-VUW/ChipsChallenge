@@ -11,11 +11,17 @@ public class Level {
 	private ArrayList<Entity> inventory;
 	public final Chip player;
 
-	public Level(long remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory) {
+	public final Runnable onWin;
+	public final Runnable onDeath;
+
+	public Level(long remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory,
+				 Runnable onWin, Runnable onDeath) {
 		this.remainingTreasures = remainingTreasures;
 		this.cells = cells;
 		this.player = player;
 		this.inventory = inventory;
+		this.onWin = onWin;
+		this.onDeath = onDeath;
 	}
 	
 	public long getRemainingTreasures() {

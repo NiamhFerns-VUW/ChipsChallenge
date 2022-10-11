@@ -17,7 +17,16 @@ public class Hazard extends FreeTile {
 	}
 	@Override
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
-		throw new Error("Code not done!");	//TODO
+		return true;
+	}
+
+	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
+		if (e instanceof Chip) {
+			e.level.onDeath.run();
+			return false;
+		}
+
+		return true;
 	}
 
 	public String toString() {

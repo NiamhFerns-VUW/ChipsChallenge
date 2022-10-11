@@ -10,13 +10,7 @@ public class Level {
 	public final Cell[][] cells;
 	private ArrayList<Entity> inventory;
 	public final Chip player;
-	
-	public Level(long remainingTreasures, Cell[][] cells, Chip player) {
-		this.remainingTreasures = remainingTreasures;
-		this.cells = cells;
-		this.player = player;
-		this.inventory = new ArrayList<Entity>();
-	}
+
 	public Level(long remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory) {
 		this.remainingTreasures = remainingTreasures;
 		this.cells = cells;

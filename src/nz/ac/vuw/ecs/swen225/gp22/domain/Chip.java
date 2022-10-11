@@ -5,7 +5,7 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  */
 public class Chip extends MovingEntity {
 	public Chip(){
-		super(Direction.Down, new Coord(7,8));	// TODO: un-hardcode chip coords
+		super(Direction.Down, new Coord(-1,-1));
 	}
 	public Chip(Direction facingDir, Coord c){
 		super(facingDir, c);

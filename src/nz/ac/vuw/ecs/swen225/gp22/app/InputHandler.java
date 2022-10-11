@@ -17,8 +17,12 @@ import java.util.HashMap;
 class InputHandler implements KeyListener {
     private final Domain domain;
     private final Recorder recorder;
+    private HashMap<Integer, Runnable> currentPressedMap;
+    private HashMap<Integer, Runnable> currentReleasedMap;
     private final HashMap<Integer, Runnable> pressed;
     private final HashMap<Integer, Runnable> released;
+    private final HashMap<Integer, Runnable> alternatePressed;
+    private final HashMap<Integer, Runnable> alternateReleased;
 
     /**
      * Sets up an InputHandler and ties it to an instance of domain and recorder.
@@ -32,11 +36,15 @@ class InputHandler implements KeyListener {
         this.recorder = recorder;
         pressed = new HashMap<>();
         released = new HashMap<>();
+        alternatePressed= new HashMap<>();
+        alternateReleased = new HashMap<>();
 
+        currentPressedMap = pressed;
+        currentReleasedMap = released;
     }
 
     /**
-     * Command callable by other classes to add a binding and its pressed and released functionality to the relevant map.
+     * Command callable by other classes to add a binding and its pressed and released functionality to the relevant default map.
      * @param key an integer code representing a key both in the maps and on the keyboard.
      * @param pressed a Runnable lambda or class method passed as the functionality on pressing a key.
      * @param released a Runnable lambda or class method passed as the functionality on releasing a key.
@@ -46,6 +54,19 @@ class InputHandler implements KeyListener {
     protected void addBinding(Integer key, Runnable pressed, Runnable released) {
         this.pressed.put(key, pressed);
         this.released.put(key, released);
+    }
+
+    /**
+     * Command callable by other classes to add a binding and its pressed and released functionality to the relevant alternate map.
+     * @param key an integer code representing a key both in the maps and on the keyboard.
+     * @param pressed a Runnable lambda or class method passed as the functionality on pressing a key.
+     * @param released a Runnable lambda or class method passed as the functionality on releasing a key.
+     *
+     * @author niamh
+     */
+    protected void addAlternateBinding(Integer key, Runnable pressed, Runnable released) {
+        this.alternatePressed.put(key, pressed);
+        this.alternateReleased.put(key, released);
     }
 
     /**
@@ -86,6 +107,58 @@ class InputHandler implements KeyListener {
     protected void mvRight() {
         domain.movePlayer(Direction.Right);
         recorder.right();
+    }
+
+    /**
+     * Sets the InputHandler to expect an alternate control with the control key modifier.
+     *
+     * @author niamh
+     */
+    protected void setAlternateControls() {
+        currentPressedMap = alternatePressed;
+        currentReleasedMap = alternateReleased;
+    }
+
+    /**
+     * Sets the InputHandler to expect standard controls without the control key modifier.
+     *
+     * @author niamh
+     */
+    protected void unsetAlternateControls() {
+        currentPressedMap = pressed;
+        currentReleasedMap = released;
+    }
+
+    /**
+     * Sets the InputHandler to expect standard controls without the control key modifier.
+     *
+     * @author niamh
+     */
+    protected void saveGame() {
+    }
+
+    /**
+     * Sets the InputHandler to expect standard controls without the control key modifier.
+     *
+     * @author niamh
+     */
+    protected void exitGame() {
+    }
+
+    /**
+     * Sets the InputHandler to expect standard controls without the control key modifier.
+     *
+     * @author niamh
+     */
+    protected void skipToLevel1() {
+    }
+
+    /**
+     * Sets the InputHandler to expect standard controls without the control key modifier.
+     *
+     * @author niamh
+     */
+    protected void skipToLevel2() {
     }
 
     /**

@@ -32,7 +32,7 @@ class Viewport extends JFrame implements Observer {
         setVisible(true);
         setFocusable(true);
 
-        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
 
         addKeyListener(input);
 

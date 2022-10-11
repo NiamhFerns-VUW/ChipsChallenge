@@ -6,6 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -53,6 +54,9 @@ public class Domain {
 				.map(e -> (Chip) e)
 				.reduce((c1, c2)->{throw new Error("Too many Chips in level!");});
 
+
+		List<MovingEntity> movingEntityList = new ArrayList<>();
+
 		IntStream.range(0, cells.length)
 				.forEach((y)->{
 					IntStream.range(0, cells[y].length)
@@ -60,7 +64,10 @@ public class Domain {
 								cells[y][x].getEntities().stream()
 										.filter(e -> e instanceof MovingEntity)
 										.map(e -> (MovingEntity) e)
-										.forEach(m -> m.coords = new Coord(y, x));
+										.forEach(m -> {
+											m.coords = new Coord(y, x);
+											movingEntityList.add(m);
+											});
 							});
 				});
 
@@ -69,6 +76,8 @@ public class Domain {
 		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory);
 
 		player.get().setLevel(currentLevel);
+
+		movingEntityList.stream().forEach(m -> m.level = currentLevel);
 	}
 
 	public void movePlayer(Direction dir) {

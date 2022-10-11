@@ -164,7 +164,7 @@ public class Recorder {
         saveStepArrayListToXml(currentRecording);
         //Convert using Persistency from ArrayList<Step> to Xml - returns XmlFile
         //Save file to folder or Recordings/Level folder
-        
+
         //System.out.println(currentLevel+" recorded and saved."); //For Testing
 
         reset();

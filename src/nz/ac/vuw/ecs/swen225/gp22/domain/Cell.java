@@ -1,7 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Each Cell keeps track of the tile it is made up of and the entities on it.
@@ -42,6 +44,19 @@ public class Cell {
 	}
 	public void setEntities(ArrayList<Entity> entList) {
 		entities = entList;
+	}
+
+	public Optional<Image> getImage() {
+		Optional<Entity> entity = entities.stream().reduce((a, b)->{
+			return a.drawHierarchy() < b.drawHierarchy() ? a : b;
+		});
+
+		if (entity.isEmpty()) return Optional.empty();
+		return Optional.of(entity.get().getImage());
+	}
+
+	public Image getTileImage() {
+		return storedTile.getImage();
 	}
 
 	public void removeEntity(Entity e) {

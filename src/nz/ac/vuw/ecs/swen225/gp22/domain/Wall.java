@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
+
 /**
  * The FreeTile is a basic tile that prevents movement onto it.
  */
@@ -11,5 +15,9 @@ public class Wall extends FreeTile {
 
 	public String toString() {
 		return "W";
+	}
+
+	public Image getImage() {
+		return Img.Walltile.image;
 	}
 }

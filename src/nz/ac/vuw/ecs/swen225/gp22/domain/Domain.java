@@ -32,14 +32,14 @@ public class Domain {
 	 *
 	 * @param levelname - the path to the level
 	 */
-	public void startLevel(String levelname) {
+	public void startLevel(String levelname, Runnable onWin, Runnable onDeath) {
 		//GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
 		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));	// TODO: change to proper name
 
 		Cell[][] cells = save.getCells();
-		createLevel(cells, (ArrayList<Entity>) save.getInventory());
+		createLevel(cells, (ArrayList<Entity>) save.getInventory(), onWin, onDeath);
 	}
-	public void createLevel(Cell[][] cells, ArrayList<Entity> inventory) {
+	public void createLevel(Cell[][] cells, ArrayList<Entity> inventory, Runnable onWin, Runnable onDeath) {
 		long remainingTreasures = Arrays.stream(cells)
 				.flatMap(cArray-> Arrays.stream(cArray))
 				.flatMap(c->c.getEntities().stream())
@@ -72,7 +72,7 @@ public class Domain {
 
 		if (player.isEmpty()) { throw new Error("No Chip in level!"); }
 
-		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory);
+		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory, onWin, onDeath);
 
 		player.get().setLevel(currentLevel);
 

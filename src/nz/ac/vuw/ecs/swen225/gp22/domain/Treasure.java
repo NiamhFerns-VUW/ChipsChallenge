@@ -20,13 +20,6 @@ public class Treasure implements Entity {
 		myCell.removeEntity(this);
 		e.level.setRemainingTreasures(e.level.getRemainingTreasures()-1);
 
-		if (e.level.getRemainingTreasures() == 0) {	// if there are no more treasures left, the ExitLocks disappear
-			Arrays.stream(e.level.cells)
-					.flatMap(cl-> Arrays.stream(cl))
-					.filter(cell->cell.getStoredTile() instanceof ExitLock)
-					.forEach(cell->cell.setStoredTile(new FreeTile()));
-		}
-
 		return true;
 	}
 	@Override

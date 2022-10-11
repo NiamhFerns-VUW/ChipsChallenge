@@ -17,7 +17,11 @@ public class Pit extends FreeTile{
 
 	@Override
 	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
-		if (!(e instanceof MoveableBlock)) throw new Error("Only MoveableBlocks can move onto pits!");
+		if (e instanceof Chip) {
+			e.level.onDeath.run();
+			return false;
+		}
+		else if (!(e instanceof MoveableBlock)) throw new Error("Only MoveableBlocks can move onto pits!");
 
 		myCell.removeEntity(e);
 		myCell.setStoredTile(new FreeTile());

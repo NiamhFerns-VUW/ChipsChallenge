@@ -31,4 +31,7 @@ public class Treasure implements Entity {
 		throw new Error("Code not done!");	//TODO
 	}
 
+	public String toString() {
+		return "t";
+	}
 }

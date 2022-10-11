@@ -1,3 +1,6 @@
+/**
+ * @author Micky Snadden
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -89,11 +92,22 @@ public class GameSave {
         protected GameSaveSerializer(Class<GameSave> t) {
             super(t);
         }
+
+        /**
+         * GameSaveSerializer constructor.
+         */
         public GameSaveSerializer() {
             this(null);
         }
 
 
+        /**
+         *
+         * @param gameSave
+         * @param jsonGenerator
+         * @param serializerProvider
+         * @throws IOException
+         */
         @Override
         public void serialize(GameSave gameSave, JsonGenerator jsonGenerator,
             SerializerProvider serializerProvider) throws IOException {
@@ -132,19 +146,36 @@ public class GameSave {
         }
     }
 
+    /**
+     *
+     */
     public static class GameSaveDeserializer extends StdDeserializer<GameSave> {
 
+        /**
+         *
+         */
         public GameSaveDeserializer() {
             this(null);
         }
 
+        /**
+         *
+         * @param vc
+         */
         public GameSaveDeserializer(Class<?> vc) {
             super(vc);
         }
 
+        /**
+         *
+         * @param jp
+         * @param ctxt
+         * @return
+         * @throws IOException
+         */
         @Override
         public GameSave deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+            throws IOException {
             GameSave gameSave = new GameSave();
             XmlMapper mapper = new XmlMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -156,7 +187,7 @@ public class GameSave {
             // inventory
             TreeNode inventoryNode = jsonNode.get("inventory");
             String xmlTing = mapper.writeValueAsString(inventoryNode);
-            List<Entity> entities = mapper.readValue(xmlTing.toString(),
+            List<Entity> entities = mapper.readValue(xmlTing,
                 new TypeReference<List<Entity>>() {
                 });
             gameSave.setInventory(entities);
@@ -178,10 +209,18 @@ public class GameSave {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Cell[][] getCells() {
         return cells;
     }
 
+    /**
+     *
+     * @param cells
+     */
     public void setCells(Cell[][] cells) {
         this.cells = cells;
         for (int row = 0; row < cells.length; row++) {
@@ -193,18 +232,34 @@ public class GameSave {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTime() {
         return time;
     }
 
+    /**
+     *
+     * @param time
+     */
     public void setTime(int time) {
         this.time = time;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Entity> getInventory() {
         return inventory;
     }
 
+    /**
+     *
+     * @param inventory
+     */
     public void setInventory(List<Entity> inventory) {
         this.inventory = inventory;
     }

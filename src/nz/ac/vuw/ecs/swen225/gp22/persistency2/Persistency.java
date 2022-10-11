@@ -1,3 +1,6 @@
+/**
+ * @author Micky Snadden
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -22,15 +25,14 @@ public class Persistency {
 
     /**
      * loads xml file at path into a gameSave object.
-     * @param path
-     * @return
+     * @param path path of serialized gameSave
+     * @return deserialized gameSave from path
      */
     public static GameSave loadGameSave(Path path) {
         XmlMapper mapper = new XmlMapper();
         try {
-            GameSave gameSave = mapper.readValue(Paths.get(path.toString()).toFile(),
+            return mapper.readValue(Paths.get(path.toString()).toFile(),
                 GameSave.class);
-            return gameSave;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -39,8 +41,8 @@ public class Persistency {
     /**
      * Like loadGameSave except we look for custom MonsterProviders and replace them with either default impl
      * or impl in jar.
-     * @param levelPath
-     * @return
+     * @param levelPath path to serialized game save (level version: empty inventory & time 100 )
+     * @return deserialized gameSave with customMonsters replaced by instances of service provider implementations or default if none present.
      */
     public static GameSave loadLevel(Path levelPath) {
         GameSave gameSave = loadGameSave(levelPath);
@@ -94,8 +96,8 @@ public class Persistency {
 
     /**
      * writes the xml of a gameSave object to path given.
-     * @param gameSave
-     * @param path
+     * @param gameSave gameSave object to serialize and write to file
+     * @param path destination of serialized gamesave
      */
     public static void saveGameSave(GameSave gameSave, Path path) {
         XmlMapper mapper = new XmlMapper();

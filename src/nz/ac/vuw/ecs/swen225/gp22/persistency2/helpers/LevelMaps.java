@@ -1,3 +1,6 @@
+/**
+ * @author Micky Snadden
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
 import java.util.ArrayList;
@@ -28,6 +31,10 @@ public class LevelMaps {
     final static int LEVEL_HEIGHT = 20;
     final static int LEVEL_WIDTH = 20;
 
+    /**
+     *
+     * @return
+     */
     public static Map<Coord, Cell> getMap1() {
         HashMap<Coord, Cell> level1map = new HashMap<>();
         // --------------------------------------------
@@ -1911,6 +1918,11 @@ public class LevelMaps {
         });
         return level1map;
     }
+
+    /**
+     *
+     * @return
+     */
     public static Map<Coord, Cell> getMap2() {
         HashMap<Coord, Cell> level2map = new HashMap<>();
         // --------------------------------------------
@@ -3790,6 +3802,10 @@ public class LevelMaps {
         return level2map;
     }
 
+    /**
+     *
+     * @return
+     */
     public static Cell[][] getMap1In2d() {
         Cell[][] cells = new Cell[LEVEL_HEIGHT+1][LEVEL_WIDTH+1];
         Map<Coord, Cell> map1 = getMap1();
@@ -3798,6 +3814,11 @@ public class LevelMaps {
         });
         return cells;
     }
+
+    /**
+     *
+     * @return
+     */
     public static Cell[][] getMap2In2d() {
         Cell[][] cells = new Cell[LEVEL_HEIGHT+1][LEVEL_WIDTH+1];
         Map<Coord, Cell> map1 = getMap2();

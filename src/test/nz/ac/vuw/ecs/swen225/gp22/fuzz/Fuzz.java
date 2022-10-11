@@ -81,11 +81,10 @@ public class Fuzz{
         InputGenerator input = new InputGenerator(game);
         Robot robot = new Robot();
 
-        //actions = List.of(input::up, input::down, input::left, input::right);
-        List<Runnable> actions_witout_up = List.of(input::down, input::down, input::left, input::right);
-        List<Runnable> actions_witout_down = List.of(input::up, input::up, input::left, input::right);
-        List<Runnable> actions_witout_left = List.of(input::up, input::down, input::right, input::right);
-        List<Runnable> actions_witout_right = List.of(input::up, input::down, input::left, input::left);
+        List<Runnable> actions_without_up = List.of(input::down, input::down, input::left, input::right);
+        List<Runnable> actions_without_down = List.of(input::up, input::up, input::left, input::right);
+        List<Runnable> actions_without_left = List.of(input::up, input::down, input::right, input::right);
+        List<Runnable> actions_without_right = List.of(input::up, input::down, input::left, input::left);
 
         robot.delay(2000);
         int index = 3;
@@ -93,10 +92,10 @@ public class Fuzz{
 
             // prevent the player from making meaningless moves( like moving up and down at the same time)
             List<Runnable> from = switch(index){
-                case 0 -> actions_witout_down;
-                case 1 -> actions_witout_up;
-                case 2 -> actions_witout_right;
-                default -> actions_witout_left;
+                case 0 -> actions_without_down;
+                case 1 -> actions_without_up;
+                case 2 -> actions_without_right;
+                default -> actions_without_left;
             };
 
             testClock();

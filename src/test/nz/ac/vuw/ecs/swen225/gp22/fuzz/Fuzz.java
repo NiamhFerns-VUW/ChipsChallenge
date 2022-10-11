@@ -36,8 +36,10 @@ public class Fuzz{
             int key = inputStrategy.nextInput();
             if (inputStrategy.isPressCtrl()) {
                 robot.keyPress(KeyEvent.VK_CONTROL);
+                System.out.println("Pressing control");
             }
             robot.keyPress(key);
+            System.out.println("Pressing " + KeyEvent.getKeyText(key));
             robot.keyRelease(key);
             if (inputStrategy.isPressCtrl()) {
                 robot.keyRelease(KeyEvent.VK_CONTROL);

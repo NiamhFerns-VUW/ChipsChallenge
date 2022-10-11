@@ -17,9 +17,7 @@ public class FollowedInput implements InputStrategy {
     private int prevKey;
     private InputStrategy inputStrategy;
     Random random = new Random();
-    public FollowedInput() {
-        key = keys[random.nextInt(keys.length)];
-    }
+    public FollowedInput() { key = keys[random.nextInt(keys.length)];}
 
     @Override
     public int nextInput() {

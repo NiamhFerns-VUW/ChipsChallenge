@@ -17,6 +17,7 @@ public class ProbInput implements InputStrategy {
             KeyEvent.VK_S,
             KeyEvent.VK_R
     };
+    public ProbInput() {key = keys[random.nextInt(keys.length)];}
 
     @Override
     public int nextInput() {

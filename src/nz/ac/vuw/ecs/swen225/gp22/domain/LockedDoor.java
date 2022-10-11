@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,11 +32,22 @@ public class LockedDoor extends FreeTile {
 		if (key.isEmpty()) return false;
 
 		myCell.setStoredTile(new FreeTile());
+		if (!key.get().keyColour.equals("Green")) e.level.getInventory().remove(key.get());
 
 		return true;
 	}
 
 	public String toString() {
 		return "D";
+	}
+
+	public Image getImage() {
+		return switch (lockColour) {
+			case "Red" -> Img.RedLockeddoor.image;
+			case "Green" -> Img.GreenLockeddoor.image;
+			case "Blue" -> Img.BlueLockeddoor.image;
+			case "Yellow" -> Img.YellowLockeddoor.image;
+			default -> throw new Error("LockedDoor does not have an image for the colour " + lockColour + "!");
+		};
 	}
 }

@@ -125,7 +125,7 @@ class DomainTest {
     @Test
     void createLevel4() {
         Domain dom = new Domain();
-        dom.startLevel("./src/levels/level1.xml");
+        dom.startLevel("level1");
 
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
         List<String> levelSlices = levelToStrings(dom.getLevel().get());
@@ -413,7 +413,6 @@ class DomainTest {
                         "|_|_|_|_|_|\n"+
                         "|_|_|_|_|_|");
         List<String> expectedInventory = new ArrayList<String>();
-        expectedInventory.add("k:Blue");
         int expectedTreasure = 0;
 
         assertEquals(expectedLevel, levelSlices);
@@ -458,7 +457,6 @@ class DomainTest {
                         "|_|_|_|_|_|\n"+
                         "|_|_|_|_|_|");
         List<String> expectedInventory = new ArrayList<String>();
-        expectedInventory.add("k:Blue");
         expectedInventory.add("k:Blue");
         int expectedTreasure = 0;
 

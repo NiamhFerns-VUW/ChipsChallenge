@@ -3,7 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp22.renderer;
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.GameSave;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
-import nz.ac.vuw.ecs.swen225.gp22.renderer.images.*;
+import gameImages.*;
 
 import javax.swing.*;
 import java.awt.*;

@@ -33,7 +33,6 @@ public class Domain {
 	 * @param levelname - the path to the level
 	 */
 	public void startLevel(String levelname) {
-		System.out.println("Domain starting level '" + levelname + "'!");
 		//GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
 		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));	// TODO: change to proper name
 

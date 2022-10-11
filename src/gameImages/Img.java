@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp22.renderer.images;
+package gameImages;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

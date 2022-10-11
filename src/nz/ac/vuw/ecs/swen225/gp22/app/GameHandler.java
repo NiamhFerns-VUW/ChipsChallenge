@@ -69,6 +69,7 @@ public class GameHandler implements Observer {
     protected Domain getDomain() {
         return domain.get();
     }
+    protected Recorder recorder() { return recorder; }
     protected int chipsRemaining() { return  0; }
 
 

@@ -125,7 +125,7 @@ class DomainTest {
     @Test
     void createLevel4() {
         Domain dom = new Domain();
-        dom.startLevel("level1");
+        dom.startLevel("level1",()->{}, ()->{});
 
         if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
         List<String> levelSlices = levelToStrings(dom.getLevel().get());

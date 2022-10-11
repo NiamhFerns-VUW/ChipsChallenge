@@ -29,6 +29,21 @@ public class Fuzz{
         game.reset();
         game.start();
     }
+    public void testInputStrategy(InputStrategy inputStrategy, int size, String level) throws AWTException {
+        game.skipTo(level);
+        Robot robot = new Robot();
+        for (int i = 0; i < size; i++) {
+            int key = inputStrategy.nextInput();
+            if (inputStrategy.isPressCtrl()) {
+                robot.keyPress(KeyEvent.VK_CONTROL);
+            }
+            robot.keyPress(key);
+            robot.keyRelease(key);
+            if (inputStrategy.isPressCtrl()) {
+                robot.keyRelease(KeyEvent.VK_CONTROL);
+            }
+        }
+    }
 
     /**
      * @param size the number of random inputs to generate
@@ -125,9 +140,11 @@ public class Fuzz{
     @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
+        InputStrategy inputStrategy = new ProbInput();
+        f.testInputStrategy(inputStrategy, 100000, "level1");
 
         // use comment and uncomment to switch between random keys and actions
         //f.randomKeys(10000, "level1");
-        f.actiontest(100000, "level2");
+        //f.actiontest(100000, "level2");
     }
 }

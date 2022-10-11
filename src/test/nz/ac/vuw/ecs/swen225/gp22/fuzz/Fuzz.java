@@ -125,7 +125,7 @@ public class Fuzz{
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
         //f.randomKeys(100);
-        f.actiontest(10000);
+        f.actiontest(100000);
     }
 
     @Test

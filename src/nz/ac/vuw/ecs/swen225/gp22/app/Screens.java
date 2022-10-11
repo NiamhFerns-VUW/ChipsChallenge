@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,16 +49,31 @@ class StartScreen implements GameState, ActionListener {
         loadGame.setBounds(220, 175, 200, 50);
         loadGame.setText("Load Game");
         loadGame.addActionListener(l -> {
-            GameSave save = Persistency.loadGameSave(Path.of("./src/levels/level1.xml"));
+            var fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("./src/levels/"));
+            int response = fileChooser.showOpenDialog(menuframe);
+            if (response == 0) {
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                GameSave save = Persistency.loadGameSave(Path.of(file.getAbsolutePath()));
+                System.out.println(file);
+            }
+        });
+
+        // Button to load a recording.
+        JButton loadRecording = new JButton();
+        loadRecording.setBounds(220, 250, 200, 50);
+        loadRecording.setText("Load Recording");
+        loadRecording.addActionListener(l -> {
+            GameHandler.get().recorder().loadRecording();
         });
 
         // Button to quit.
         JButton quitGame = new JButton();
-        quitGame.setBounds(220, 250, 200, 50);
+        quitGame.setBounds(220, 325, 200, 50);
         quitGame.setText("Quit Game");
         quitGame.addActionListener(l -> exit(0));
 
-        buttons = List.of(startGame, loadGame, quitGame);
+        buttons = List.of(startGame, loadGame, loadRecording, quitGame);
 
         buttons.forEach(menuframe::add);
 

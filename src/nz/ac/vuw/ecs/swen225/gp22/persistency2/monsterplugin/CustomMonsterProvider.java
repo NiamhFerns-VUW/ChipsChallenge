@@ -10,6 +10,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Chip;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.LevelPath;
 
 /**
  *
@@ -56,7 +57,7 @@ public class CustomMonsterProvider extends CustomMonster {
      */
     @Override
     public Path getAssociatedLevelPath() {
-        return Path.of("./nonExistendDir/nonExistentFile.xml");
+        return LevelPath.LEVEL2.getLevelPath();
     }
 
     /**

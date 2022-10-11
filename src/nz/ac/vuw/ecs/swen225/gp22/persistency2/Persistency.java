@@ -21,6 +21,9 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.CustomMonster;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.CustomMonsterProvider;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.DefaultCustomMonsterProvider;
 
+/**
+ * Holds static methods for other modules to use.
+ */
 public class Persistency {
 
     /**
@@ -47,7 +50,6 @@ public class Persistency {
     public static GameSave loadLevel(Path levelPath) {
         GameSave gameSave = loadGameSave(levelPath);
         ServiceLoader<CustomMonster> loader = ServiceLoader.load(CustomMonster.class);
-
         // Looking for service providers
         Optional<Provider<CustomMonster>> any = loader.stream().filter(e -> {
             CustomMonster customMonster = e.get();

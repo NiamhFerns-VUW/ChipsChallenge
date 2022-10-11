@@ -79,7 +79,7 @@ class StartScreen implements GameState, ActionListener {
      */
     @Override
     public GameState nextLevel() {
-        return new Level("Level 1", GameHandler.get().getDomain(), new Render());
+        return new Level("level1", GameHandler.get().getDomain(), new Render());
     }
 
     @Override

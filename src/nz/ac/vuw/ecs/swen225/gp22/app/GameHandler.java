@@ -69,6 +69,8 @@ public class GameHandler implements Observer {
     protected Domain getDomain() {
         return domain.get();
     }
+    protected int chipsRemaining() { return  0; }
+
 
     @Override
     public void update() {
@@ -95,10 +97,20 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     private void setBindings(InputHandler input) {
-        input.addBinding(KeyEvent.VK_UP,    input::mvUp,    () -> {});
-        input.addBinding(KeyEvent.VK_DOWN,  input::mvDown,  () -> {});
-        input.addBinding(KeyEvent.VK_LEFT,  input::mvLeft,  () -> {});
-        input.addBinding(KeyEvent.VK_RIGHT, input::mvRight, () -> {});
+        input.addBinding(KeyEvent.VK_UP,      input::mvUp,    () -> {});
+        input.addBinding(KeyEvent.VK_DOWN,    input::mvDown,  () -> {});
+        input.addBinding(KeyEvent.VK_LEFT,    input::mvLeft,  () -> {});
+        input.addBinding(KeyEvent.VK_RIGHT,   input::mvRight, () -> {});
+        input.addBinding(KeyEvent.VK_SPACE,   () -> {}, () -> {});
+        input.addBinding(KeyEvent.VK_ESCAPE,  () -> {}, () -> {});
+
+        input.addBinding(KeyEvent.VK_CONTROL, input::setAlternateControls, input::unsetAlternateControls);
+
+        input.addAlternateBinding(KeyEvent.VK_R, () -> {}, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_X, () -> {}, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_S, () -> {}, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_1, () -> {}, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_2, () -> {}, () -> {});
     }
 
     /**
@@ -134,13 +146,13 @@ public class GameHandler implements Observer {
         switch(str.toLowerCase()) {
             case "level1":
                 System.out.println("You are now at level one.");
-                setGameState(new Level("Level 1", domain.get(), new Render()));
+                setGameState(new Level("level1", domain.get(), new Render()));
                 break;
 
 
             case "level2":
                 System.out.println("You are now at level two.");
-                setGameState(new Level("Level 2", domain.get(), new Render()));
+                setGameState(new Level("level2", domain.get(), new Render()));
                 break;
         }
     }
@@ -160,6 +172,7 @@ public class GameHandler implements Observer {
             setComponents((Level) state);
 
         GameClock.get().register(viewport);
+        GameClock.get().register(this);
         GameClock.get().setLevelTime(90000);
 
         viewport.validate();
@@ -174,12 +187,14 @@ public class GameHandler implements Observer {
         GameClock.get().unregister(this);
         GameClock.get().unregister(domain);
         GameClock.get().unregister(viewport);
+        if (viewport.getGameState() instanceof Level) recorder.saveRecording();
+
         viewport.setState(viewport.getGameState().nextLevel());
 
         if (viewport.getGameState() instanceof Level) {
-            recorder.saveRecording();
             setComponents((Level) viewport.getGameState());
         }
+
 
         GameClock.get().setLevelTime(90000);
         GameClock.get().register(this);

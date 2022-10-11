@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
+
 /**
  * Blocks movement across until a MoveableBlock is pushed onto it, removing the block and filling the pit.
  */
@@ -22,5 +26,11 @@ public class Pit extends FreeTile{
 
 	public String toString() {
 		return "P";
+	}
+
+	public Image getImage() {
+		throw new Error("No image for Pit yet!");
+
+		//return Img.Freetile.image;
 	}
 }

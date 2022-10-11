@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
+
 /**
  * The AntiHazard is an Entity that, when in the player's inventory, nullifies the effect of the Hazard with the
  * corresponding HazardType.
@@ -29,7 +33,16 @@ public class AntiHazard implements Entity {
 
 	@Override
 	public int drawHierarchy() {
-		throw new Error("Code not done!");	//TODO
+		return 5;
 	}
 
+	public String toString() {
+		return "a";
+	}
+
+	public Image getImage() {
+		throw new Error("No image for Antihazard!");
+
+		//return Img.Exitlock.image;
+	}
 }

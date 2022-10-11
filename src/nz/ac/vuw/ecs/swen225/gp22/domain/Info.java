@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
+
 /**
  * The Info tile displays text when Chip is standing on it.
  */
@@ -11,8 +15,12 @@ public class Info extends FreeTile {
 	public Info() {
 		this.infoText = "";
 	}
-	@Override
-	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
-		throw new Error("Code not done!");	//TODO
+
+	public String toString() {
+		return "I";
+	}
+
+	public Image getImage() {
+		return Img.Infotile.image;
 	}
 }

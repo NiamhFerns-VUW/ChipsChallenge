@@ -19,7 +19,8 @@ public enum Img{
     Bluekey,
     Greenkey,
     Yellowkey,
-    Redkey;
+    Redkey,
+    Treasure;
 
     public final BufferedImage image;
     Img(){image=loadImage(this.name());}

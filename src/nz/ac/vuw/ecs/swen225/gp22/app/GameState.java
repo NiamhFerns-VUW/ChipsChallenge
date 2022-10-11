@@ -1,16 +1,27 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
-
 import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
+/**
+ * Represents a level or main screen in a game of chips challenge.
+ *
+ * @author niamh
+ */
 interface GameState {
-    String levelName();
-    Runnable action(Domain d);
-    public List<JPanel> panels();
-
-    public GameState nextLevel();
+    /**
+     * Set up panels for this GameState
+     *
+     * @return list of JPanels for this GameState.
+     *
+     * @author niamh
+     */
+    List<JPanel> panels();
+    /**
+     * @return next GameState to change of on switching level. Conceptually a LinkedList of GameStates.
+     *
+     * @author niamh
+     */
+    GameState nextLevel();
 }
 

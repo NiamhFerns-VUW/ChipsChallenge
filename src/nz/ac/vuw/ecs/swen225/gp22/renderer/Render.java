@@ -120,6 +120,10 @@ public class Render extends JPanel {
                                 }
                             }
                         }
+                        if(entities.get(k).getClass().equals(Treasure.class)){
+                            g.drawImage(Img.Treasure.image, j * tileSize, i * tileSize, tileSize, tileSize, null);
+
+                        }
                     }
                     j++;
                 }

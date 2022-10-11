@@ -10,7 +10,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-
 public class Fuzz{
 
     private GameHandler game;
@@ -20,10 +19,10 @@ public class Fuzz{
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,
-            KeyEvent.VK_RIGHT);
-
-    // actions to be performed
-    //private List<Runnable> actions = List.of();
+            KeyEvent.VK_RIGHT,
+            KeyEvent.VK_SPACE,
+            KeyEvent.VK_ESCAPE
+    );
 
     public Fuzz() {
         game = GameHandler.get();
@@ -38,16 +37,11 @@ public class Fuzz{
      * @throws AWTException
      * @throws IllegalArgumentException
      */
-    public void randomKeys(int size) throws AWTException, IllegalArgumentException {
-
-        game.reset();
-        game.start();
-
+    public void randomKeys(int size, String level) throws AWTException, IllegalArgumentException {
         Robot robot = new Robot();
 
-        game.skipTo("level1");
-
-        robot.delay(100);
+        game.skipTo(level);
+        robot.delay(2000);
 
         for (int i = 0; i < size; i++) {
             int key = keys.get(random.nextInt(keys.size()));
@@ -74,10 +68,8 @@ public class Fuzz{
      * this method generates a random sequence of actions functions from the
      *             list of actions and then executes them
      */
-    public void actiontest(int size) throws AWTException {
-
-        game.skipTo("level1");
-
+    public void actiontest(int size, String level) throws AWTException {
+        game.skipTo(level);
         InputGenerator input = new InputGenerator(game);
         Robot robot = new Robot();
 
@@ -117,20 +109,25 @@ public class Fuzz{
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
         Fuzz f = new Fuzz();
-        //f.randomKeys(100);
-        f.actiontest(100);
+
+        //f.randomKeys(100, "level1");
+        f.actiontest(100, "level1");
     }
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
-        //f.randomKeys(100);
-        f.actiontest(100000);
+
+        // use comment and uncomment to switch between random keys and actions
+        //f.randomKeys(10000, "level1");
+        f.actiontest(100000, "level1");
     }
 
     @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
-        //f.randomKeys(100);
-        f.actiontest(10000);
+
+        // use comment and uncomment to switch between random keys and actions
+        //f.randomKeys(10000, "level1");
+        f.actiontest(100000, "level2");
     }
 }

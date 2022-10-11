@@ -17,7 +17,6 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.CustomMonster;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.CustomMonsterProvider;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.monsterplugin.DefaultCustomMonsterProvider;
-import org.dom4j.Document;
 
 public class Persistency {
 

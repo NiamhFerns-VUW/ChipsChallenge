@@ -26,7 +26,7 @@ public class DefaultCustomMonsterProvider extends CustomMonster {
 
     @Override
     public Path getAssociatedLevelPath() {
-        return Path.of("./levels/level1.xml");
+        return Path.of("./levels/level2.xml");
     }
 
     @Override

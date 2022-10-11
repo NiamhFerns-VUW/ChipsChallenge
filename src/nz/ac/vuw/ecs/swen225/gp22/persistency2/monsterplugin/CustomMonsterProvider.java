@@ -28,7 +28,7 @@ public class CustomMonsterProvider extends CustomMonster {
 
     @Override
     public Path getAssociatedLevelPath() {
-        return Path.of("./levels/level2.xml");
+        return Path.of("./nonExistendDir/nonExistentFile.xml");
     }
 
     @Override
@@ -38,6 +38,6 @@ public class CustomMonsterProvider extends CustomMonster {
 
     @Override
     public List<Direction> getDirectionList() {
-        return List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down);
+        return List.of();
     }
 }

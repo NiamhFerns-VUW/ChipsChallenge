@@ -8,4 +8,8 @@ public class Wall extends FreeTile {
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		return false;
 	}
+
+	public String toString() {
+		return "W";
+	}
 }

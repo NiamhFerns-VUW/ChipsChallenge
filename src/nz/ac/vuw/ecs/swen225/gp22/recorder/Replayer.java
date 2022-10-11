@@ -6,14 +6,12 @@ import java.util.Stack;
 public class Replayer {
 
     private int replaySpeed = 1;
-    private final Stack<Step> setHistory;
     private Stack<Step> history;
     private Stack<Step> prev;
-    boolean autoReplay = false;
+    boolean autoReplayState = false;
 
 
     public Replayer(Stack<Step> gameHistory){
-        setHistory = gameHistory;
         history = gameHistory;
         prev = new Stack<>();
     }
@@ -24,13 +22,15 @@ public class Replayer {
      * Also pushes each move into the prev Stack in case User wants to go backwards (Backwards not implemented yet)
      */
     public void autoReplay(){
-        autoReplay = true;
-        while(!history.isEmpty()){
+        int count = 0;
+        while(!history.isEmpty() && autoReplayState){
+            if(count == 6){this.stepByStep(); System.out.println("Starting some StepBystep"); break;}
             Step currentStep = history.pop();
             prev.push(currentStep);
-            //System.out.println(currentStep.replayerToString());
+            count++;
+            System.out.println(currentStep.replayerToString());
             try {
-                Thread.sleep(2000/replaySpeed);
+                Thread.sleep(1000/replaySpeed);
             } catch (InterruptedException e) {
                 System.out.println("InterruptedException Exception" + e.getMessage());
             }
@@ -41,13 +41,15 @@ public class Replayer {
      * Step by Step replay
      */
     public Step stepByStep(){
-        autoReplay = false;
+        autoReplayState = false;
         Step currentMove = history.pop();
         prev.push(currentMove);
         if(currentMove.move().equals("None")){
             Step validMove = skipEmptySteps();
+            System.out.println("StepbyStep skipping None Actions to : "+validMove.replayerToString());
             return validMove;
         }
+        System.out.println("StepbyStep: "+currentMove.replayerToString());
         return currentMove;
 
     }
@@ -70,16 +72,26 @@ public class Replayer {
 
     public void resetReplayer(){
         //display level back to the beginning (reload through app?)
-        history = setHistory;
-        prev = new Stack<>();
+        while(!prev.isEmpty()){history.push(prev.pop());}
+        autoReplayState = false;
+        replaySpeed = 1;
+
     }
 
     public Stack<Step> getHistory(){
         return history;
     }
 
+    public Stack<Step> getPrevStack(){
+        return prev;
+    }
+
     public void setReplaySpeed(int newSpeed){
         this.replaySpeed = newSpeed;
+    }
+
+    public void setAutoReplay(){
+        autoReplayState = true;
     }
 
 }

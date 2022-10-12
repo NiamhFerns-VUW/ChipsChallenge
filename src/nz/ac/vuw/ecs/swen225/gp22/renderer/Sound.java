@@ -8,6 +8,7 @@ import javax.sound.sampled.*;
 /**
  * Sound class to construct clips for sound effects
  *
+ *  * @author kittmcevoy 300522463
  */
 public class Sound {
     private Clip clip;

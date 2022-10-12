@@ -19,6 +19,7 @@ public class Treasure implements Entity {
 	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
 		myCell.removeEntity(this);
 		e.level.setRemainingTreasures(e.level.getRemainingTreasures()-1);
+		e.level.addSoundToPlay(this);
 
 		return true;
 	}

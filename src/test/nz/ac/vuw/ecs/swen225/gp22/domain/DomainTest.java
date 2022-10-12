@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -547,6 +548,251 @@ class DomainTest {
         assertEquals(expectedInventory, actualInventory);
         assertEquals(expectedTreasure, dom.getLevel().get().getRemainingTreasures());
     }
+
+    @Test
+    void moveThroughExitLock1() {
+        Domain dom = new Domain();
+        Cell[][] cells = createTestCells(5,5);
+        cells[1][1].getEntities().add(new Chip());
+
+        cells[1][2].setStoredTile(new ExitLock());
+        cells[2][1].getEntities().add(new Treasure());
+        cells[2][2].setStoredTile(new ExitLock());
+        cells[3][2].setStoredTile(new ExitLock());
+
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
+        if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
+
+        dom.movePlayer(Direction.Down);
+        dom.movePlayer(Direction.Right);
+        dom.movePlayer(Direction.Right);
+
+        List<String> levelSlices = levelToStrings(dom.getLevel().get());
+        List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
+
+        List<String> expectedLevel = new ArrayList<String>();
+        expectedLevel.add(
+                "\n" +
+                        "|W|W|W|W|W|\n"+
+                        "|W|_|L|_|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|_|L|_|W|\n"+
+                        "|W|W|W|W|W|");
+        expectedLevel.add(
+                "\n" +
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|c|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|");
+        List<String> expectedInventory = new ArrayList<String>();
+        int expectedTreasure = 0;
+
+        assertEquals(expectedLevel, levelSlices);
+        assertEquals(expectedInventory, actualInventory);
+        assertEquals(expectedTreasure, dom.getLevel().get().getRemainingTreasures());
+    }
+
+    @Test
+    void reachExit1() {
+        Domain dom = new Domain();
+        Cell[][] cells = createTestCells(5,5);
+        cells[2][2].getEntities().add(new Chip());
+
+        cells[2][3].setStoredTile(new Exit());
+
+        ArrayList<Boolean> won = new ArrayList<Boolean>();
+
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{won.add(true);}, ()->{});
+        if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
+
+        dom.movePlayer(Direction.Right);
+
+        List<String> levelSlices = levelToStrings(dom.getLevel().get());
+        List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
+
+        List<String> expectedLevel = new ArrayList<String>();
+        expectedLevel.add(
+                "\n" +
+                        "|W|W|W|W|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|_|_|E|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|W|W|W|W|");
+        expectedLevel.add(
+                "\n" +
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|c|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|");
+        List<String> expectedInventory = new ArrayList<String>();
+        int expectedTreasure = 0;
+
+        assertEquals(expectedLevel, levelSlices);
+        assertEquals(expectedInventory, actualInventory);
+        assertEquals(expectedTreasure, dom.getLevel().get().getRemainingTreasures());
+        assert(won.get(0));
+    }
+
+    @Test
+    void touchHazard1() {
+        Domain dom = new Domain();
+        Cell[][] cells = createTestCells(5,5);
+        cells[2][2].getEntities().add(new Chip());
+
+        cells[2][3].setStoredTile(new Hazard());
+
+        ArrayList<Boolean> dead = new ArrayList<Boolean>();
+
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{dead.add(true);});
+        if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
+
+        dom.movePlayer(Direction.Right);
+
+        List<String> levelSlices = levelToStrings(dom.getLevel().get());
+        List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
+
+        List<String> expectedLevel = new ArrayList<String>();
+        expectedLevel.add(
+                "\n" +
+                        "|W|W|W|W|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|_|_|H|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|W|W|W|W|");
+        expectedLevel.add(
+                "\n" +
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|c|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|");
+        List<String> expectedInventory = new ArrayList<String>();
+        int expectedTreasure = 0;
+
+        assertEquals(expectedLevel, levelSlices);
+        assertEquals(expectedInventory, actualInventory);
+        assertEquals(expectedTreasure, dom.getLevel().get().getRemainingTreasures());
+        assert(dead.get(0));
+    }
+
+    // ==| Image Tests |==
+    @Test
+    void doorAndKeyImages1() {
+        Domain dom = new Domain();
+        Cell[][] cells = createTestCells(5,5);
+        cells[2][2].getEntities().add(new Chip());
+
+        cells[1][1].setStoredTile(new LockedDoor("Red"));
+        cells[1][2].setStoredTile(new LockedDoor("Green"));
+        cells[1][3].setStoredTile(new LockedDoor("Blue"));
+        cells[2][1].setStoredTile(new LockedDoor("Yellow"));
+
+        cells[2][3].getEntities().add(new Key("Red"));
+        cells[3][1].getEntities().add(new Key("Green"));
+        cells[3][2].getEntities().add(new Key("Blue"));
+        cells[3][3].getEntities().add(new Key("Yellow"));
+
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{});
+        if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
+        List<String> levelSlices = levelToStrings(dom.getLevel().get());
+        List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
+
+        assert(dom.getLevel().get().cells[1][1].getTileImage() == Img.RedLockeddoor.image);
+        assert(dom.getLevel().get().cells[1][2].getTileImage() == Img.GreenLockeddoor.image);
+        assert(dom.getLevel().get().cells[1][3].getTileImage() == Img.BlueLockeddoor.image);
+        assert(dom.getLevel().get().cells[2][1].getTileImage() == Img.YellowLockeddoor.image);
+
+        assert(dom.getLevel().get().cells[2][3].getImage().get() == Img.Redkey.image);
+        assert(dom.getLevel().get().cells[3][1].getImage().get() == Img.Greenkey.image);
+        assert(dom.getLevel().get().cells[3][2].getImage().get() == Img.Bluekey.image);
+        assert(dom.getLevel().get().cells[3][3].getImage().get() == Img.Yellowkey.image);
+
+        List<String> expectedLevel = new ArrayList<String>();
+        expectedLevel.add(
+                "\n" +
+                        "|W|W|W|W|W|\n"+
+                        "|W|D|D|D|W|\n"+
+                        "|W|D|_|_|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|W|W|W|W|");
+        expectedLevel.add(
+                "\n" +
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|c|k|_|\n"+
+                        "|_|k|k|k|_|\n"+
+                        "|_|_|_|_|_|");
+        List<String> expectedInventory = new ArrayList<String>();
+        int expectedTreasure = 0;
+
+        assertEquals(expectedLevel, levelSlices);
+        assertEquals(expectedInventory, actualInventory);
+        assertEquals(expectedTreasure, dom.getLevel().get().getRemainingTreasures());
+    }
+
+
+
+    //
+    // ==========================
+    //       Invalid Tests:
+    // ==========================
+
+    // ==| Creating the Level |==
+    @Test
+    void createLevelFail1() {
+        Domain dom = new Domain();
+        Cell[][] cells = createTestCells(4,4);
+
+        assertThrows(Error.class, ()->dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{}));
+    }
+
+    // ==| Chip Tests |==
+    @Test
+    void boxCantExit1() {
+        Domain dom = new Domain();
+        Cell[][] cells = createTestCells(5,5);
+        cells[2][1].getEntities().add(new Chip());
+
+        cells[2][2].getEntities().add(new MoveableBlock());
+        cells[2][3].setStoredTile(new Exit());
+
+        ArrayList<Boolean> won = new ArrayList<Boolean>();
+
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{won.add(true);}, ()->{});
+        if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
+
+        dom.movePlayer(Direction.Right);
+
+        List<String> levelSlices = levelToStrings(dom.getLevel().get());
+        List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
+
+        List<String> expectedLevel = new ArrayList<String>();
+        expectedLevel.add(
+                "\n" +
+                        "|W|W|W|W|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|_|_|E|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|W|W|W|W|");
+        expectedLevel.add(
+                "\n" +
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|c|b|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|");
+        List<String> expectedInventory = new ArrayList<String>();
+        int expectedTreasure = 0;
+
+        assertEquals(expectedLevel, levelSlices);
+        assertEquals(expectedInventory, actualInventory);
+        assertEquals(expectedTreasure, dom.getLevel().get().getRemainingTreasures());
+        assertThrows(IndexOutOfBoundsException.class, ()->won.get(0));
+    }
+
+
 
 
     public static Cell[][] createTestCells(int row, int col) {

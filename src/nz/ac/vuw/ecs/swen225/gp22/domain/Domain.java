@@ -20,7 +20,6 @@ public class Domain {
 	
 	public void update() {
 		//System.out.println("Domain recieved update!");
-
 		if (!ok()) throw new Error("No current level to update.");
 
 		//throw new Error("Code not done!");	//TODO

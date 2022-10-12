@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The Render class is the main class of the Renderer Module.
+ * This class draws to the Graphics pannel supplied by App and calls the Sound class to create sound effects.
+ * */
 public class Render extends JPanel {
 
     private Domain domain;

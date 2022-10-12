@@ -29,6 +29,10 @@ public class Fuzz{
         game.reset();
         game.start();
     }
+    /**
+     * This method is used Strategy Pattern to generate random inputs
+     * @throws AWTException
+     */
     public void testInputStrategy(InputStrategy inputStrategy, int size, String level) throws AWTException {
         game.skipTo(level);
         Robot robot = new Robot();
@@ -135,19 +139,21 @@ public class Fuzz{
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
+
+        //use comment and uncomment to switch between random keys and actions
+
         InputStrategy inputStrategy = new ProbInput();
         f.testInputStrategy(inputStrategy, 100000, "level1");
 
-        //  s use comment and uncomment to switch between random keys and actions
-        //f.ra ndomKeys(10000, "level1");
-        //f.actiontest(100000, "level1");
+//        f.randomKeys(10000, "level1");
+//        f.actiontest(100000, "level1");
     }
-
      @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
+
         // use comment and uncomment to switch between random keys and actions
-        //f.randomKeys(10000, "level1");
-        //f.actiontest(100000, "level2");
+//        f.randomKeys(10000, "level1");
+//        f.actiontest(100000, "level2");
     }
 }

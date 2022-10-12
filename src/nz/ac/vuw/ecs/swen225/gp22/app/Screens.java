@@ -1,7 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.GameSave;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import javax.swing.*;
@@ -9,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +51,6 @@ class StartScreen implements GameState, ActionListener {
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                GameSave save = Persistency.loadGameSave(Path.of(file.getAbsolutePath()));
                 System.out.println(file);
             }
         });

@@ -8,6 +8,9 @@ import javax.imageio.ImageIO;
 public enum Img{
     BlueLockeddoor,
     Chip,
+    Movingblock,
+    Monster,
+    Pit,
     Exitlock,
     Exittile,
     Freetile,

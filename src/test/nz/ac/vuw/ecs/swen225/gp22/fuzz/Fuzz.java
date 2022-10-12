@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import java.awt.AWTException;
@@ -151,7 +150,7 @@ public class Fuzz{
         Fuzz f = new Fuzz();
 
         // use comment and uncomment to switch between random keys and actions
-//        f.randomKeys(10000, "level1");
+        f.randomKeys(10000, "level2");
 //        f.actiontest(100000, "level2");
     }
 }

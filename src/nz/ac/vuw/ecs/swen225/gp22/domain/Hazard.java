@@ -35,7 +35,6 @@ public class Hazard extends FreeTile {
 
 	public Image getImage() {
 		throw new Error("No Hazard image yet!");
-
 		//return Img.Freetile.image;
 	}
 }

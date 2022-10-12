@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The level keeps track of the board, Chip, Chip's inventory, and the remaining treasures to be picked up.
@@ -14,6 +15,8 @@ public class Level {
 	public final Runnable onWin;
 	public final Runnable onDeath;
 
+	private List<Object> objSoundsToPlay;	// renderer checks this in order to play sounds such as picking up keys
+
 	public Level(long remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory,
 				 Runnable onWin, Runnable onDeath) {
 		this.remainingTreasures = remainingTreasures;
@@ -22,6 +25,7 @@ public class Level {
 		this.inventory = inventory;
 		this.onWin = onWin;
 		this.onDeath = onDeath;
+		this.objSoundsToPlay = new ArrayList<Object>();
 	}
 	
 	public long getRemainingTreasures() {
@@ -32,6 +36,14 @@ public class Level {
 	}
 	public ArrayList<Entity> getInventory() {
 		return inventory;
+	}
+
+	public void addSoundToPlay(Object o) {
+		objSoundsToPlay.add(o);
+	}
+
+	public List<Object> getSoundsToPlay() {
+		return objSoundsToPlay;
 	}
 
 	/**

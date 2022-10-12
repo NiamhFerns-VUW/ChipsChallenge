@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Blocks movement until it is unlocked by Chip with a Key of the same colour.
+ * Blocks movement until it is unlocked by Chip with a Key of the same colour. Green Keys don't disappear when used.
  */
 public class LockedDoor extends FreeTile {
 	public String lockColour;
@@ -32,6 +32,8 @@ public class LockedDoor extends FreeTile {
 		if (key.isEmpty()) return false;
 
 		myCell.setStoredTile(new FreeTile());
+		e.level.addSoundToPlay(this);
+
 		if (!key.get().keyColour.equals("Green")) e.level.getInventory().remove(key.get());
 
 		return true;

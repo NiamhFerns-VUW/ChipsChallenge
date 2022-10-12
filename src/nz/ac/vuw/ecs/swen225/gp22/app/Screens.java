@@ -51,7 +51,7 @@ class StartScreen implements GameState, ActionListener {
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                GameHandler.get().setGameState(new Level(file.getAbsolutePath(), GameHandler.get().getDomain(), new Render()));
+                GameHandler.get().setGameState(new Level(file.getAbsolutePath(), GameHandler.get().domain(), new Render()));
             }
         });
 
@@ -91,7 +91,7 @@ class StartScreen implements GameState, ActionListener {
      */
     @Override
     public GameState nextLevel() {
-        return new Level("level1", GameHandler.get().getDomain(), new Render());
+        return new Level("level1", GameHandler.get().domain(), new Render());
     }
 
     @Override

@@ -64,7 +64,7 @@ public class GameHandler implements Observer {
     protected InputHandler getInput() {
         return input;
     }
-    protected Domain getDomain() {
+    protected Domain domain() {
         return domain.get();
     }
     protected Recorder recorder() { return recorder; }

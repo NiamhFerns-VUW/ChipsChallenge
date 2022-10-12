@@ -33,6 +33,8 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
  */
 public class LevelMap {
 
+    final int CELLS_WIDTH = 21;
+    final int CELLS_HEIGHT = 21;
     private static LevelMap instance = null;
 
     private LevelMap levelMap;
@@ -3831,6 +3833,14 @@ public class LevelMap {
         });
     }
 
+    public Cell[][] to2D(Map<Coord,Cell> map) {
+        Cell[][] cells = new Cell[map.keySet().size()][map.keySet().size()];
+        map.keySet().forEach(key->{
+            Cell cell = map.get(key);
+            cells[key.y()][key.x()] = cell;
+        });
+        return cells;
+    }
     /**
      *
      * @return Unmodifiable map of coords to cells for level 1.

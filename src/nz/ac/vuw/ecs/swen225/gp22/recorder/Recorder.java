@@ -38,7 +38,6 @@ import java.util.Stack;
 
 public class Recorder {
 
-    private ArrayList<Stack<Step>> recordings;
     private ArrayList<Step> currentRecording;
 
     private String currentLevel = "zero";
@@ -51,7 +50,6 @@ public class Recorder {
      * @author Santino Gaeta
      */
     public Recorder(){
-        recordings = new ArrayList<>();
         currentRecording = new ArrayList<>();
     }
 
@@ -87,6 +85,16 @@ public class Recorder {
     public void setLevel(String level){
         this.currentLevel = level;
     }
+
+    /**
+     * @return currentRecording - List of moves from the current recorded level
+     *
+     * @author Santino Gaeta
+     */
+    public ArrayList<Step> getCurrentRecording(){
+        return currentRecording;
+    }
+
 
     /**
      * Recording when Player moves Chip 'Up'
@@ -162,10 +170,11 @@ public class Recorder {
         if(currentRecording.size() == 0){return;}       //For changing from micro to Main State in App
 
         saveStepArrayListToXml(currentRecording);
+
         //Convert using Persistency from ArrayList<Step> to Xml - returns XmlFile
         //Save file to folder or Recordings/Level folder
 
-        //System.out.println(currentLevel+" recorded and saved."); //For Testing
+        System.out.println(currentLevel+" recorded and saved."); //For Testing
 
         reset();
     }
@@ -183,44 +192,24 @@ public class Recorder {
         jfc.setDialogTitle("Select XmlFile of Recording to Replay");
         jfc.setFileFilter(new FileNameExtensionFilter("Extensible Markup Language", "xml"));
         int check = jfc.showOpenDialog(null);
-        File xmlFile = new File("./src/levels/"); //just to initialise
-        if(check == JFileChooser.APPROVE_OPTION) {
-            xmlFile = jfc.getSelectedFile();
+        if(check == JFileChooser.CANCEL_OPTION) {
+            return null;
         }
+        File xmlFile = jfc.getSelectedFile();
         //TODO implement this method into Persistency?
         return new Replayer(convertXmlToHistoryStack(xmlFile)); //Not implemented in Persistency yet
     }
 
-    /**
-     * @return currentRecording - List of moves from the current recorded level
-     *
-     * @author Santino Gaeta
-     */
-    public ArrayList<Step> getCurrentRecording(){
-        return currentRecording;
-    }
-
-    /**
-     * @return recordings - Contains List of Recorded levels
-     *
-     * @author Santino Gaeta
-     */
-    public ArrayList<Stack<Step>> getListOfRecordings(){
-        return recordings;
-    }
-
-
-
 
     public void saveStepArrayListToXml(ArrayList<Step> chipMoves){
         XmlMapper mapper = new XmlMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try{
-            mapper.writeValue(new File("./src/levels/levelOneRec.xml"), chipMoves);
+            mapper.writeValue(new File("./src/levels/"+currentLevel+"Recording.xml"), chipMoves);
         }catch(IOException e){
             throw new RuntimeException(e);
         }
     }
-
 
 
     public static Stack<Step> convertXmlToHistoryStack(File xmlFile){
@@ -238,9 +227,6 @@ public class Recorder {
             throw new RuntimeException(e);
         }
     }
-
-
-
 
 
 }

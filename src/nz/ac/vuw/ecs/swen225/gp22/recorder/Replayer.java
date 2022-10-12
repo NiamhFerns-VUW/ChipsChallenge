@@ -1,16 +1,18 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
-import java.util.Observer;
+
 import java.util.Stack;
 
 
-public class Replayer {
+public class Replayer implements Observer {
 
     private int replaySpeed = 1;
     private Stack<Step> history;
     private Stack<Step> prev;
-    boolean autoReplayState = false;
+    boolean autoReplayState = true;
+    private InputGenerator inputGenerator;
+    private GameHandler gameHandler;
 
     /**
      * Replayer initialised with a Stack of Chip's moves to go through and replay
@@ -21,15 +23,17 @@ public class Replayer {
     public Replayer(Stack<Step> gameHistory){
         history = gameHistory;
         prev = new Stack<>();
+        gameHandler = GameHandler.get();
+        inputGenerator = new InputGenerator(gameHandler);
     }
 
-    public void update(){
 
+    @Override
+    public void update() {
+        if(history.isEmpty()){return;}
+        if(!autoReplayState){stepByStep(); return;}
+        else {autoReplay();}
     }
-
-
-
-
 
     /**
      * Automatic Replay
@@ -39,19 +43,11 @@ public class Replayer {
      * @author Santino Gaeta
      */
     public void autoReplay(){
-        //int count = 0;
-        while(!history.isEmpty() && autoReplayState){
-            //if(count == 6){this.stepByStep(); System.out.println("Starting some StepBystep"); break;} //Used for TESTING
-            //count++;              //Used for TESTING
-            //System.out.println(currentStep.replayerToString());
-            try {
-                Thread.sleep(2000/replaySpeed);
-            } catch (InterruptedException e) {
-                System.out.println("InterruptedException Exception" + e.getMessage());
-            }
-            Step currentStep = history.pop();
-            prev.push(currentStep);
-        }
+        if(history.peek().getTime()!=GameClock.get().currentLevelTime()){return;}
+        Step currentStep = history.pop();
+        prev.push(currentStep);
+        replayStep(currentStep);
+        System.out.println(currentStep.replayerToString());
     }
 
     /**
@@ -60,23 +56,28 @@ public class Replayer {
      * Moves Step from history Stack to prev Stack and return that move direction
      * If move was direction "None" will look for next step not "None" and return that instead
      *
-     *
      * @return - move in direction that Chip had made
      *
      * @author Santino Gaeta
      */
-    public Step stepByStep(){
+    public void stepByStep(){
         autoReplayState = false;
         Step currentMove = history.pop();
         prev.push(currentMove);
         if(currentMove.getMove().equals("None")){
             Step validMove = skipEmptySteps();
             System.out.println("StepbyStep skipping None Actions to : "+validMove.replayerToString());
-            return validMove;
+            replayStep(validMove);
         }
         System.out.println("StepbyStep: "+currentMove.replayerToString());
-        return currentMove;
+        replayStep(currentMove);
+    }
 
+    public void replayStep(Step s){
+        if(s.getMove().equals("Left")){inputGenerator.left();}
+        else if (s.getMove().equals("Right")){inputGenerator.right();}
+        else if (s.getMove().equals("Up")){inputGenerator.up();}
+        else if (s.getMove().equals("Down")){inputGenerator.down();}
     }
 
     /**
@@ -141,6 +142,7 @@ public class Replayer {
      * @author Santino Gaeta
      */
     public void setReplaySpeed(int newSpeed){
+        //GameClock.setTickRate(1000/GameClock.getFrameRate() * newSpeed);
         this.replaySpeed = newSpeed;
     }
 

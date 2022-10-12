@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class FollowedInput implements InputStrategy {
-    public final int[] keys = {
+    public final int[] keys =  {
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,

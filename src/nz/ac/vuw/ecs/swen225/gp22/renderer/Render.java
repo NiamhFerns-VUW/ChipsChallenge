@@ -14,7 +14,7 @@ public class Render extends JPanel {
     private Domain domain;
     private int chipX;
     private int chipY;
-    private List<Object> soundToPlay = new ArrayList<Object>();
+    private final List<Object> soundToPlay = new ArrayList<Object>();
     /**
      * Default constructor for an instance of Render.
      */
@@ -72,9 +72,6 @@ public class Render extends JPanel {
      */
     public static ArrayList<String> splitString(String text) {
         ArrayList<String> results = new ArrayList<>();
-        int length = text.length();
-
-
         String[] strings = text.split(" ");
         for (int i = 0; i < strings.length; i++) {
             if(i < strings.length-1){

@@ -11,7 +11,6 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
-import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 import org.junit.jupiter.api.Test;
 
 class CustomMovingEntityServiceTest {
@@ -19,7 +18,7 @@ class CustomMovingEntityServiceTest {
     @Test
     void directionList() {
         CustomMovingEntityService entity = createEntity();
-        assertEquals(entity.directionList(),List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down));
+        assertEquals(entity.getDirectionList(),List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down));
     }
 
     @Test
@@ -39,7 +38,7 @@ class CustomMovingEntityServiceTest {
             Direction.None, new Coord(-1, -1)) {
 
             @Override
-            public List<Direction> directionList() {
+            public List<Direction> getDirectionList() {
                 return List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down);
             }
 

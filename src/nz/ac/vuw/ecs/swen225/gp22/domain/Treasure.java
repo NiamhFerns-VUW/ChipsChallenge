@@ -35,4 +35,13 @@ public class Treasure implements Entity {
 	public Image getImage() {
 		return Img.Treasure.image;
 	}
+	@Override
+	public int hashCode() {
+		return this.getClass().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Treasure && obj.hashCode() == this.hashCode();
+	}
 }

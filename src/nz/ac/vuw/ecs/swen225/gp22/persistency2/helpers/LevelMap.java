@@ -2413,7 +2413,7 @@ public class LevelMap {
                 List.of(
                     new CustomMovingEntityService() {
                         @Override
-                        public List<Direction> directionList() {
+                        public List<Direction> getDirectionList() {
                             return List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down);
                         }
 

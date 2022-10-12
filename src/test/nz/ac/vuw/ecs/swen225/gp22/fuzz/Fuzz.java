@@ -11,7 +11,6 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 public class Fuzz{
-
     private GameHandler game;
     static final Random random = new Random();
     // keys to be pressed
@@ -139,14 +138,13 @@ public class Fuzz{
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
-
         //use comment and uncomment to switch between random keys and actions
 
-        InputStrategy inputStrategy = new ProbInput();
-        f.testInputStrategy(inputStrategy, 100000, "level1");
+//        InputStrategy inputStrategy = new ProbInput();
+//        f.testInputStrategy(inputStrategy, 100000, "level1");
 
 //        f.randomKeys(10000, "level1");
-//        f.actiontest(100000, "level1");
+        f.actiontest(100000, "level1");
     }
      @Test
     public void test2() throws AWTException {

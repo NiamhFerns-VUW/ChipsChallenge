@@ -7,6 +7,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import nz.ac.vuw.ecs.swen225.gp22.fuzz.ProbInput;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +33,7 @@ public class Fuzz{
     public void testInputStrategy(InputStrategy inputStrategy, int size, String level) throws AWTException {
         game.skipTo(level);
         Robot robot = new Robot();
+        robot.delay(2000);
         for (int i = 0; i < size; i++) {
             int key = inputStrategy.nextInput();
             if (inputStrategy.isPressCtrl()) {
@@ -58,19 +60,19 @@ public class Fuzz{
         Robot robot = new Robot();
 
         game.skipTo(level);
-        robot.delay(2000);
+        robot.delay(2000 ) ;
 
-        for (int i = 0; i < size; i++) {
-            int key = keys.get(random.nextInt(keys.size()));
+         for (int i = 0; i < size; i++) {
+            int key = keys.get(random.nextInt(keys.size()))  ;
             robot.keyPress(key);
-            System.out.println("Key: " + key);
+            System.out.println("Key: " + KeyEvent.getKeyText(key));
             robot.keyRelease(key);
             robot.delay(100);
         }
     }
     /**
-     * This method generates a mouse click at a location
-     */
+         * This method generates a mouse click at a location
+      */
     public void mouseTest() throws AWTException {
         GameHandler game = null;
         Robot robot = new Robot();
@@ -136,15 +138,14 @@ public class Fuzz{
         InputStrategy inputStrategy = new ProbInput();
         f.testInputStrategy(inputStrategy, 100000, "level1");
 
-        // use comment and uncomment to switch between random keys and actions
-        //f.randomKeys(10000, "level1");
-        f.actiontest(100000, "level1");
+        //  s use comment and uncomment to switch between random keys and actions
+        //f.ra ndomKeys(10000, "level1");
+        //f.actiontest(100000, "level1");
     }
 
-    @Test
+     @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
-
         // use comment and uncomment to switch between random keys and actions
         //f.randomKeys(10000, "level1");
         //f.actiontest(100000, "level2");

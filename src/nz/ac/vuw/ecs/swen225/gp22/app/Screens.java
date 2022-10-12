@@ -51,7 +51,7 @@ class StartScreen implements GameState, ActionListener {
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                System.out.println(file);
+                GameHandler.get().setGameState(new Level(file.getAbsolutePath(), GameHandler.get().getDomain(), new Render()));
             }
         });
 

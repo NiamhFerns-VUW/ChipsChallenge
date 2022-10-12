@@ -11,12 +11,13 @@ import javax.sound.sampled.*;
  */
 public class Sound {
     private Clip clip;
-    URL soundURL[] = new URL[30];
+    URL[] soundURL = new URL[5];
 
     public Sound() {
         soundURL[0] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/keys.wav");
         soundURL[1] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/door_opening.wav");
         soundURL[2] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/cat.wav");
+        soundURL[3] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/walking.wav");
     }
 
     public void setFile(int i) {
@@ -24,25 +25,13 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void play(){
         clip.start();
-    }
-
-    public void loop(){
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
-
-    public void stop(){
-        clip.stop();
     }
 
 }

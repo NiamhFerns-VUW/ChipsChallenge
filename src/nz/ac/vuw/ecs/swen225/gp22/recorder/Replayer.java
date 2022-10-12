@@ -4,8 +4,17 @@ import nz.ac.vuw.ecs.swen225.gp22.app.*;
 
 import java.util.Stack;
 
-
-public class Replayer implements Observer {
+/**
+ * Replayer represents an object that can replay levels that have been recorded.
+ * Implements Observer from App so the Automatic replay is synced with the GameClock update()
+ * Two modes of Replaying include AutoReplay, where each step is invoked at the LevelTime they
+ * were executed in the original play-through, as the GameClock ticks. This ReplaySpeed can be altered by
+ * the user to make the AutoReplay faster or slower.
+ * And StepByStep allows User to move through each step made by chip in their own time, on Step at a time.
+ *
+ * @author Santino Gaeta
+ */
+public class Replayer implements Observer { //need to make Observer public in App
 
     private int replaySpeed = 1;
     private Stack<Step> history;
@@ -16,6 +25,8 @@ public class Replayer implements Observer {
 
     /**
      * Replayer initialised with a Stack of Chip's moves to go through and replay
+     * Also GameHandler of currently level and InputGenerator invoking moves on Chip
+     * AutoReplay mode on default
      * @param gameHistory - Stack of Steps
      *
      * @author Santino Gaeta
@@ -27,17 +38,23 @@ public class Replayer implements Observer {
         inputGenerator = new InputGenerator(gameHandler);
     }
 
-
+    /**
+     * Implementing GameClock in App, Replayer will update each tick of GameClock
+     * If the history Stack is empty nothing happens
+     * Depending on the autoReplayState either StepbyStep or AutomaticReplay will be called
+     *
+     * @author Santino Gaeta
+     */
     @Override
     public void update() {
         if(history.isEmpty()){return;}
-        if(!autoReplayState){stepByStep(); return;}
+        if(!autoReplayState){stepByStep(); return;} //take this out? And just have button call stepByStep method itself?
         else {autoReplay();}
     }
 
     /**
      * Automatic Replay
-     * While the Stack isn't empty and AutoReplayState is true - will print each move every 2seconds
+     * If the next move occurs at the currentLeveltime of the GameClock - will replay move on update()
      * Also pushes each move into the prev Stack in case User wants to go backwards (Backwards not implemented yet)
      *
      * @author Santino Gaeta
@@ -52,8 +69,8 @@ public class Replayer implements Observer {
 
     /**
      * Step-by-Step Replay
-     * Sets Automatic replay off in case Automatic relpay was currently on
-     * Moves Step from history Stack to prev Stack and return that move direction
+     * Sets Automatic replay off in case Automatic replay was currently on
+     * Moves Step from history Stack to prev Stack and replays that move direction
      * If move was direction "None" will look for next step not "None" and return that instead
      *
      * @return - move in direction that Chip had made
@@ -73,11 +90,17 @@ public class Replayer implements Observer {
         replayStep(currentMove);
     }
 
-    public void replayStep(Step s){
-        if(s.getMove().equals("Left")){inputGenerator.left();}
-        else if (s.getMove().equals("Right")){inputGenerator.right();}
-        else if (s.getMove().equals("Up")){inputGenerator.up();}
-        else if (s.getMove().equals("Down")){inputGenerator.down();}
+    /**
+     * Invokes inputGenerator from App to move Chip in Game during replay
+     * @param step - Step popped from history Stack to be invoked on Chip
+     *
+     * @author Santino Gaeta
+     */
+    public void replayStep(Step step){
+        if(step.getMove().equals("Left")){inputGenerator.left();}
+        else if (step.getMove().equals("Right")){inputGenerator.right();}
+        else if (step.getMove().equals("Up")){inputGenerator.up();}
+        else if (step.getMove().equals("Down")){inputGenerator.down();}
     }
 
     /**
@@ -136,7 +159,7 @@ public class Replayer implements Observer {
     }
 
     /**
-     * Changes speed of automatic replay to play faster or slower
+     * Changes speed of automatic replay to play faster or slower by changing tick interval on GameClock
      * @param newSpeed - int the user wishes to change the automatic replay speed to
      *
      * @author Santino Gaeta
@@ -154,6 +177,7 @@ public class Replayer implements Observer {
      */
     public void setAutoReplay(){
         autoReplayState = true;
+        //update();
     }
 
 }

@@ -1,31 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
-import org.dom4j.Document;
-import org.dom4j.Element;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
@@ -35,11 +14,18 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Stack;
 
-
+/**
+ * Represents a Recorder implemented in App, where Recorder stores Chip's movements into an Array
+ * of Steps.
+ * Recorder remains being able to record multiple levels and storing them in xml format into the levels folder.
+ * Recorder can also load those xml files from levels folder and produce a Replayer object, who can
+ * replay those levels and re-enact Chip's movements during the level that was recorded.
+ *
+ * @author Santino Gaeta
+ */
 public class Recorder {
 
     private ArrayList<Step> currentRecording;
-
     private String currentLevel = "zero";
     private boolean startRecording = false;
 
@@ -94,7 +80,6 @@ public class Recorder {
     public ArrayList<Step> getCurrentRecording(){
         return currentRecording;
     }
-
 
     /**
      * Recording when Player moves Chip 'Up'
@@ -161,21 +146,15 @@ public class Recorder {
     }
 
     /**
-     * Reverse inputs Steps from currentRecording into a Stack of Steps to be called at end of level
+     * Call Persistency to convert Array of Steps into XmlFile and save in folder.
      * Then resets the Recorder - ready for recording a new level
      *
      * @author Santino Gaeta
      */
     public void saveRecording(){
         if(currentRecording.size() == 0){return;}       //For changing from micro to Main State in App
-
-        saveStepArrayListToXml(currentRecording);
-
-        //Convert using Persistency from ArrayList<Step> to Xml - returns XmlFile
-        //Save file to folder or Recordings/Level folder
-
+        saveStepArrayListToXml(currentRecording, currentLevel); //Will call from Persistency
         System.out.println(currentLevel+" recorded and saved."); //For Testing
-
         reset();
     }
 
@@ -201,11 +180,12 @@ public class Recorder {
     }
 
 
-    public void saveStepArrayListToXml(ArrayList<Step> chipMoves){
+    //TODO Send to persistency
+    public void saveStepArrayListToXml(ArrayList<Step> chipMoves, String level){
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try{
-            mapper.writeValue(new File("./src/levels/"+currentLevel+"Recording.xml"), chipMoves);
+            mapper.writeValue(new File("./src/levels/"+level+"Recording.xml"), chipMoves);
         }catch(IOException e){
             throw new RuntimeException(e);
         }

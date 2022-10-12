@@ -10,9 +10,7 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-
 public class Fuzz{
-
     private GameHandler game;
     static final Random random = new Random();
     // keys to be pressed
@@ -20,15 +18,38 @@ public class Fuzz{
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,
-            KeyEvent.VK_RIGHT);
-
-    // actions to be performed
-    //private List<Runnable> actions = List.of();
+            KeyEvent.VK_RIGHT,
+            KeyEvent.VK_SPACE,
+            KeyEvent.VK_ESCAPE
+    );
 
     public Fuzz() {
         game = GameHandler.get();
         game.reset();
         game.start();
+    }
+    /**
+     * This method is used Strategy Pattern to generate random inputs
+     * @throws AWTException
+     */
+    public void testInputStrategy(InputStrategy inputStrategy, int size, String level) throws AWTException {
+        game.skipTo(level);
+        Robot robot = new Robot();
+        robot.delay(2000);
+        for (int i = 0; i < size; i++) {
+            int key = inputStrategy.nextInput();
+            if (inputStrategy.isPressCtrl()) {
+                robot.keyPress(KeyEvent.VK_CONTROL);
+                System.out.println("Pressing control");
+            }
+            testClock();
+            robot.keyPress(key);
+            System.out.println("Pressing " + KeyEvent.getKeyText(key));
+            robot.keyRelease(key);
+            if (inputStrategy.isPressCtrl()) {
+                robot.keyRelease(KeyEvent.VK_CONTROL);
+            }
+        }
     }
 
     /**
@@ -38,28 +59,23 @@ public class Fuzz{
      * @throws AWTException
      * @throws IllegalArgumentException
      */
-    public void randomKeys(int size) throws AWTException, IllegalArgumentException {
-
-        game.reset();
-        game.start();
-
+    public void randomKeys(int size, String level) throws AWTException, IllegalArgumentException {
         Robot robot = new Robot();
 
-        game.skipTo("level1");
+        game.skipTo(level);
+        robot.delay(2000 ) ;
 
-        robot.delay(100);
-
-        for (int i = 0; i < size; i++) {
-            int key = keys.get(random.nextInt(keys.size()));
+         for (int i = 0; i < size; i++) {
+            int key = keys.get(random.nextInt(keys.size()))  ;
             robot.keyPress(key);
-            System.out.println("Key: " + key);
+            System.out.println("Key: " + KeyEvent.getKeyText(key));
             robot.keyRelease(key);
             robot.delay(100);
         }
     }
     /**
-     * This method generates a mouse click at a location
-     */
+         * This method generates a mouse click at a location
+      */
     public void mouseTest() throws AWTException {
         GameHandler game = null;
         Robot robot = new Robot();
@@ -74,18 +90,15 @@ public class Fuzz{
      * this method generates a random sequence of actions functions from the
      *             list of actions and then executes them
      */
-    public void actiontest(int size) throws AWTException {
-
-        game.skipTo("level1");
-
+    public void actiontest(int size, String level) throws AWTException {
+        game.skipTo(level);
         InputGenerator input = new InputGenerator(game);
         Robot robot = new Robot();
 
-        //actions = List.of(input::up, input::down, input::left, input::right);
-        List<Runnable> actions_witout_up = List.of(input::down, input::down, input::left, input::right);
-        List<Runnable> actions_witout_down = List.of(input::up, input::up, input::left, input::right);
-        List<Runnable> actions_witout_left = List.of(input::up, input::down, input::right, input::right);
-        List<Runnable> actions_witout_right = List.of(input::up, input::down, input::left, input::left);
+        List<Runnable> actions_without_up = List.of(input::down, input::down, input::left, input::right);
+        List<Runnable> actions_without_down = List.of(input::up, input::up, input::left, input::right);
+        List<Runnable> actions_without_left = List.of(input::up, input::down, input::right, input::right);
+        List<Runnable> actions_without_right = List.of(input::up, input::down, input::left, input::left);
 
         robot.delay(2000);
         int index = 3;
@@ -93,10 +106,10 @@ public class Fuzz{
 
             // prevent the player from making meaningless moves( like moving up and down at the same time)
             List<Runnable> from = switch(index){
-                case 0 -> actions_witout_down;
-                case 1 -> actions_witout_up;
-                case 2 -> actions_witout_right;
-                default -> actions_witout_left;
+                case 0 -> actions_without_down;
+                case 1 -> actions_without_up;
+                case 2 -> actions_without_right;
+                default -> actions_without_left;
             };
 
             testClock();
@@ -118,20 +131,27 @@ public class Fuzz{
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
         Fuzz f = new Fuzz();
-        //f.randomKeys(100);
-        f.actiontest(100);
+
+        //f.randomKeys(100, "level1");
+        f.actiontest(100, "level1");
     }
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
-        //f.randomKeys(100);
-        f.actiontest(100000);
-    }
+        //use comment and uncomment to switch between random keys and actions
 
-    @Test
+//        InputStrategy inputStrategy = new ProbInput();
+//        f.testInputStrategy(inputStrategy, 100000, "level1");
+
+//        f.randomKeys(10000, "level1");
+        f.actiontest(100000, "level1");
+    }
+     @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
-        //f.randomKeys(100);
-        f.actiontest(10000);
+
+        // use comment and uncomment to switch between random keys and actions
+//        f.randomKeys(10000, "level1");
+//        f.actiontest(100000, "level2");
     }
 }

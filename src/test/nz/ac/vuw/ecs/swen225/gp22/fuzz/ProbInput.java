@@ -3,7 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp22.fuzz;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-public class ProbInput implements InputStrategy {
+class ProbInput implements InputStrategy {
     private int key;
     private int prevKey;
     private InputStrategy inputStrategy;

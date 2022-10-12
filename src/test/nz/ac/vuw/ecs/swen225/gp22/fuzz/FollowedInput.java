@@ -1,9 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
+import nz.ac.vuw.ecs.swen225.gp22.fuzz.InputStrategy;
+
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-public class FollowedInput implements InputStrategy {
+class FollowedInput implements InputStrategy {
     public final int[] keys =  {
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,

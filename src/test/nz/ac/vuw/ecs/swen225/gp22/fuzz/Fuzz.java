@@ -133,6 +133,8 @@ public class Fuzz{
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
+        InputStrategy inputStrategy = new ProbInput();
+        f.testInputStrategy(inputStrategy, 100000, "level1");
 
         // use comment and uncomment to switch between random keys and actions
         //f.randomKeys(10000, "level1");
@@ -142,8 +144,6 @@ public class Fuzz{
     @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
-        InputStrategy inputStrategy = new ProbInput();
-        f.testInputStrategy(inputStrategy, 100000, "level1");
 
         // use comment and uncomment to switch between random keys and actions
         //f.randomKeys(10000, "level1");

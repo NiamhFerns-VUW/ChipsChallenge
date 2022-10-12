@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
+
 /**
  * The Entity interface is for the various things that the player could interact with.
  * Different from tiles, these can stack on top of each other (for example, a monster standing on the key, or a box pushed onto treasure).
@@ -36,6 +40,11 @@ public interface Entity {
 	 * for when multiple entities occupy the same tile.
 	 */
 	int drawHierarchy();
+
+	/**
+	 * @return Returns the entity's image
+	 */
+	public Image getImage();
 
 	public String toString();
 }

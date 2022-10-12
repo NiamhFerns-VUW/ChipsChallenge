@@ -6,6 +6,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -31,15 +32,14 @@ public class Domain {
 	 *
 	 * @param levelname - the path to the level
 	 */
-	public void startLevel(String levelname) {
-		System.out.println("Domain starting level '" + levelname + "'!");
+	public void startLevel(String levelname, Runnable onWin, Runnable onDeath) {
 		//GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
 		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));	// TODO: change to proper name
 
 		Cell[][] cells = save.getCells();
-		createLevel(cells, (ArrayList<Entity>) save.getInventory());
+		createLevel(cells, (ArrayList<Entity>) save.getInventory(), onWin, onDeath);
 	}
-	public void createLevel(Cell[][] cells, ArrayList<Entity> inventory) {
+	public void createLevel(Cell[][] cells, ArrayList<Entity> inventory, Runnable onWin, Runnable onDeath) {
 		long remainingTreasures = Arrays.stream(cells)
 				.flatMap(cArray-> Arrays.stream(cArray))
 				.flatMap(c->c.getEntities().stream())
@@ -53,6 +53,9 @@ public class Domain {
 				.map(e -> (Chip) e)
 				.reduce((c1, c2)->{throw new Error("Too many Chips in level!");});
 
+
+		List<MovingEntity> movingEntityList = new ArrayList<>();
+
 		IntStream.range(0, cells.length)
 				.forEach((y)->{
 					IntStream.range(0, cells[y].length)
@@ -60,15 +63,20 @@ public class Domain {
 								cells[y][x].getEntities().stream()
 										.filter(e -> e instanceof MovingEntity)
 										.map(e -> (MovingEntity) e)
-										.forEach(m -> m.coords = new Coord(y, x));
+										.forEach(m -> {
+											m.coords = new Coord(y, x);
+											movingEntityList.add(m);
+											});
 							});
 				});
 
 		if (player.isEmpty()) { throw new Error("No Chip in level!"); }
 
-		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory);
+		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory, onWin, onDeath);
 
 		player.get().setLevel(currentLevel);
+
+		movingEntityList.stream().forEach(m -> m.level = currentLevel);
 	}
 
 	public void movePlayer(Direction dir) {

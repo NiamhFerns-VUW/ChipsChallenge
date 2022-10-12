@@ -28,21 +28,21 @@ record Level(String levelName, Domain domain, Render gameplayPanel) implements G
                 g.fillRect(0, 0, getWidth(), getHeight());
 
                 g.setColor(Color.GREEN);
-                g.drawString(levelName, 20, getHeight() / 2);
-                g.drawString(GameClock.get().currentLevelTime() / 1000 + "", getWidth() / 2, getHeight() / 2);
-                g.drawString("Chips Level: " + 0, getWidth() - 100, getHeight() / 2);
+                g.drawString(levelName, 80, 50);
+                g.drawString("Time Remaining: " + GameClock.get().currentLevelTime() / 1000, 50, getHeight() / 2 - 100);
+                g.drawString("Keys Remaining: " + GameHandler.get().chipsRemaining(), 50, getHeight() - 250);
             }
         };
-        timerPanel.setMaximumSize(new Dimension(640, 75));
+        timerPanel.setMaximumSize(new Dimension(200, 480));
         timerPanel.setFocusable(false);
 
-        gameplayPanel.setMaximumSize(new Dimension(640, 405));
+        gameplayPanel.setMaximumSize(new Dimension(440, 480));
         gameplayPanel.setFocusable(false);
-        return List.of(timerPanel, gameplayPanel);
+        return List.of(gameplayPanel, timerPanel);
     }
 
     @Override
     public GameState nextLevel() {
-        return new Level("Level2", domain, new Render());
+        return new Level("level2", domain, new Render());
     }
 }

@@ -1,11 +1,15 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import gameImages.Img;
+
+import java.awt.*;
+
 /**
  * Chip is the player's character, it can move and interact with entities and tiles.
  */
 public class Chip extends MovingEntity {
 	public Chip(){
-		super(Direction.Down, new Coord(7,8));	// TODO: un-hardcode chip coords
+		super(Direction.Down, new Coord(-1,-1));
 	}
 	public Chip(Direction facingDir, Coord c){
 		super(facingDir, c);
@@ -27,10 +31,14 @@ public class Chip extends MovingEntity {
 
 	@Override
 	public int drawHierarchy() {
-		throw new Error("Code not done!");	//TODO
+		return 1;
 	}
 
 	public String toString() {
 		return "c";
+	}
+
+	public Image getImage() {
+		return Img.Chip.image;
 	}
 }

@@ -6,6 +6,7 @@ import java.awt.*;
 
 /**
  * The Key entity allows Chip to unlock LockedDoors of the same colour when the key is in the player's inventory.
+ * Disappears after use unless it is a green key.
  */
 public class Key implements Entity {
 	public String keyColour;
@@ -24,7 +25,10 @@ public class Key implements Entity {
 	@Override
 	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
 		if (!(e instanceof Chip p)) return true;
-		if (p.level.addToInventory(this)) myCell.removeEntity(this);
+		if (p.level.addToInventory(this)) {
+			myCell.removeEntity(this);
+			e.level.addSoundToPlay(this);
+		}
 		return true;
 	}
 

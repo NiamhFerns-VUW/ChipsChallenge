@@ -139,7 +139,6 @@ public class Fuzz{
         Fuzz f = new Fuzz();
         //use comment and uncomment to switch between random keys and actions
 
-        //f.testInputStrategy(inputStrategy, 100000, "level1");
 //        InputStrategy inputStrategy = new ProbInput();
 //        f.testInputStrategy(inputStrategy, 100000, "level1");
 

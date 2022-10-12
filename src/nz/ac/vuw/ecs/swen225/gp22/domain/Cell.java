@@ -9,9 +9,11 @@ import java.util.Optional;
  * Each Cell keeps track of the tile it is made up of and the entities on it.
  */
 public class Cell {
+	private FreeTile freeTile;
 	private FreeTile storedTile;
-	private ArrayList<Entity> entities;
+	private List<Entity> entities;
 
+	private Coord coord;
 	/**
 	 * Default Constructor for the cell leaves the tile as a blank FreeTile
 	 */
@@ -23,7 +25,31 @@ public class Cell {
 		this.storedTile = storedTile;
 		entities = new ArrayList<Entity>();
 	}
-	public boolean beforeMoveInto(MovingEntity e, Direction d) {
+
+	public FreeTile getFreeTile() {
+		return freeTile;
+	}
+
+	public void setFreeTile(FreeTile freeTile) {
+		this.freeTile = freeTile;
+	}
+	public void setEntities(List<Entity> entities) {
+		this.entities = entities;
+	}
+
+	public Coord getCoord() {
+		return coord;
+	}
+
+	public void setCoord(Coord coord) {
+		this.coord = coord;
+	}
+
+	public Cell(FreeTile freeTile, List<Entity> entities) {
+		this.freeTile = freeTile;
+		this.entities = entities;
+	}
+    public boolean beforeMoveInto(MovingEntity e, Direction d) {
 		return storedTile.onMoveInto(e, d, this) &&
 				entities.stream().allMatch(a -> a.interactBefore(e, d, this));
 	}

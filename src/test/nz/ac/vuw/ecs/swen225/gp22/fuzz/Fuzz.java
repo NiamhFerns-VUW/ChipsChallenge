@@ -76,7 +76,6 @@ public class Fuzz{
          * This method generates a mouse click at a location
       */
     public void mouseTest() throws AWTException {
-        GameHandler game = null;
         Robot robot = new Robot();
 
         robot.mouseMove(1050, 550);
@@ -114,9 +113,23 @@ public class Fuzz{
             testClock();
 
             from.get(index).run();
-            System.out.println("Action: " + from.get(index));
+            System.out.println("Action: " + printActionName(index));
             robot.delay(10);
             index = random.nextInt(from.size());
+        }
+    }
+    /**
+     * This method is used to print the name of the action which works for actiontest() method
+     * @param index
+     * @return the name of the action
+     */
+    public String printActionName(int index) {
+        switch(index) {
+            case 0: return "up";
+            case 1: return "down";
+            case 2: return "left";
+            case 3: return "right";
+            default: return "unknown";
         }
     }
     /**

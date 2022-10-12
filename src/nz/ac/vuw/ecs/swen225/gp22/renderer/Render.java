@@ -12,6 +12,8 @@ import java.util.Optional;
 /**
  * The Render class is the main class of the Renderer Module.
  * This class draws to the Graphics pannel supplied by App and calls the Sound class to create sound effects.
+ *
+ * @author kittmcevoy 300522463
  * */
 public class Render extends JPanel {
 

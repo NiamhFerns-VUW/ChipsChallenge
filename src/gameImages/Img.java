@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 
 /**
  * Enum for creating and loading images
+ *
+ *  * @author kittmcevoy 300522463
  * */
 public enum Img{
     BlueLockeddoor,

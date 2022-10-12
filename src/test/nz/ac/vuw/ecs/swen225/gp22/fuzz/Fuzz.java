@@ -7,7 +7,6 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import nz.ac.vuw.ecs.swen225.gp22.fuzz.ProbInput;
 
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +39,7 @@ public class Fuzz{
                 robot.keyPress(KeyEvent.VK_CONTROL);
                 System.out.println("Pressing control");
             }
+            testClock();
             robot.keyPress(key);
             System.out.println("Pressing " + KeyEvent.getKeyText(key));
             robot.keyRelease(key);

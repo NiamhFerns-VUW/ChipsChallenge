@@ -1,5 +1,10 @@
+/**
+ * @author Micky Snadden
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
+import gameImages.Img;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,10 +21,16 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Info;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
 import nz.ac.vuw.ecs.swen225.gp22.domain.LockedDoor;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MoveableBlock;
+import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pit;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Wall;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 
+/**
+ * Singleton class that holds source code versions of level 1 and level 2.
+ * Acts as source of truth to check deserialized xml against.
+ */
 public class LevelMap {
 
     private static LevelMap instance = null;
@@ -34,7 +45,7 @@ public class LevelMap {
         initLevel1Map();
         initLevel2Map();
     }
-    public void initLevel1Map() {
+    private void initLevel1Map() {
         this.level1Map = new HashMap<>();
         // --------------------------------------------
         // Row 0
@@ -1916,7 +1927,7 @@ public class LevelMap {
             cell.setCoord(coord);
         });
     }
-    public void initLevel2Map() {
+    private void initLevel2Map() {
         this.level2Map = new HashMap<>();
         // --------------------------------------------
         // Row 0
@@ -2396,7 +2407,35 @@ public class LevelMap {
                 new ArrayList<>(List.of())
             ));
             level2Map.put(new Coord(7,5),new Cell(
-                // TODO implement CustomMonster
+                new FreeTile(),
+                List.of(
+                    new CustomMovingEntityService() {
+                        @Override
+                        public List<Direction> directionList() {
+                            return List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down);
+                        }
+
+                        @Override
+                        public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
+                            return false;
+                        }
+
+                        @Override
+                        public int drawHierarchy() {
+                            return 0;
+                        }
+
+                        @Override
+                        public Image getImage() {
+                            return Img.Chip.image;
+                        }
+                    }
+                )
             ));
             level2Map.put(new Coord(8,5),new Cell(
                 new Wall(),
@@ -3792,16 +3831,24 @@ public class LevelMap {
         });
     }
 
+    /**
+     *
+     * @return Unmodifiable map of coords to cells for level 1.
+     */
     public Map<Coord, Cell> getLevel1Map() {
         return Collections.unmodifiableMap(level1Map);
     }
 
+    /**
+     *
+     * @return Unmodifiable map of coords to cells for level 2.
+     */
     public Map<Coord, Cell> getLevel2Map() {
         return Collections.unmodifiableMap(level2Map);
     }
 
     /**
-     * Used to get singleton instance.
+     * Used to get singleton instance of LevelMap.
      * @return
      */
     public static LevelMap get() {

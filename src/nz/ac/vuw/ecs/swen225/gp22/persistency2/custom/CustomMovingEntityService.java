@@ -26,6 +26,9 @@ public abstract class CustomMovingEntityService extends MovingEntity {
         this.iterator = directionList().listIterator();
     }
 
+    public CustomMovingEntityService() {
+        super(Direction.None,new Coord(-1,-1));
+    }
     /**
      * Houses the directions the custom moving entity will go.
      * @return

@@ -1,3 +1,6 @@
+/**
+ * @author Micky Snadden
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.custom;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +11,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 import org.junit.jupiter.api.Test;
 
 class CustomMovingEntityServiceTest {

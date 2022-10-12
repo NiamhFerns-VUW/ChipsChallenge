@@ -1,3 +1,6 @@
+/**
+ * @author Micky Snadden
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
 import static org.junit.jupiter.api.Assertions.*;

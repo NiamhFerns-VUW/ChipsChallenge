@@ -6,13 +6,17 @@ import javax.sound.sampled.*;
 
 
 /**
- * SoundEffect class to construct clips
- * for sound playing in the Audio player.
+ * Sound class to construct clips for sound effects
+ *
  */
 public class Sound {
     private Clip clip;
-    URL[] soundURL = new URL[5];
+    private final URL[] soundURL = new URL[5];
 
+
+    /**
+     * Creates a list of the sounds that are used for the game
+     * */
     public Sound() {
         soundURL[0] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/keys.wav");
         soundURL[1] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/door_opening.wav");
@@ -20,6 +24,11 @@ public class Sound {
         soundURL[3] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/walking.wav");
     }
 
+    /**
+     * Sets the file to be played.
+     *
+     * @param i, the number of the file to be played
+     * */
     public void setFile(int i) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
@@ -30,6 +39,9 @@ public class Sound {
         }
     }
 
+    /**
+     * Plays the sound effect
+     * */
     public void play(){
         clip.start();
     }

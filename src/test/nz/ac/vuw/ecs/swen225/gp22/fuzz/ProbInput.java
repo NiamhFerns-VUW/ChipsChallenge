@@ -2,11 +2,14 @@ package nz.ac.vuw.ecs.swen225.gp22.fuzz;
 
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-class ProbInput implements InputStrategy {
-    private int key;
-    private int prevKey;
-    private InputStrategy inputStrategy;
+/**
+ * This class is used to generate random inputs for the game with different probabilities.
+ */
+
+public class ProbInput implements InputStrategy {
     Random random = new Random();
     private int[] keys = {
             KeyEvent.VK_UP,
@@ -18,34 +21,32 @@ class ProbInput implements InputStrategy {
             KeyEvent.VK_S,
             KeyEvent.VK_R
     };
-    public ProbInput() {key = keys[random.nextInt(keys.length)];}
 
     @Override
-    public int nextInput() {
-        int[] keysWithoutUp = { KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE, KeyEvent.VK_S, KeyEvent.VK_R };
-        int[] keysWithoutDown = { KeyEvent.VK_UP, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE, KeyEvent.VK_S, KeyEvent.VK_R };
-        int[] keysWithoutLeft = { KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE, KeyEvent.VK_S, KeyEvent.VK_R };
-        int[] keysWithoutRight = { KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE, KeyEvent.VK_S, KeyEvent.VK_R };
+    public int nextInput(Input input) {
+        double[] weightMost = {0.2, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1};
+        double[] weightAfterS = {0, 0, 0, 0, 0, 0, 0, 1};
+        double[] weightAfterSpace = {0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.1, 0.1};
 
-        int[] from = switch (prevKey) {
-            case KeyEvent.VK_UP -> keysWithoutDown;
-            case KeyEvent.VK_DOWN -> keysWithoutUp;
-            case KeyEvent.VK_LEFT -> keysWithoutRight;
-            case KeyEvent.VK_RIGHT -> keysWithoutLeft;
-            default -> keys;
+        double[] fromProb = switch (input.prevKey) {
+            case KeyEvent.VK_S -> weightAfterS;
+            case KeyEvent.VK_SPACE -> weightAfterSpace;
+            default -> weightMost;
         };
-        if (prevKey == KeyEvent.VK_S) {
-            inputStrategy = new FollowedInput();
-        }
 
-        key = from[random.nextInt(from.length)];
-        prevKey = key;
-        return key;
+        int[] from = IntStream.range(0, fromProb.length)
+                .filter(i -> fromProb[i] > 0)
+                .mapToObj(i -> IntStream.range(0, (int) (fromProb[i] * 100)).map(j -> keys[i]).toArray())
+                .flatMapToInt(IntStream::of)
+                .toArray();
+
+        return from[random.nextInt(from.length)];
     }
 
+
     @Override
-    public boolean isPressCtrl() {
-        return (key == KeyEvent.VK_S || key == KeyEvent.VK_R);
+    public boolean isPressCtrl(Input input) {
+        return (input.key == KeyEvent.VK_S || input.key == KeyEvent.VK_R);
     }
 }
 

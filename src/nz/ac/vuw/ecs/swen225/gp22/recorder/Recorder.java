@@ -26,7 +26,7 @@ import java.util.Stack;
 public class Recorder {
 
     private ArrayList<Step> currentRecording;
-    private static String currentLevel = "zero";
+    private String currentLevel = "zero";
     private boolean startRecording = false;
 
 
@@ -166,7 +166,7 @@ public class Recorder {
      *
      * @author Santino Gaeta
      */
-    public static Replayer loadRecording(){
+    public Replayer loadRecording(){
         JFileChooser jfc = new JFileChooser("./src/levels/");
         jfc.setDialogTitle("Select XmlFile of Recording to Replay");
         jfc.setFileFilter(new FileNameExtensionFilter("Extensible Markup Language", "xml"));

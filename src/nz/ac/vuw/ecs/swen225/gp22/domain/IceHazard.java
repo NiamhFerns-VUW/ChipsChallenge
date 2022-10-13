@@ -10,6 +10,11 @@ public class IceHazard extends Hazard {
 	}
 	@Override
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
-		throw new Error("Code not done!");	//TODO
+		return true;
+	}
+
+	@Override
+	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
+		return e.move(d);
 	}
 }

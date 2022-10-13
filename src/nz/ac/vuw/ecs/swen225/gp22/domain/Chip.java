@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
 import gameImages.Img;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 
 import java.awt.*;
 
@@ -22,6 +23,8 @@ public class Chip extends MovingEntity {
 
 	@Override
 	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
+		if (e instanceof CustomMovingEntityService) e.level.onDeath.run();
+
 		return false;
 	}
 

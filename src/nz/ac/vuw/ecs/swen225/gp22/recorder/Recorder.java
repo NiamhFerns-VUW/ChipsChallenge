@@ -1,7 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Stack;
 
+
 /**
  * Represents a Recorder implemented in App, where Recorder stores Chip's movements into an Array
  * of Steps.
@@ -21,14 +22,13 @@ import java.util.Stack;
  * Recorder can also load those xml files from levels folder and produce a Replayer object, who can
  * replay those levels and re-enact Chip's movements during the level that was recorded.
  *
- * @author Santino Gaeta
+ * @author Santino Gaeta 300305101
  */
 public class Recorder {
 
     private ArrayList<Step> currentRecording;
     private String currentLevel = "zero";
     private boolean startRecording = false;
-
 
     /**
      * Initialises List of RecordedLevels and List of moves from currentRecording
@@ -40,18 +40,16 @@ public class Recorder {
     }
 
     /**
-     * Sets Recorder to start recording inputs from App
+     * Sets Recorder to start recording inputs from App's InputHandler
      *
      * @author Santino Gaeta
      */
-    public void start(){
-        startRecording = true;
-    }
+    public void start() {startRecording = true;}
 
     /**
      * Triggers once currentRecording is saved at the end of Level
      * Clears the currentRecording of all moves from the level, ready for recording new level
-     * Sets currentLevel to zero - should be set at beginning of each level
+     * Sets currentLevel to zero - will be set at beginning of each level
      * Sets Recorder to stop recording inputs - in case of a lull period before levels
      *
      * @author Santino Gaeta
@@ -73,15 +71,6 @@ public class Recorder {
     }
 
     /**
-     * @return currentRecording - List of moves from the current recorded level
-     *
-     * @author Santino Gaeta
-     */
-    public ArrayList<Step> getCurrentRecording(){
-        return currentRecording;
-    }
-
-    /**
      * Recording when Player moves Chip 'Up'
      *
      * @author Santino Gaeta
@@ -90,7 +79,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Up", time));
-            System.out.println("Move UP recorded at time " +time);
         }
     }
 
@@ -103,7 +91,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Down", time));
-            System.out.println("Move DOWN recorded at time " +time);
         }
     }
 
@@ -116,7 +103,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Left", time));
-            System.out.println("Move LEFT recorded at time " +time);
         }
     }
 
@@ -129,7 +115,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Right", time));
-            System.out.println("Move RIGHT recorded at time " +time);
         }
     }
 
@@ -146,23 +131,24 @@ public class Recorder {
     }
 
     /**
-     * Call Persistency to convert Array of Steps into XmlFile and save in folder.
+     * Converts an Array of Steps into XmlFile and save in folder "./src/levels/"
      * Then resets the Recorder - ready for recording a new level
      *
      * @author Santino Gaeta
      */
     public void saveRecording(){
-        if(currentRecording.size() == 0){return;}       //For changing from micro to Main State in App
+        if(currentRecording.size() == 0){return;}
         saveStepArrayListToXml(currentRecording, currentLevel);
-        System.out.println(currentLevel+" recorded and saved."); //For Testing
         reset();
     }
 
     /**
-     *  loadRecording brings up a file picker for the user to choose which recording to laod
-     *  The file choosen gets sent to Persistency to be converted into a Stack<Step>
+     *  Called via App's Start Screen - clicking on "Load Recording" button
+     *  loadRecording brings up a file picker for the user to choose which xmlFile Recording to laod
+     *  The file's name is checked and sets the level - used to create Replayer with
+     *  Converts the file into Stack using convertXmlToStack(File) and returns a Replayer
      *
-     * @return Replayer  - initialised with Stack from converted xmlFile using Persistency classes
+     * @return Replayer  - initialised with Stack from converted xmlFile using convertXmlToStack(File)
      *
      * @author Santino Gaeta
      */
@@ -177,18 +163,19 @@ public class Recorder {
         File xmlFile = jfc.getSelectedFile();
         if(xmlFile.toString().contains("level1Recording")){currentLevel = "level1";}
         else if(xmlFile.toString().contains("level2Recording")){currentLevel = "level2";}
-
-        System.out.println(xmlFile.toString());
-        Replayer rep = new Replayer(convertXmlToHistoryStack(xmlFile), currentLevel);
-        System.out.println(rep.getReplayLevel());
-
-        return new Replayer(convertXmlToHistoryStack(xmlFile), currentLevel);
+        else{return null;}
+        return new Replayer(convertXmlToStack(xmlFile), currentLevel);
     }
 
     /**
+     * Creates an XmlMapper to convert each Step within the ArrayList into an XmlFile
+     * Then stores the XmlFile in "./src/levels/" either under level1Recording.xml or
+     * level2Recording.xml, depending on what level was recorded
      *
-     * @param chipMoves
-     * @param level
+     * @param chipMoves - ArrayList of Steps containing Chip's movement during the recorded level
+     * @param level - name of the Level that was recorded
+     *
+     * @author Santino Gaeta
      */
     public void saveStepArrayListToXml(ArrayList<Step> chipMoves, String level){
         XmlMapper mapper = new XmlMapper();
@@ -206,19 +193,29 @@ public class Recorder {
     }
 
     /**
+     * Creates an XmlMapper and grabs the chosen XmlFile via InputStream
+     * Using the TypeReference for the Xml to be converted back into an ArrayList<Step>
+     * Then in reverse order, creates a Stack of Steps for the Replayer to use so moves are in
+     * correct order to .pop() and replay.
+     * Checks if a move is created at time 9000 and removes it
      *
-     * @param xmlFile
-     * @return
+     * @param xmlFile - Chosen by User in loadRecording()
+     * @return Stack<Step> - the history of Chip's moves with first move at the top
+     *
+     * @author Santino Gaeta
      */
-    public static Stack<Step> convertXmlToHistoryStack(File xmlFile){
+    public static Stack<Step> convertXmlToStack(File xmlFile){
         XmlMapper mapper = new XmlMapper();
         try{
             InputStream input = new FileInputStream(xmlFile);
-            TypeReference<ArrayList<Step>> step = new TypeReference<ArrayList<Step>>(){};
+            TypeReference<ArrayList<Step>> step = new TypeReference<>(){};
             ArrayList<Step> chipHistory = mapper.readValue(input, step);
             Stack<Step> history = new Stack<>();
             for(int i = chipHistory.size()-1; i >= 0; i--){
                 history.push(chipHistory.get(i));
+            }
+            if(history.peek().getTime()==90000){
+                history.pop();
             }
             return history;
         }catch(IOException e){

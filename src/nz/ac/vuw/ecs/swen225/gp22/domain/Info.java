@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * The Info tile displays text when Chip is standing on it.
+ *
+ * @author James Gordon - 300577473
  */
 public class Info extends FreeTile {
 	public String infoText;

@@ -7,11 +7,13 @@ import java.awt.*;
 
 /**
  * Chip is the player's character, it can move and interact with entities and tiles.
+ *
+ * @author James Gordon - 300577473
  */
 public class Chip extends MovingEntity {
 
 	/**
-	 * No-arguments constructor for Chip allows creating Chip without setting a proper coordinate yet.
+	 * No-arguments constructor for Chip allows creating Chip without setting a proper coordinate immediately.
 	 */
 	public Chip(){
 		super(Direction.Down, new Coord(-1,-1));

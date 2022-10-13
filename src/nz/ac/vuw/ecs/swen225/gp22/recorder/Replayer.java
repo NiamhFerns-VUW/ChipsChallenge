@@ -1,7 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
+
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
 import java.util.Stack;
+
 
 /**
  * Replayer represents an object that can replay levels that have been recorded.
@@ -11,11 +13,11 @@ import java.util.Stack;
  * the user to make the AutoReplay faster or slower.
  * And StepByStep allows User to move through each step made by chip in their own time, on Step at a time.
  *
- * @author Santino Gaeta
+ * @author Santino Gaeta 300305101
  */
 public class Replayer implements Observer {
 
-    private int replaySpeed = 1;
+    private int replaySpeed = GameClock.get().DEFAULT_FRAMERATE;
     private Stack<Step> history;
     private Stack<Step> prev;
     private String currentLevel;
@@ -26,8 +28,10 @@ public class Replayer implements Observer {
     /**
      * Replayer initialised with a Stack of Chip's moves to go through and replay
      * Also GameHandler of currently level and InputGenerator invoking moves on Chip
-     * AutoReplay mode on default
-     * @param gameHistory - Stack of Steps
+     * AutoReplay mode on default at default speed
+     *
+     * @param gameHistory - Stack<Steps> Chip's movements to be replayed
+     * @param level - A String of which level was recorded
      *
      * @author Santino Gaeta
      */
@@ -37,26 +41,30 @@ public class Replayer implements Observer {
         prev = new Stack<>();
         gameHandler = GameHandler.get();
         inputGenerator = new InputGenerator(gameHandler);
+        setReplaySpeed(GameClock.get().DEFAULT_FRAMERATE);
+
     }
 
     /**
      * Implementing GameClock in App, Replayer will update each tick of GameClock
-     * If the history Stack is empty nothing happens
-     * Depending on the autoReplayState either StepbyStep or AutomaticReplay will be called
+     * If the history Stack, empty time is speed up to return to Menu
+     * If AutoReplay Mode and the next Step's time matches up with GameClock,
+     * autoReplay() will replay the next movement of Chip
      *
      * @author Santino Gaeta
      */
     @Override
     public void update() {
-        if(history.isEmpty()){return;}
-        if(autoReplayState && history.peek().getTime()==GameClock.get().currentLevelTime()){autoReplay();}
-        //if(!autoReplayState){stepByStep(); return;} //take this out? And just have button call stepByStep method itself?
+        if(history.isEmpty()){setReplaySpeed(10000);}
+        else if(autoReplayState && history.peek().getTime()==GameClock.get().currentLevelTime()){
+            autoReplay();
+        }
     }
 
     /**
      * Automatic Replay
      * If the next move occurs at the currentLeveltime of the GameClock - will replay move on update()
-     * Also pushes each move into the prev Stack in case User wants to go backwards (Backwards not implemented yet)
+     * Also pushes each move into the prev Stack in case User wants to go backwards (Backwards not implemented)
      *
      * @author Santino Gaeta
      */
@@ -64,16 +72,13 @@ public class Replayer implements Observer {
         Step currentStep = history.pop();
         prev.push(currentStep);
         replayStep(currentStep);
-        System.out.println(currentStep.replayerToString());
     }
 
     /**
      * Step-by-Step Replay
      * Sets Automatic replay off in case Automatic replay was currently on
      * Moves Step from history Stack to prev Stack and replays that move direction
-     * If move was direction "None" will look for next step not "None" and return that instead
-     *
-     * @return - move in direction that Chip had made
+     * If move was direction "None" will look for next step not "None" and replay that instead
      *
      * @author Santino Gaeta
      */
@@ -81,18 +86,17 @@ public class Replayer implements Observer {
         autoReplayState = false;
         Step currentMove = history.pop();
         prev.push(currentMove);
-
         if(currentMove.getMove().equals("None")){
             Step validMove = skipEmptySteps();
-            System.out.println("StepbyStep skipping None Actions to : "+validMove.replayerToString());
             replayStep(validMove);
         }
-        System.out.println("StepbyStep: "+currentMove.replayerToString());
-        replayStep(currentMove);
+        else{
+            replayStep(currentMove);
+        }
     }
 
     /**
-     * Invokes inputGenerator from App to move Chip in Game during replay
+     * Invokes InputGenerator from App to move Chip in Game during replay
      * @param step - Step popped from history Stack to be invoked on Chip
      *
      * @author Santino Gaeta
@@ -109,7 +113,7 @@ public class Replayer implements Observer {
      * Will look through history Stack until a move that is not "None" direction appears and returns it
      * If Stack is empty and no moves other than "None" are found, the last move is returned anyway, even if "None"
      *
-     * @return - move that is not "None" or returns the last move of the stack
+     * @return Step - move that is not "None" or returns the last move of the stack
      *
      * @author Santino Gaeta
      */
@@ -121,7 +125,6 @@ public class Replayer implements Observer {
                 return move;
             }
         }
-        //takes the last move (even "None") off prev stack
         history.push(prev.pop());
         return history.pop();
     }
@@ -133,30 +136,9 @@ public class Replayer implements Observer {
      * @author Santino Gaeta
      */
     public void resetReplayer(){
-        //display level back to the beginning (reload through app?)
         while(!prev.isEmpty()){history.push(prev.pop());}
         autoReplayState = false;
         replaySpeed = 1;
-    }
-
-    /**
-     * Returns the Stack containing Chip's history of moves
-     * @return Stack of Steps (Chip's move history)
-     *
-     * @author Santino Gaeta
-     */
-    public Stack<Step> getHistory(){
-        return history;
-    }
-
-    /**
-     * Returns the Stack containing Chip's moves already made by the Replayer
-     * @return Stack of Steps (Chip's replay moves history)
-     *
-     * @author Santino Gaeta
-     */
-    public Stack<Step> getPrevStack(){
-        return prev;
     }
 
     /**
@@ -168,25 +150,28 @@ public class Replayer implements Observer {
     public String getReplayLevel(){return currentLevel;}
 
     /**
-     * Changes speed of automatic replay to play faster or slower by changing tick interval on GameClock
+     * Changes speed of automatic replay to play faster or slower by changing tickRate on GameClock
      * @param newSpeed - int the user wishes to change the automatic replay speed to
      *
      * @author Santino Gaeta
      */
     public void setReplaySpeed(int newSpeed){
         this.replaySpeed = newSpeed;
-        //GameClock.setTickRate(1000/GameClock.getFrameRate() * replaySpeed);
+        GameClock.setTickRate(replaySpeed);
+        GameClock.get().pause();
+        GameClock.get().unpause();
     }
 
     /**
      * Switches the Replayer's state to change from StepByStep into Automatic Replay mode
-     * Sets autoReplayState boolean to true (false for StepByStep)
+     * Starts the GameClock update() up again
      *
      * @author Santino Gaeta
      */
     public void setAutoReplay(){
         autoReplayState = true;
-        //GameClock
+        GameClock.get().pause();
+        GameClock.get().unpause();
     }
 
 }

@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * Can be pushed around by moving into it - it blocks movement if it cannot be pushed forwards.
+ *
+ * @author James Gordon - 300577473
  */
 public class MoveableBlock extends MovingEntity {
 

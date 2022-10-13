@@ -8,7 +8,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Objects;
 
 /**
- * Coordinates store an x,y position in the game. Limitations prevented it from being a record.
+ * Coordinates store an x,y position in the game. Limitations prevent it from being a record.
+ *
+ * @author James Gordon - 300577473
  */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @JsonSerialize

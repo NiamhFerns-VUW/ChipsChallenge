@@ -6,6 +6,7 @@ package nz.ac.vuw.ecs.swen225.gp22.persistency2.custom;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Image;
+import java.io.File;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
@@ -15,6 +16,10 @@ import org.junit.jupiter.api.Test;
 
 class CustomMovingEntityServiceTest {
 
+    @Test
+    void testGetAssociatedLevelFile() {
+        CustomMovingEntityService entity = createEntity();
+    }
     @Test
     void directionList() {
         CustomMovingEntityService entity = createEntity();
@@ -36,6 +41,11 @@ class CustomMovingEntityServiceTest {
     public CustomMovingEntityService createEntity() {
         return new CustomMovingEntityService(
             Direction.None, new Coord(-1, -1)) {
+
+            @Override
+            public File getAssociatedLevelFile() {
+                return new File("level2.xml");
+            }
 
             @Override
             public List<Direction> getDirectionList() {

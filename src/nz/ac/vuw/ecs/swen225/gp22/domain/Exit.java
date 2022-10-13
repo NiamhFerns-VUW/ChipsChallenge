@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * The exit is Chip's goal. When Chip stands on the exit's cell the level is won.
+ *
+ * @author James Gordon - 300577473
  */
 public class Exit extends FreeTile {
     @Override

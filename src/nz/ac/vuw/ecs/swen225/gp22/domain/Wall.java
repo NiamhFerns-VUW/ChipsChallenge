@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * The FreeTile is a basic tile that prevents movement onto it.
+ *
+ * @author James Gordon - 300577473
  */
 public class Wall extends FreeTile {
 	@Override

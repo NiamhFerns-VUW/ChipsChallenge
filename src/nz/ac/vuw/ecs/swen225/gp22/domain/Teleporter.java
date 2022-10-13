@@ -8,6 +8,8 @@ import java.util.stream.IntStream;
 
 /**
  * Teleporters teleport the target to the other teleporter of the same colour when they are stepped on.
+ *
+ * @author James Gordon - 300577473
  */
 public class Teleporter extends FreeTile {
 	public String teleColour;

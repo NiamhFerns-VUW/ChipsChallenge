@@ -1,5 +1,5 @@
 /**
- * @author Micky Snadden
+ * @author Micky Snadden 300569572
  */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.custom;
 
@@ -16,7 +16,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +48,8 @@ public abstract class CustomMovingEntityService extends MovingEntity {
         super(Direction.None, new Coord(-1, -1));
     }
 
+    @JsonIgnore
+    public abstract File getAssociatedLevelFile();
     /**
      * Houses the directions the custom moving entity will go.
      *
@@ -55,6 +59,9 @@ public abstract class CustomMovingEntityService extends MovingEntity {
     @JsonDeserialize(using = DirectionListDeserializer.class)
     public abstract List<Direction> getDirectionList();
 
+    /**
+     * Used to serialize the List of directions.
+     */
     public static class DirectionListSerializer extends
         StdSerializer {
 
@@ -71,6 +78,10 @@ public abstract class CustomMovingEntityService extends MovingEntity {
             serializerProvider.defaultSerializeValue(o,jsonGenerator);
         }
     }
+
+    /**
+     * Used to deserialize the list of directions back into enums.
+     */
     public static class DirectionListDeserializer extends
         StdDeserializer {
 

@@ -1,5 +1,5 @@
 /**
- * @author Micky Snadden
+ * @author Micky Snadden 300569572
  */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
@@ -15,6 +15,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 
 /**
  * Represents a state in the game which can be serialized and deserialized.
+ * A gamesave with empty inventory and time set to 100 is the start of a level.
  */
 public class GameSave {
 
@@ -26,6 +27,13 @@ public class GameSave {
 
     private List<Cell> cellList;
 
+    /**
+     * GameSave constructor, annotations allow the jackson library to know how to serialize and
+     * deserialize the gamesave.
+     * @param cellList list of cells saved.
+     * @param time current time at cells being saved.
+     * @param inventory list of entities chap possesses at time of save.
+     */
     @JsonCreator
     public GameSave(
         @JsonProperty("cellList") List<Cell> cellList,
@@ -45,7 +53,7 @@ public class GameSave {
     }
 
     /**
-     * @return indented xml representing the current object.
+     * @return indented xml representing the current gamesave object.
      */
     @Override
     public String toString() {

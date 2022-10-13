@@ -10,6 +10,8 @@ import java.util.Optional;
 
 /**
  * Blocks movement until it is unlocked by Chip with a Key of the same colour. Green Keys don't disappear when used.
+ *
+ * @author James Gordon - 300577473
  */
 public class LockedDoor extends FreeTile {
 	public String lockColour;

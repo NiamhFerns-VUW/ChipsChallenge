@@ -8,6 +8,8 @@ import java.util.Optional;
 
 /**
  * Each Cell keeps track of the tile it is made up of and the entities on it.
+ *
+ * @author James Gordon - 300577473
  */
 public class Cell {
 	private FreeTile storedTile;

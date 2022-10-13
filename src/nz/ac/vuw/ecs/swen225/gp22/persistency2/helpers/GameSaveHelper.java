@@ -7,9 +7,15 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.ServiceLoader;
+import java.util.stream.Stream;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.GameSave;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityServiceProvider;
 
 public class GameSaveHelper {
 
@@ -21,8 +27,29 @@ public class GameSaveHelper {
         return gameSave;
     }
     public static GameSave getLevel2GameSave() throws IOException {
-        Map<Coord, Cell> level1Map = LevelMap.get().getLevel2Map();
+        Map<Coord, Cell> level2Map = LevelMap.get().getLevel2Map();
         GameSave gameSave = loadGameSave(Path.of(LEVEL_PATH+"/level2.xml"));
+        ServiceLoader<CustomMovingEntityService> loader = ServiceLoader.load(CustomMovingEntityService.class);
+        if (loader.findFirst().isEmpty()) {
+            return gameSave;
+        }
+        List<Cell> cellList = gameSave.getCellList();
+        List<Cell> cellsWithCustomEntities = cellList.stream()
+            .filter(cell -> cell.getEntities().stream()
+                .anyMatch(e -> e instanceof CustomMovingEntityService))
+            .toList();
+        cellsWithCustomEntities.forEach(cell -> {
+            List<Entity> origEntities = cell.getEntities();
+            List<Entity> customEntities = cell.getEntities().stream()
+                .filter(e -> e instanceof CustomMovingEntityService).toList();
+            customEntities.forEach(customEntity -> {
+                int indexOfCustomEntity = origEntities.indexOf(customEntity);
+                if (loader.findFirst().isPresent()) {
+                    origEntities.set(indexOfCustomEntity,loader.findFirst().get());
+                }
+            });
+            cell.setEntities(origEntities);
+        });
         return gameSave;
     }
     public static GameSave loadGameSave(Path path) throws IOException {

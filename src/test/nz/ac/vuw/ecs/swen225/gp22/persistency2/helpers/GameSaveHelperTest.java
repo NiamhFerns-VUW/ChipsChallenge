@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Optional;
+import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.GameSave;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 import org.junit.jupiter.api.Test;
 
 class GameSaveHelperTest {
@@ -15,8 +18,14 @@ class GameSaveHelperTest {
     }
 
     @Test
-    void getLevel2GameSave() {
-        // compare against source of truth source code levels
+    void getLevel2GameSave() throws IOException {
+        GameSave level2GameSave = GameSaveHelper.getLevel2GameSave();
+        Optional<Cell> cellWithCustomMovingEntity = level2GameSave.getCellList().stream().filter(cell -> {
+            return cell.getEntities().stream().filter(e -> e.getClass().getName().toString().equals(
+                CustomMovingEntityService.class.getName())).isParallel();
+        }).findAny();
+        assertTrue(cellWithCustomMovingEntity.isEmpty());
+        // TODO compare against source of truth source code levels
     }
 
     @Test
@@ -47,5 +56,9 @@ class GameSaveHelperTest {
         );
         assertEquals(level2GameSave,gameSave);
 
+    }
+    @Test
+    public void tmpTest() throws IOException {
+        GameSave level2GameSave = GameSaveHelper.getLevel2GameSave();
     }
 }

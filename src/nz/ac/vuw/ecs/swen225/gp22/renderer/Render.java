@@ -50,6 +50,7 @@ public class Render extends JPanel {
      * to figure out the cells that need to be drawn and the cells that do not.
      *
      * @return Array of two integers, the first being the x co-ordinate and the second is the y co-ordinate
+     * @param cells, A 2d array of cells
      */
     private ArrayList<Integer> findChip(Cell[][] cells) {
         ArrayList<Integer> chipsCells = new ArrayList<>();
@@ -78,13 +79,19 @@ public class Render extends JPanel {
         ArrayList<String> results = new ArrayList<>();
         String[] strings = text.split(" ");
         for (int i = 0; i < strings.length; i++) {
-            if(i < strings.length-1){
-                if(strings[i].length() + strings[i+1].length() + strings[i+2].length() <= 19){
+            if(i < strings.length-2){
+                if(strings[i].length() + strings[i+1].length() + strings[i+2].length() <= 25){
                     results.add(strings[i]+ " " + strings[i+1] + " " + strings[i+2]);
                     i++;
                     i++;
                 }
-                else if(strings[i].length() + strings[i+1].length() <= 19){
+                else if(strings[i].length() + strings[i+1].length() <= 25){
+                    results.add(strings[i]+ " " + strings[i+1]);
+                    i++;
+                }
+            }
+            else if(i < strings.length -1){
+                if(strings[i].length() + strings[i+1].length() <= 25){
                     results.add(strings[i]+ " " + strings[i+1]);
                     i++;
                 }
@@ -105,6 +112,8 @@ public class Render extends JPanel {
     public void paintComponent(Graphics g) {
         boolean cellsPresent = this.domain.getLevel().isPresent();
         Cell[][] cells;
+        boolean drawInfo = false;
+        String infoText = null;
         if (cellsPresent) {
             cells = this.domain.getLevel().get().cells;
 
@@ -157,15 +166,12 @@ public class Render extends JPanel {
                             }
                             if(c.getStoredTile().getClass().equals(Info.class)){
                                 if(e.getClass().equals(Chip.class)){
+                                    drawInfo = true;
                                     Info cellI = (Info) c.getStoredTile();
-                                    ArrayList<String> strings = splitString(cellI.infoText);
-                                    g.setColor(Color.yellow);
-                                    g.setFont(new Font("SansSerif", Font.BOLD, 30));
-                                    int l = 0;
-                                    for(String s : strings){
-                                        g.drawString(s, 70, 70+(30*l));
-                                        l++;
-                                    }
+                                    infoText = cellI.infoText;
+                                }
+                                else{
+                                    drawInfo = false;
                                 }
                             }
                         }
@@ -174,6 +180,19 @@ public class Render extends JPanel {
                 }
                 j = 0;
                 i++;
+            }
+
+            if(drawInfo){
+                ArrayList<String> strings = splitString(infoText);
+                int l = 0;
+                g.setColor(Color.BLUE);
+                g.setFont(new Font("SansSerif", Font.BOLD, 30));
+                Graphics2D g2d = (Graphics2D) g.create();
+                FontMetrics fm = g2d.getFontMetrics();
+                for(String s : strings) {
+                    g.drawString(s, getWidth() / 2 - fm.stringWidth(s) / 2, 180 + (l*30));
+                    l++;
+                }
             }
         }
     }

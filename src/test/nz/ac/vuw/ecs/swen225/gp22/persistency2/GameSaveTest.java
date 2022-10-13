@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Cell;
@@ -26,7 +27,7 @@ class GameSaveTest {
     }
 
     @Test
-    public void validateLevel1And2GameSaves() throws JsonProcessingException {
+    public void validateLevel1And2GameSaves() throws IOException {
         GameSave level1GameSave = GameSaveHelper.getLevel1GameSave();
         assertTrue(validateGameSave(level1GameSave));
         GameSave level2GameSave = GameSaveHelper.getLevel2GameSave();

@@ -131,7 +131,7 @@ public class GameClock extends Subject {
     }
 
     /**
-     * Private constructor to instantiate a GameClock if get() determines that one does not yet exist.
+     * Private constructor to instantiate a GameClock if the get() method determines that one does not yet exist.
      *
      * @author niamh
      */

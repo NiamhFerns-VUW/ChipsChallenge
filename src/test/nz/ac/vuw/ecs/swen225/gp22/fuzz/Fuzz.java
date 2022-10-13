@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-public class Fuzz{
+class Fuzz{
     private GameHandler game;
     static final Random random = new Random();
     // keys to be pressed
@@ -31,13 +31,13 @@ public class Fuzz{
      * This method is used Strategy Pattern to generate random inputs
      * @throws AWTException
      */
-    public void testInputStrategy(InputStrategy inputStrategy, int size, String level) throws AWTException {
+    public void testInputStrategy(Input input, int size, String level) throws AWTException {
         game.skipTo(level);
         Robot robot = new Robot();
         robot.delay(2000);
         for (int i = 0; i < size; i++) {
-            int key = inputStrategy.nextInput();
-            if (inputStrategy.isPressCtrl()) {
+            int key = input.nextInput();
+            if (input.isPressCtrl()) {
                 robot.keyPress(KeyEvent.VK_CONTROL);
                 System.out.println("Pressing control");
             }
@@ -45,7 +45,7 @@ public class Fuzz{
             robot.keyPress(key);
             System.out.println("Pressing " + KeyEvent.getKeyText(key));
             robot.keyRelease(key);
-            if (inputStrategy.isPressCtrl()) {
+            if (input.isPressCtrl()) {
                 robot.keyRelease(KeyEvent.VK_CONTROL);
             }
         }
@@ -69,14 +69,13 @@ public class Fuzz{
             robot.keyPress(key);
             System.out.println("Key: " + KeyEvent.getKeyText(key));
             robot.keyRelease(key);
-            robot.delay(100);
+            robot.delay(10);
         }
     }
     /**
          * This method generates a mouse click at a location
       */
     public void mouseTest() throws AWTException {
-        GameHandler game = null;
         Robot robot = new Robot();
 
         robot.mouseMove(1050, 550);
@@ -114,9 +113,23 @@ public class Fuzz{
             testClock();
 
             from.get(index).run();
-            System.out.println("Action: " + from.get(index));
+            System.out.println("Action: " + printActionName(index));
             robot.delay(10);
             index = random.nextInt(from.size());
+        }
+    }
+    /**
+     * This method is used to print the name of the action which works for actiontest() method
+     * @param index
+     * @return the name of the action
+     */
+    public String printActionName(int index) {
+        switch(index) {
+            case 0: return "up";
+            case 1: return "down";
+            case 2: return "left";
+            case 3: return "right";
+            default: return "unknown";
         }
     }
     /**
@@ -137,20 +150,50 @@ public class Fuzz{
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
-        //use comment and uncomment to switch between random keys and actions
+        Input input1 = new Input( new ProbInput());
+        Input input2 = new Input( new FollowedInput());
 
-//        InputStrategy inputStrategy = new ProbInput();
-//        f.testInputStrategy(inputStrategy, 100000, "level1");
+        int method = 2;
+        switch (method) {
+            case 0:
+                f.testInputStrategy(input1, 100000, "level1");
+                break;
+            case 1:
+                f.testInputStrategy(input2, 100000, "level1");
+                break;
+            case 2:
+                f.randomKeys(100000, "level1");
+                break;
+            case 3:
+                f.actiontest(100000, "level1");
+                break;
+            default:
+                break;
+        }
 
-//        f.randomKeys(10000, "level1");
-        f.actiontest(100000, "level1");
     }
      @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
+        Input input1 = new Input( new ProbInput());
+        Input input2 = new Input( new FollowedInput());
 
-        // use comment and uncomment to switch between random keys and actions
-        f.randomKeys(10000, "level2");
-//        f.actiontest(100000, "level2");
+        int method = 4;
+        switch (method) {
+            case 1:
+                f.testInputStrategy(input1, 100000, "level2");
+                break;
+            case 2:
+                f.testInputStrategy(input2, 100000, "level2");
+                break;
+            case 3:
+                f.randomKeys(100000, "level2");
+                break;
+            case 4:
+                f.actiontest(100000, "level2");
+                break;
+            default:
+                break;
+        }
     }
 }

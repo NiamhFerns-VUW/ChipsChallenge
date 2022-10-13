@@ -17,9 +17,11 @@ public class Treasure implements Entity {
 
 	@Override
 	public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
-		myCell.removeEntity(this);
-		e.level.setRemainingTreasures(e.level.getRemainingTreasures()-1);
-		e.level.addSoundToPlay(this);
+		if (e instanceof Chip) {
+			myCell.removeEntity(this);
+			e.level.setRemainingTreasures(e.level.getRemainingTreasures() - 1);
+			e.level.addSoundToPlay(this);
+		}
 
 		return true;
 	}
@@ -34,5 +36,14 @@ public class Treasure implements Entity {
 
 	public Image getImage() {
 		return Img.Treasure.image;
+	}
+	@Override
+	public int hashCode() {
+		return this.getClass().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Treasure && obj.hashCode() == this.hashCode();
 	}
 }

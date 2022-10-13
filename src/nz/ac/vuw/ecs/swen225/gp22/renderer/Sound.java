@@ -22,7 +22,6 @@ public class Sound {
         soundURL[0] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/keys.wav");
         soundURL[1] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/door_opening.wav");
         soundURL[2] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/cat.wav");
-        soundURL[3] = getClass().getResource("/nz/ac/vuw/ecs/swen225/gp22/renderer/Sound/walking.wav");
     }
 
     /**

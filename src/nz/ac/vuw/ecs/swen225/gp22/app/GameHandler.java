@@ -152,6 +152,7 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     public void skipTo(String str) {
+        System.out.println(str);
         if (currentReplay != null) {
             GameClock.get().unregister(currentReplay);
             currentReplay = null;

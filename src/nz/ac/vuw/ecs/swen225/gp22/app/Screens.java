@@ -62,7 +62,6 @@ class StartScreen implements GameState, ActionListener {
         loadRecording.setText("Load Recording");
         loadRecording.addActionListener(l -> {
             GameHandler.get().setReplayer(GameHandler.get().recorder().loadRecording());
-
         });
 
         // Button to quit.

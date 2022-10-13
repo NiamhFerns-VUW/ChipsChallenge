@@ -31,11 +31,12 @@ public class DefaultCustomMovingEntityServiceProvider extends CustomMovingEntity
 
     @Override
     public Image getImage() {
-        return Img.Chip.image;
+        return Img.Monster.image;
     }
 
     @Override
     public List<Direction> getDirectionList() {
-        return List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down);
+        return List.of(Direction.Up,Direction.Up,Direction.Up,Direction.Up,Direction.Down,
+            Direction.Down, Direction.Down,Direction.Down);
     }
 }

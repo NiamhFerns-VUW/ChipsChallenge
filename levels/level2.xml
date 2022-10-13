@@ -1052,7 +1052,9 @@
     </cellList>
     <cellList>
       <storedTile type="nz.ac.vuw.ecs.swen225.gp22.domain.FreeTile"/>
-      <entities/>
+      <entities>
+        <entities type="nz.ac.vuw.ecs.swen225.gp22.domain.Treasure"/>
+      </entities>
       <coord>
         <x>8</x>
         <y>4</y>

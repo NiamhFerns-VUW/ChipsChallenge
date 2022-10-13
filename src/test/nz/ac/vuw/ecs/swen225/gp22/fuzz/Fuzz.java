@@ -153,7 +153,7 @@ class Fuzz{
         Input input1 = new Input( new ProbInput());
         Input input2 = new Input( new FollowedInput());
 
-        int method = 2;
+        int method = 3;
         switch (method) {
             case 0:
                 f.testInputStrategy(input1, 100000, "level1");

@@ -21,7 +21,8 @@ public class Pit extends FreeTile{
 			e.level.onDeath.run();
 			return false;
 		}
-		else if (!(e instanceof MoveableBlock)) throw new Error("Only MoveableBlocks can move onto pits!");
+		else if (!(e instanceof MoveableBlock))
+			throw new IllegalStateException("Only MoveableBlocks can move onto pits!");
 
 		myCell.removeEntity(e);
 		myCell.setStoredTile(new FreeTile());
@@ -33,8 +34,6 @@ public class Pit extends FreeTile{
 	}
 
 	public Image getImage() {
-		throw new Error("No image for Pit yet!");
-
-		//return Img.Freetile.image;
+		return Img.Pit.image;
 	}
 }

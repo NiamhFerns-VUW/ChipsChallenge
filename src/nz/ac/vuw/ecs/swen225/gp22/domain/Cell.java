@@ -77,6 +77,9 @@ public class Cell {
 	}
 
 	public void removeEntity(Entity e) {
+		if (!entities.contains(e))
+			throw new IllegalArgumentException("Cannot remove an entity from a tile it is not in!");
+
 		entities = new ArrayList<Entity>(entities.stream().filter(entity -> entity != e).toList());
 	}
 	@Override

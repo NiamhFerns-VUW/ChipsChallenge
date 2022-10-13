@@ -20,7 +20,7 @@ public class Domain {
 	
 	public void update() {
 		//System.out.println("Domain recieved update!");
-		if (!ok()) throw new Error("No current level to update.");
+		if (!ok()) throw new IllegalStateException("No current level to update.");
 
 		//throw new Error("Code not done!");	//TODO
 	}
@@ -50,7 +50,7 @@ public class Domain {
 				.flatMap(c->c.getEntities().stream())
 				.filter(e -> e instanceof Chip)
 				.map(e -> (Chip) e)
-				.reduce((c1, c2)->{throw new Error("Too many Chips in level!");});
+				.reduce((c1, c2)->{throw new IllegalArgumentException("Too many Chips in level!");});
 
 
 		List<MovingEntity> movingEntityList = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Domain {
 							});
 				});
 
-		if (player.isEmpty()) { throw new Error("No Chip in level!"); }
+		if (player.isEmpty()) { throw new IllegalArgumentException("No Chip in level!"); }
 
 		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory, onWin, onDeath);
 
@@ -79,9 +79,7 @@ public class Domain {
 	}
 
 	public void movePlayer(Direction dir) {
-		//System.out.println("Domain moving player in direction " + dir + "!");
-
-		if (!ok()) throw new Error("No current level for moving player.");
+		if (!ok()) throw new IllegalStateException("No current level for moving player.");
 
 		currentLevel.player.move(dir);
 	}

@@ -17,7 +17,7 @@ public class ExitLock extends FreeTile {
 
 	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		if (!(e instanceof Chip) || e.level.getRemainingTreasures() != 0){
-			throw new Error("Only Chip can move onto exit locks when no treasures are left!");
+			throw new IllegalStateException("Only Chip can move onto exit locks when no treasures are left!");
 		}
 		e.level.addSoundToPlay(this);
 		myCell.setStoredTile(new FreeTile());

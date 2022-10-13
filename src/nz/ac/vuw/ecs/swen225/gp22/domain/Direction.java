@@ -11,4 +11,30 @@ public enum Direction {
 		this.x = x;
 		this.y = y;
 	}
+
+	/**
+	 * Convenience method to convert direction string to enum value.
+	 * @param directionString string representing direction.
+	 * @return corresponding direction enum value.
+	 */
+	public static Direction fromString(String directionString) {
+			switch (directionString) {
+				case "Up" -> {
+					return Direction.Up;
+				}
+				case "Down" -> {
+					return Direction.Down;
+				}
+				case "Left" -> {
+					return Direction.Left;
+				}
+				case "Right" -> {
+					return Direction.Right;
+				}
+				case "None" -> {
+					return Direction.None;
+				}
+				default -> throw new Error("Not a valid direction string");
+			}
+	}
 }

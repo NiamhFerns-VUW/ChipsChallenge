@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,9 @@ import java.util.Optional;
  */
 public class Cell {
 	private FreeTile storedTile;
-	private ArrayList<Entity> entities;
+	private List<Entity> entities;
 
+	private Coord coord;
 	/**
 	 * Default Constructor for the cell leaves the tile as a blank FreeTile
 	 */
@@ -23,7 +25,24 @@ public class Cell {
 		this.storedTile = storedTile;
 		entities = new ArrayList<Entity>();
 	}
-	public boolean beforeMoveInto(MovingEntity e, Direction d) {
+
+	public void setEntities(List<Entity> entities) {
+		this.entities = entities;
+	}
+
+	public Coord getCoord() {
+		return coord;
+	}
+
+	public void setCoord(Coord coord) {
+		this.coord = coord;
+	}
+
+	public Cell(FreeTile freeTile, List<Entity> entities) {
+		this.storedTile = freeTile;
+		this.entities = entities;
+	}
+    public boolean beforeMoveInto(MovingEntity e, Direction d) {
 		return storedTile.onMoveInto(e, d, this) &&
 				entities.stream().allMatch(a -> a.interactBefore(e, d, this));
 	}
@@ -42,10 +61,7 @@ public class Cell {
 	public List<Entity> getEntities() {
 		return entities;
 	}
-	public void setEntities(ArrayList<Entity> entList) {
-		entities = entList;
-	}
-
+	@JsonIgnore
 	public Optional<Image> getImage() {
 		Optional<Entity> entity = entities.stream().reduce((a, b)->{
 			return a.drawHierarchy() < b.drawHierarchy() ? a : b;
@@ -55,11 +71,21 @@ public class Cell {
 		return Optional.of(entity.get().getImage());
 	}
 
+	@JsonIgnore
 	public Image getTileImage() {
 		return storedTile.getImage();
 	}
 
 	public void removeEntity(Entity e) {
 		entities = new ArrayList<Entity>(entities.stream().filter(entity -> entity != e).toList());
+	}
+	@Override
+	public int hashCode() {
+		return storedTile.hashCode()+entities.hashCode()+coord.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Cell && obj.hashCode() == this.hashCode();
 	}
 }

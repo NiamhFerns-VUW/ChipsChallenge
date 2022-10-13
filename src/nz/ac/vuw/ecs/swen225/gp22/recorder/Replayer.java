@@ -67,7 +67,6 @@ public class Replayer implements Observer {
         Step currentStep = history.pop();
         prev.push(currentStep);
         replayStep(currentStep);
-        System.out.println(currentStep.replayerToString());
     }
 
     /**
@@ -87,10 +86,8 @@ public class Replayer implements Observer {
 
         if(currentMove.getMove().equals("None")){
             Step validMove = skipEmptySteps();
-            System.out.println("StepbyStep skipping None Actions to : "+validMove.replayerToString());
             replayStep(validMove);
         }
-        System.out.println("StepbyStep: "+currentMove.replayerToString());
         replayStep(currentMove);
     }
 

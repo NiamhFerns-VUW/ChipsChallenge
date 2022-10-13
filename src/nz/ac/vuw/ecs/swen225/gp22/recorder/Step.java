@@ -1,9 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
-import nz.ac.vuw.ecs.swen225.gp22.app.*;
-import org.dom4j.Element;
 
-
+/**
+ * When Recording, 'Steps' are created to contain the direction Chip moved in and Time the move occured.
+ *
+ * @author Santino Gaeta
+ */
 public class Step{
 
     private String move;
@@ -64,16 +66,6 @@ public class Step{
      */
     public void setTime(long time) {
         this.time = time;
-    }
-
-    /**
-     * For IntegrationDay what will be printed to console when RecordedLevel is being replayed
-     * @return String - Displays what the recorded move was and what time it was made
-     *
-     * @author Santino Gaeta
-     */
-    public String replayerToString(){
-        return "Replaying step: Chip moved "+move+" at time: "+time;
     }
 
 }

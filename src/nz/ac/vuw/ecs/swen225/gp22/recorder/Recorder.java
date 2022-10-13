@@ -1,7 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -45,7 +44,6 @@ public class Recorder {
      * @author Santino Gaeta
      */
     public void start(){
-        System.out.println("Starting to record "+currentLevel);
         startRecording = true;
     }
 
@@ -82,7 +80,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Up", time));
-            System.out.println("Move UP recorded at time " +time);
         }
     }
 
@@ -95,7 +92,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Down", time));
-            System.out.println("Move DOWN recorded at time " +time);
         }
     }
 
@@ -108,7 +104,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Left", time));
-            System.out.println("Move LEFT recorded at time " +time);
         }
     }
 
@@ -121,7 +116,6 @@ public class Recorder {
         if(startRecording){
             long time = GameClock.get().currentLevelTime();
             currentRecording.add(new Step("Right", time));
-            System.out.println("Move RIGHT recorded at time " +time);
         }
     }
 
@@ -144,9 +138,8 @@ public class Recorder {
      * @author Santino Gaeta
      */
     public void saveRecording(){
-        if(currentRecording.size() == 0){return;}       //For changing from micro to Main State in App
+        if(currentRecording.size() == 0){return;}
         saveStepArrayListToXml(currentRecording, currentLevel);
-        System.out.println(currentLevel+" recorded and saved."); //For Testing
         reset();
     }
 

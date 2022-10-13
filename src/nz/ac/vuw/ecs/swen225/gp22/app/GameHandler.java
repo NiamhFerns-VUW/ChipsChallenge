@@ -219,7 +219,7 @@ public class GameHandler implements Observer {
      */
     private void setComponents(Level level) {
             // Start the next level in domain.
-            domain.get().startLevel(level.levelName(), this::onLevelChange, this::onFail);
+            domain.get().startLevel(level.levelPath(), this::onLevelChange, this::onFail);
             assert domain.get().ok();
             GameClock.get().register(domain);
 

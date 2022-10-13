@@ -54,6 +54,6 @@ record Level(String levelName, String levelPath, Domain domain, Render gameplayP
 
     @Override
     public GameState nextLevel() {
-        return new Level("Level Two", "level2", domain, new Render());
+        return new Level("Level Two", "level1", domain, new Render());
     }
 }

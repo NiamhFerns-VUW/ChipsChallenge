@@ -5,6 +5,9 @@ package nz.ac.vuw.ecs.swen225.gp22.domain;
  * AntiHazard with the same hazardType.
  */
 public class IceHazard extends Hazard {
+	/**
+	 * Constructor for Ice, a special type of hazard
+	 */
 	public IceHazard() {
 		super("Ice");
 	}

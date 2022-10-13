@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Objects;
 
 /**
- *
+ * Coordinates store an x,y position in the game. Limitations prevented it from being a record.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @JsonSerialize
@@ -30,16 +30,26 @@ public final class Coord {
         this.x = x;
         this.y = y;
     }
+
+    /**
+     * No-argument constructor for the coordinate,
+     * used by persistency to create a coordinate before changing the values
+     */
     public Coord() {
         this.x = -1;
         this.y=-1;
     }
 
+    /**
+     * @return - the x position of the coordinate
+     */
     @JsonProperty("x")
     public int x() {
         return x;
     }
-
+    /**
+     * @return - the y position of the coordinate
+     */
     @JsonProperty("y")
     public int y() {
         return y;

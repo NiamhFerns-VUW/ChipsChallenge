@@ -8,9 +8,11 @@ import java.awt.*;
  * The exit is Chip's goal. When Chip stands on the exit's cell the level is won.
  */
 public class Exit extends FreeTile {
+    @Override
     public String toString() {
         return "E";
     }
+    @Override
     public Image getImage() {
         return Img.Exittile.image;
     }

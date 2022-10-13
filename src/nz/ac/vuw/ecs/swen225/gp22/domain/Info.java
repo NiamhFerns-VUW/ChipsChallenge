@@ -9,17 +9,28 @@ import java.awt.*;
  */
 public class Info extends FreeTile {
 	public String infoText;
-	public Info(String infoText) {
-		this.infoText = infoText;
-	}
+
+	/**
+	 * No-arguments constructor for info allows creating an info tile without immediately setting text for it
+	 */
 	public Info() {
 		this.infoText = "";
 	}
 
+	/**
+	 * Constructor for the info tile
+	 *
+	 * @param infoText - the text to display when Chip stands on the tile
+	 */
+	public Info(String infoText) {
+		this.infoText = infoText;
+	}
+
+	@Override
 	public String toString() {
 		return "I";
 	}
-
+	@Override
 	public Image getImage() {
 		return Img.Infotile.image;
 	}

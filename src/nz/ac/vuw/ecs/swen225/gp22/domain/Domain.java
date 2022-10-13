@@ -23,10 +23,12 @@ import static nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper.get
  */
 public class Domain {
 	Level currentLevel = null;
-	Persistency persist = new Persistency();
-
 	int wait = 10;
-	
+	/**
+	 * Updates objects in the level that move independently of Chip (ie monster)
+	 *
+	 * Throws IllegalStateException if there is no level to update.
+	 */
 	public void update() {
 		//System.out.println("Domain recieved update!");
 		if (!ok()) throw new IllegalStateException("No current level to update.");
@@ -41,14 +43,20 @@ public class Domain {
 	}
 
 	/**
-	 * startLevel takes a file path, asks Persistency for the corresponding level, and then converts the
-	 * resulting GameSave into a useable level using createLevel
+	 * startLevel takes a file path and what to do on win/death, asks Persistency for the corresponding level,
+	 * and gives the relevant info to createLevel to make a level out of
 	 *
 	 * @param levelname - the path to the level
+	 * @param onWin - what to do on the player reaching the exit
+	 * @param onDeath - what to do on the player dying
 	 */
 	public void startLevel(String levelname, Runnable onWin, Runnable onDeath) {
 		try {
-			GameSave save = GameSaveHelper.loadGameSave(Path.of("./levels/" + levelname + ".xml"));
+			GameSave save;
+			if (levelname.contains("save")) {
+				save = GameSaveHelper.loadGameSave(Path.of("./saves/" + levelname + ".xml"));
+			}
+			else save = GameSaveHelper.loadGameSave(Path.of("./levels/" + levelname + ".xml"));
 
 			Cell[][] cells = new Cell[save.CELLS_HEIGHT][save.CELLS_WIDTH];
 
@@ -60,6 +68,14 @@ public class Domain {
 			throw new RuntimeException(e);
 		}
 	}
+	/**
+	 * createLevel takes a 2d array of cells, an array of entities,
+	 * and what to do on win/death and turns it into a level stored in Domain.
+	 *
+	 * @param cells - a 2d array
+	 * @param onWin - what to do on the player reaching the exit
+	 * @param onDeath - what to do on the player dying
+	 */
 	public void createLevel(Cell[][] cells, ArrayList<Entity> inventory, Runnable onWin, Runnable onDeath) {
 		long remainingTreasures = Arrays.stream(cells)
 				.flatMap(cArray-> Arrays.stream(cArray))
@@ -102,21 +118,42 @@ public class Domain {
 		movingEntityList.stream().forEach(m -> m.level = currentLevel);
 	}
 
+	/**
+	 * Moves the player in the specified direction. Throws IllegalStateException if Domain doesn't have a level stored
+	 *
+	 * @param dir - the direction to move the player
+	 */
 	public void movePlayer(Direction dir) {
 		if (!ok()) throw new IllegalStateException("No current level for moving player.");
 
 		currentLevel.player.move(dir);
 	}
 
+	/**
+	 * Returns whether domain currently has a level stored
+	 *
+	 * @return - boolean that returns true if a level is stored
+	 */
 	public boolean ok() {
 		return currentLevel != null;
 	}
-	
+
+	/**
+	 * Returns the stored level as an Optional - if there is no stored level returns an empty optional
+	 *
+	 * @return - Optional that stores the level
+	 */
 	public Optional<Level> getLevel() {
 		if (!ok()) return Optional.empty();
 
 		return Optional.of(currentLevel);
 	}
+
+	/**
+	 * Sets the stored level in the domain to be the given level
+	 *
+	 * @param newLevel - the new level for domain
+	 */
 	public void setLevel(Level newLevel) {
 		currentLevel = newLevel;
 	}

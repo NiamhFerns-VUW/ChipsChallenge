@@ -28,7 +28,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityS
 })
 public interface Entity {
 	/**
-	 * The interactBefore method causes the entity to perform an action based on its class, before the player moves
+	 * The interactBefore method causes the entity to perform an action based on its class, before an entity moves
 	 * onto this entity's tile.
 	 * 
 	 * @param e - The Entity interacting with this Entity.
@@ -64,5 +64,6 @@ public interface Entity {
 	@JsonIgnore
 	public Image getImage();
 
+	@Override
 	public String toString();
 }

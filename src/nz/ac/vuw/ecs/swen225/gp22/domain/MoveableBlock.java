@@ -9,14 +9,25 @@ import java.awt.*;
  */
 public class MoveableBlock extends MovingEntity {
 
+	/**
+	 * No-argument Constructor for MoveableBlock, creates the block without setting a proper coordinate
+	 */
 	public MoveableBlock() {
-		super(Direction.None, new Coord(-1, -1));
+		super(Direction.None, new Coord());
 	}
+
+	/**
+	 * Constructor for MoveableBlock allows setting coordinate upon creation of the block.
+	 *
+	 * @param c	- the coordinate of the cell the block is on
+	 */
 	public MoveableBlock(Coord c) {
 		super(Direction.None,c);
 	}
 	@Override
 	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
+		if (e instanceof MoveableBlock) return false;	// cannot push two blocks at once
+
 		return move(d);
 	}
 	@Override
@@ -27,11 +38,11 @@ public class MoveableBlock extends MovingEntity {
 	public int drawHierarchy() {
 		return 6;
 	}
-
+	@Override
 	public String toString() {
 		return "b";
 	}
-
+	@Override
 	public Image getImage() {
 		return Img.Movingblock.image;
 	}

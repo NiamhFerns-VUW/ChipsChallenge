@@ -132,6 +132,16 @@ class InputHandler implements KeyListener {
         GameClock.unpause();
     }
 
+    protected void speedUp() {
+        if (GameHandler.get().currentReplay == null) return;
+
+    }
+
+    protected void speedDown() {
+        if (GameHandler.get().currentReplay == null) return;
+
+    }
+
     /**
      * Sets the InputHandler to expect an alternate control with the control key modifier.
      *

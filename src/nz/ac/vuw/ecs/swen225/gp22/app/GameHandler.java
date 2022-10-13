@@ -19,7 +19,7 @@ public class GameHandler implements Observer {
     static GameHandler instance;
     private final ObserverAdapter domain;
     private final Recorder recorder;
-    private Replayer currentReplay;
+    protected Replayer currentReplay;
     private Viewport viewport;
     private final InputHandler input;
 
@@ -113,6 +113,9 @@ public class GameHandler implements Observer {
         input.addAlternateBinding(KeyEvent.VK_S, input::saveGame,     () -> {});
         input.addAlternateBinding(KeyEvent.VK_1, input::skipToLevel1, () -> {});
         input.addAlternateBinding(KeyEvent.VK_2, input::skipToLevel2, () -> {});
+
+        input.addBinding(KeyEvent.VK_PLUS, input::speedUp, () -> {});
+        input.addBinding(KeyEvent.VK_MINUS, input::speedDown, () -> {});
     }
 
     /**

@@ -29,19 +29,43 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityS
 	@JsonSubTypes.Type(value = Wall.class, name = "wall")
 })
 public class FreeTile {
+	/**
+	 * Performs an action based on this tile and the entity attempting to move onto this tile's cell,
+	 * returns a boolean whether the entity is allowed to move onto the same cell as this tile
+	 *
+	 * @param e - the entity attempting to move onto the cell this tile is on
+	 * @param d - the direction the entity is attempting to move
+	 * @param myCell - the cell this tile is part of
+	 *
+	 * @return - returns true if the entity can move onto the same cell as this tile, false if not
+	 */
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		return true;
 	}
 
+	/**
+	 * Performs an action based on this tile and the entity that has moved onto this tile's cell,
+	 * returns a boolean whether moving onto this tile's cell has killed chip
+	 *
+	 * @param e - the entity that has moved onto this tile's cell
+	 * @param d - the direction the entity moved
+	 * @param myCell - the cell this tile is part of
+	 *
+	 * @return - returns true if moving onto this tile's cell doesn't kill Chip
+	 */
 	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		return true;
 	}
 
+	/**
+	 * @return - the tile's corresponding image
+	 */
 	@JsonIgnore
 	public Image getImage() {
 		return Img.Freetile.image;
 	}
 
+	@Override
 	public String toString() {
 		return "_";
 	}

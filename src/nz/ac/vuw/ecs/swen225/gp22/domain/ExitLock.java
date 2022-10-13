@@ -15,6 +15,7 @@ public class ExitLock extends FreeTile {
 		return false;
 	}
 
+	@Override
 	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
 		if (!(e instanceof Chip) || e.level.getRemainingTreasures() != 0){
 			throw new IllegalStateException("Only Chip can move onto exit locks when no treasures are left!");
@@ -24,10 +25,12 @@ public class ExitLock extends FreeTile {
 		return true;
 	}
 
+	@Override
 	public String toString() {
 		return "L";
 	}
 
+	@Override
 	public Image getImage() {
 		return Img.Exitlock.image;
 	}

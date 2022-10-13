@@ -36,7 +36,7 @@ public class MoveableBlock extends MovingEntity {
 	}
 	@Override
 	public int drawHierarchy() {
-		return 6;
+		return 0;
 	}
 	@Override
 	public String toString() {

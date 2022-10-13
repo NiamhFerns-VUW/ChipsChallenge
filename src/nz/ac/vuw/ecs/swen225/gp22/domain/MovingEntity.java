@@ -17,18 +17,32 @@ public abstract class MovingEntity implements Entity {
 		this.coords = coords;
 	}
 
+	/**
+	 * @return - the coordinates of this entity on the board
+	 */
 	public Coord getCoords() {
 		return coords;
 	}
 
+	/**
+	 * Sets the coordinates of this entity on the board
+	 * @param coords - the new coordinates for this entity
+	 */
 	public void setCoords(Coord coords) {
 		this.coords = coords;
 	}
 
+	/**
+	 * @return - the direction this entity is facing
+	 */
 	public Direction getFacingDir() {
 		return facingDir;
 	}
 
+	/**
+	 * Sets the direction this entity faces
+	 * @param facingDir - the new direction to face
+	 */
 	public void setFacingDir(Direction facingDir) {
 		this.facingDir = facingDir;
 	}

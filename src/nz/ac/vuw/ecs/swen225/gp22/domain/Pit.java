@@ -27,10 +27,12 @@ public class Pit extends FreeTile{
 		return true;
 	}
 
+	@Override
 	public String toString() {
 		return "P";
 	}
 
+	@Override
 	public Image getImage() {
 		return Img.Pit.image;
 	}

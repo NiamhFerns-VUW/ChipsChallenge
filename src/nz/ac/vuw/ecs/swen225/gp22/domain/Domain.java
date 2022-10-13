@@ -1,8 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.GameSave;
-import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper;
 
@@ -13,9 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
-
-import static nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper.getLevel1GameSave;
-import static nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper.getLevel2GameSave;
 
 /**
  * The domain class is the part of the domain package the other packages interact with.

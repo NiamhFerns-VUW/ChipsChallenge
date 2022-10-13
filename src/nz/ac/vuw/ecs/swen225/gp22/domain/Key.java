@@ -11,11 +11,20 @@ import java.awt.*;
 public class Key implements Entity {
 	public String keyColour;
 
-	public Key(String keyColour) {
-		this.keyColour = keyColour;
-	}
+	/**
+	 * No-arguments constructor for key allows creating a key without immediately setting its colour
+	 */
 	public Key() {
 		this.keyColour = "";
+	}
+
+	/**
+	 * Constructor for key
+	 *
+	 * @param keyColour - The colour of this key, unlocks locked doors of the corresponding colour.
+	 */
+	public Key(String keyColour) {
+		this.keyColour = keyColour;
 	}
 
 	@Override
@@ -36,11 +45,12 @@ public class Key implements Entity {
 	public int drawHierarchy() {
 		return 3;
 	}
-
+	@Override
 	public String toString() {
 		return "k";
 	}
 
+	@Override
 	public Image getImage() {
 		return switch (keyColour) {
 			case "Red" -> Img.Redkey.image;

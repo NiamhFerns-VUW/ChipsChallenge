@@ -18,10 +18,12 @@ public class Wall extends FreeTile {
 		throw new IllegalStateException("Entities cannot be moved into walls!");
 	}
 
+	@Override
 	public String toString() {
 		return "W";
 	}
 
+	@Override
 	public Image getImage() {
 		return Img.Walltile.image;
 	}

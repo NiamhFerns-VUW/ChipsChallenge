@@ -169,6 +169,9 @@ public class GameHandler implements Observer {
                 System.out.println("You are now at level two.");
                 setGameState(new Level("Level Two", "level2", domain.get(), new Render()));
             }
+            case "startMenu" -> {
+                setGameState(new StartScreen());
+            }
             default -> {
                 System.out.println(str + " is not a level that exists.");
             }

@@ -152,6 +152,8 @@ public class GameClock extends Subject {
         clock.timer.start();
     }
 
+    public static boolean isPaused() { return clock.paused; }
+
 
     /**
      * Stops the clock.

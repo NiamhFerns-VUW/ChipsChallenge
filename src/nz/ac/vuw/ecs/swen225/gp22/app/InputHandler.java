@@ -210,6 +210,7 @@ class InputHandler implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentPressedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
     }
 
@@ -220,6 +221,7 @@ class InputHandler implements KeyListener {
      */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
+        if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentReleasedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
     }
 

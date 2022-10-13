@@ -12,3 +12,9 @@ If the game does not compile, please make sure the Project structure for the Mod
 And the Libraries looks like this:
 
 ![](./readmeAssets/Modules_Example.png)
+
+
+
+NOTE: We are having a strange bug with the IDE in InputStrategy.java where we sometimes get errors when InputStrategy is public,
+but then without changing code it sometimes works. The fix is to remove 'public' from the InputStrategy, which works until it starts giving errors again, with the fix
+being to make InputStrategy public again.

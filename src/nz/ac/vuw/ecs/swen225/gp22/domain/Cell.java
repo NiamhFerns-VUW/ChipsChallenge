@@ -42,6 +42,11 @@ public class Cell {
 		this.storedTile = freeTile;
 		this.entities = entities;
 	}
+	public Cell(FreeTile freeTile, List<Entity> entities, Coord coord) {
+		this.storedTile = freeTile;
+		this.entities = entities;
+		this.coord = coord;
+	}
     public boolean beforeMoveInto(MovingEntity e, Direction d) {
 		return storedTile.onMoveInto(e, d, this) &&
 				entities.stream().allMatch(a -> a.interactBefore(e, d, this));

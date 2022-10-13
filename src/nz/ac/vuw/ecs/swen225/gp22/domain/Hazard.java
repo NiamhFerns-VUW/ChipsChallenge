@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * Hazards kill Chip when he moves onto the Hazard's cell unless Chip has an AntiHazard with the same hazardType.
+ *
+ * @author James Gordon - 300577473
  */
 public class Hazard extends FreeTile {
 	public String hazardType;

@@ -8,14 +8,23 @@ import java.awt.*;
  * The AntiHazard is an Entity that, when in the player's inventory, nullifies the effect of the Hazard with the
  * corresponding HazardType.
  *
- * @param hazardType - Hazards with the same hazardType are cancelled out.
+ * @author James Gordon - 300577473
  */
 public class AntiHazard implements Entity {
 	public String hazardType;
 
+	/**
+	 * Constructor for AntiHazard
+	 *
+	 * @param hazardType - Hazards with the corresponding hazardType are cancelled out.
+	 */
 	public AntiHazard(String hazardType) {
 		this.hazardType = hazardType;
 	}
+
+	/**
+	 * No-arguments constructor for AntiHazard allows creating AntiHazard without immediately setting a hazardtype.
+	 */
 	public AntiHazard() {
 		this.hazardType = "";
 	}

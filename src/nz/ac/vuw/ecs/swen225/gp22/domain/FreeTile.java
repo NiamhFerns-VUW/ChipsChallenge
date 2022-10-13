@@ -11,6 +11,8 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityS
 
 /**
  * The FreeTile is an empty tile that doesn't prevent movement.
+ *
+ * @author James Gordon - 300577473
  */
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.CLASS,

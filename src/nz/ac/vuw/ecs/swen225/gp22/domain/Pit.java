@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * Blocks movement across until a MoveableBlock is pushed onto it, removing the block and filling the pit.
+ *
+ * @author James Gordon - 300577473
  */
 public class Pit extends FreeTile{
 	@Override

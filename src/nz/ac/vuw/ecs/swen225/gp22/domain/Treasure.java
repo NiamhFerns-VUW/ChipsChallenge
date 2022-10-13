@@ -8,6 +8,8 @@ import java.util.Arrays;
 /**
  * When Chip steps onto the Treasure's cell, it is picked up and the number of remaining treasures decreases, unlocking
  * the ExitLocks once it reaches 0.
+ *
+ * @author James Gordon - 300577473
  */
 public class Treasure implements Entity {
 	@Override

@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * The Level keeps track of the board, Chip, Chip's inventory, the monsters, what to do on win, what to do on death,
  * and the remaining treasures to be picked up. Performs no actions on its own.
+ *
+ * @author James Gordon - 300577473
  */
 public class Level {
 	private long remainingTreasures;

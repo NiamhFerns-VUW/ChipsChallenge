@@ -11,8 +11,10 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityS
 
 /**
  * The Entity interface is for the various things that the player could interact with.
- * Different from tiles, these can stack on top of each other (for example, a monster standing on the key, or a box pushed onto treasure).
- * 
+ * Different from tiles, these can stack on top of each other
+ * (for example, a monster standing on the key, or a box pushed onto treasure).
+ *
+ * @author James Gordon - 300577473
  */
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.CLASS,

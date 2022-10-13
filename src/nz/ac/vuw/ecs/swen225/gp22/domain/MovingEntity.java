@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * The MovingEntity is for Entities that can move outside of the cell they're in, such as
  * Chip moving or a block being pushed.
+ *
+ * @author James Gordon - 300577473
  */
 public abstract class MovingEntity implements Entity {
 	private Direction facingDir;

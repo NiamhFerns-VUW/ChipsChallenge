@@ -15,6 +15,8 @@ import java.util.stream.IntStream;
 /**
  * The domain class is the part of the domain package the other packages interact with.
  * It keeps track of the level and tells the other classes in this package what to do.
+ *
+ * @author James Gordon - 300577473
  */
 public class Domain {
 	Level currentLevel = null;

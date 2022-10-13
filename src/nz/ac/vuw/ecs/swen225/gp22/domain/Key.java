@@ -7,6 +7,8 @@ import java.awt.*;
 /**
  * The Key entity allows Chip to unlock LockedDoors of the same colour when the key is in the player's inventory.
  * Disappears after use unless it is a green key.
+ *
+ * @author James Gordon - 300577473
  */
 public class Key implements Entity {
 	public String keyColour;

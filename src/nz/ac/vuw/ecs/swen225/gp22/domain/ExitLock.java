@@ -6,6 +6,8 @@ import java.awt.*;
 
 /**
  * The ExitLock prevents Chip moving past until all Treasures have been collected.
+ *
+ * @author James Gordon - 300577473
  */
 public class ExitLock extends FreeTile {
 	@Override

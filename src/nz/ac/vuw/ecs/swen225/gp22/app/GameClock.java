@@ -14,7 +14,7 @@ public class GameClock extends Subject {
     private Timer timer;
     public static final int DEFAULT_FRAMERATE = 60;
     private static int FRAMERATE;
-    private static int TICKRATE = 1000 / 60;
+    private static int TICKRATE;
 
     private long tickCount;
     private long levelTickCount;
@@ -53,7 +53,7 @@ public class GameClock extends Subject {
     public static void setTickRate(int frameRate) {
         FRAMERATE = frameRate;
         TICKRATE = 1000 / FRAMERATE;
-        get().validateClock();
+        if (clock != null) get().validateClock();
     }
 
     /**
@@ -148,8 +148,11 @@ public class GameClock extends Subject {
 
     public static void unpause() {
         if (!clock.paused) return;
+        clock.paused = false;
         clock.timer.start();
     }
+
+    public static boolean isPaused() { return clock.paused; }
 
 
     /**
@@ -161,7 +164,7 @@ public class GameClock extends Subject {
         timer.stop();
     }
 
-    protected void reset() {
+    protected static void reset() {
         clock = new GameClock();
     }
 
@@ -186,7 +189,7 @@ public class GameClock extends Subject {
         levelTickCount = 0;
         timePlayed = 0;
         timeRemaining = 0;
-        TICKRATE = 1000 / DEFAULT_FRAMERATE;
+        GameClock.setTickRate(DEFAULT_FRAMERATE);
         paused = false;
     }
 }

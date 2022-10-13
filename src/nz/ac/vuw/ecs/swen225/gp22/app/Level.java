@@ -38,7 +38,6 @@ record Level(String levelName, String levelPath, Domain domain, Render gameplayP
 
                 var level = domain.getLevel().orElseThrow(() -> new Error("No level was found."));
                 var chipsRemaining = level.getRemainingTreasures();
-                var inventory = level.getInventory();
 
                 currentlyDrawing = "Sphynxes Remaining: " + chipsRemaining;
                 g.drawString(currentlyDrawing, getWidth() / 2 - fm.stringWidth(currentlyDrawing) / 2, getHeight() - 250);
@@ -54,6 +53,6 @@ record Level(String levelName, String levelPath, Domain domain, Render gameplayP
 
     @Override
     public GameState nextLevel() {
-        return new Level("Level Two", "level1", domain, new Render());
+        return new Level("Level Two", "level2", domain, new Render());
     }
 }

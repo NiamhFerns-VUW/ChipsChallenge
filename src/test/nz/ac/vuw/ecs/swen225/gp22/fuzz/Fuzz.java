@@ -21,7 +21,9 @@ class Fuzz{
             KeyEvent.VK_SPACE,
             KeyEvent.VK_ESCAPE
     );
-
+    /**
+     * This the constructor of the Fuzz class
+     */
     public Fuzz() {
         game = GameHandler.get();
         game.reset();
@@ -52,9 +54,10 @@ class Fuzz{
     }
 
     /**
-     * @param size the number of random inputs to generate
      * this method generates a random sequence of inputs
      *             and then executes them
+     * @param size the number of random inputs to generate
+     * @param level the level to start the game on
      * @throws AWTException
      * @throws IllegalArgumentException
      */
@@ -73,8 +76,9 @@ class Fuzz{
         }
     }
     /**
-         * This method generates a mouse click at a location
-      */
+     * This method generates a mouse click at a location
+     * @throws AWTException
+     */
     public void mouseTest() throws AWTException {
         Robot robot = new Robot();
 
@@ -84,9 +88,10 @@ class Fuzz{
         robot.mouseRelease(KeyEvent.BUTTON1_DOWN_MASK);
     }
     /**
-     * @param size the number of random inputs to generate
      * this method generates a random sequence of actions functions from the
      *             list of actions and then executes them
+     * @param size the number of random inputs to generate
+     * @param level the level to start the game on
      */
     public void actiontest(int size, String level) throws AWTException {
         game.skipTo(level);
@@ -147,6 +152,15 @@ class Fuzz{
         //f.randomKeys(100, "level1");
         f.actiontest(100, "level1");
     }
+    /**
+     * This method is used to test level 1
+     * using int method to determine the strategy of generating random inputs
+     * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy
+     * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
+     * method 2: randomKeys() method, using Robot to generate random Key Events
+     * method 3: actiontest() method, calling the action functions from the list of actions
+     * @throws AWTException
+     */
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
@@ -172,7 +186,16 @@ class Fuzz{
         }
 
     }
-     @Test
+    /**
+     * This method is used to test level 2
+     * using int method to determine the strategy of generating random inputs
+     * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy
+     * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
+     * method 2: randomKeys() method, using Robot to generate random Key Events
+     * method 3: actiontest() method, calling the action functions from the list of actions
+     * @throws AWTException
+     */
+    @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
         Input input1 = new Input( new ProbInput());

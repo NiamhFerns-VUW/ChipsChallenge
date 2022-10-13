@@ -17,7 +17,15 @@ class FollowedInput implements InputStrategy {
             KeyEvent.VK_S,
             KeyEvent.VK_R
     };
+    /**
+     * This is the constructor of the FollowedInput class
+     */
     public FollowedInput() {}
+    /**
+     * This method is used to generate random inputs for the game by following the previous input
+     * @param input the input
+     * @return the next input
+     */
     @Override
     public int nextInput( Input input) {
         int[] keysWithoutUp = { KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE, KeyEvent.VK_S, KeyEvent.VK_R };
@@ -44,6 +52,11 @@ class FollowedInput implements InputStrategy {
         return from[random.nextInt(from.length)];
     }
 
+    /**
+     * This method is used to check if the input is a control key
+     * @param input the input
+     * @return true if the input is a control key
+     */
     @Override
     public boolean isPressCtrl( Input input) {
         return (input.key == KeyEvent.VK_S || input.key == KeyEvent.VK_R);

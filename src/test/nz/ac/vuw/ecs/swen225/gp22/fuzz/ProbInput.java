@@ -21,7 +21,15 @@ public class ProbInput implements InputStrategy {
             KeyEvent.VK_S,
             KeyEvent.VK_R
     };
-
+    /**
+     * This is the constructor of the ProbInput class
+     */
+    public ProbInput() {}
+    /**
+     * This method is used to generate random inputs for the game with different probabilities
+     * @param input the input
+     * @return the next input
+     */
     @Override
     public int nextInput(Input input) {
         double[] weightMost = {0.2, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1};
@@ -42,8 +50,11 @@ public class ProbInput implements InputStrategy {
 
         return from[random.nextInt(from.length)];
     }
-
-
+    /**
+     * This method is used to check if the next input is a ctrl key
+     * @param input the input
+     * @return true if the next input is a ctrl key
+     */
     @Override
     public boolean isPressCtrl(Input input) {
         return (input.key == KeyEvent.VK_S || input.key == KeyEvent.VK_R);

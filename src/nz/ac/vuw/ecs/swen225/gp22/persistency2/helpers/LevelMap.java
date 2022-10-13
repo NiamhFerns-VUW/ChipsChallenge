@@ -26,6 +26,7 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Pit;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Wall;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityServiceProvider;
 
 /**
  * Singleton class that holds source code versions of level 1 and level 2.
@@ -2411,32 +2412,7 @@ public class LevelMap {
             level2Map.put(new Coord(7,5),new Cell(
                 new FreeTile(),
                 List.of(
-                    new CustomMovingEntityService() {
-                        @Override
-                        public List<Direction> getDirectionList() {
-                            return List.of(Direction.Up,Direction.Up,Direction.Down,Direction.Down);
-                        }
-
-                        @Override
-                        public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean interactAfter(MovingEntity e, Direction d, Cell myCell) {
-                            return false;
-                        }
-
-                        @Override
-                        public int drawHierarchy() {
-                            return 0;
-                        }
-
-                        @Override
-                        public Image getImage() {
-                            return Img.Chip.image;
-                        }
-                    }
+                    new DefaultCustomMovingEntityServiceProvider()
                 )
             ));
             level2Map.put(new Coord(8,5),new Cell(

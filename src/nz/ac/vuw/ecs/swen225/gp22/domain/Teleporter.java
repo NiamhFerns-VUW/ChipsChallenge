@@ -7,14 +7,24 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * Teleporters teleport the target to a random different teleporter of the same colour when they are stepped on.
+ * Teleporters teleport the target to the other teleporter of the same colour when they are stepped on.
  */
 public class Teleporter extends FreeTile {
 	public String teleColour;
 
+	/**
+	 * Constructor for Teleporter
+	 *
+	 * @param teleColour - the colour of this teleporter.
+	 *                      Teleporters teleport between two teleporters of the same colour
+	 */
 	public Teleporter(String teleColour) {
 		this.teleColour = teleColour;
 	}
+
+	/**
+	 * No-arguments constructor allows creation of the teleporter without immediately setting the colour
+	 */
 	public Teleporter() {
 		this.teleColour = "";
 	}
@@ -49,11 +59,13 @@ public class Teleporter extends FreeTile {
 		return true;
 	}
 
+	@Override
 	public String toString() {
 		return "T";
 	}
 
-	public Image getImage() {
+	@Override
+	public Image getImage() {	// No image since we never ended up using Teleporter
 		throw new Error("No Teleporter image yet!");
 
 		//return Img.Freetile.image;

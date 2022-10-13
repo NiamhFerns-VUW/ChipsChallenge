@@ -14,9 +14,19 @@ import java.util.Optional;
 public class LockedDoor extends FreeTile {
 	public String lockColour;
 
+	/**
+	 * No-arguments constructor for LockedDoor allows creating a door without immediately setting its colour
+	 */
 	public LockedDoor() {
 		this.lockColour = "";
 	}
+
+	/**
+	 * Constructor for lockedDoor
+	 *
+	 * @param lockColour - The colour of this door's lock, this door is unlocked by chip walking into it with a key of
+	 *                   the corresponding colour
+	 */
 	public LockedDoor(String lockColour) {
 		this.lockColour = lockColour;
 	}
@@ -34,7 +44,7 @@ public class LockedDoor extends FreeTile {
 		myCell.setStoredTile(new FreeTile());
 		e.level.addSoundToPlay(this);
 
-		if (!key.get().keyColour.equals("Green")) e.level.getInventory().remove(key.get());
+		if (!key.get().keyColour.equals("Green")) e.level.getInventory().remove(key.get());	//green keys aren't used up
 
 		return true;
 	}
@@ -44,10 +54,12 @@ public class LockedDoor extends FreeTile {
 		throw new IllegalStateException("Entities cannot be moved into locked doors!");
 	}
 
+	@Override
 	public String toString() {
 		return "D";
 	}
 
+	@Override
 	public Image getImage() {
 		return switch (lockColour) {
 			case "Red" -> Img.RedLockeddoor.image;

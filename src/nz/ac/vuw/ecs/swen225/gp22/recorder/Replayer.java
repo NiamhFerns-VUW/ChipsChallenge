@@ -15,7 +15,7 @@ import java.util.Stack;
  */
 public class Replayer implements Observer {
 
-    private int replaySpeed = 1;
+    private int replaySpeed = GameClock.get().DEFAULT_FRAMERATE;
     private Stack<Step> history;
     private Stack<Step> prev;
     private String currentLevel;
@@ -37,6 +37,8 @@ public class Replayer implements Observer {
         prev = new Stack<>();
         gameHandler = GameHandler.get();
         inputGenerator = new InputGenerator(gameHandler);
+        setReplaySpeed(GameClock.get().DEFAULT_FRAMERATE);
+
     }
 
     /**
@@ -48,15 +50,16 @@ public class Replayer implements Observer {
      */
     @Override
     public void update() {
-        if(history.isEmpty()){return;}
-        if(autoReplayState && history.peek().getTime()==GameClock.get().currentLevelTime()){autoReplay();}
-        //if(!autoReplayState){stepByStep(); return;} //take this out? And just have button call stepByStep method itself?
+        if(history.isEmpty()){setReplaySpeed(10000);}
+        else if(autoReplayState && history.peek().getTime()==GameClock.get().currentLevelTime()){
+            autoReplay();
+        }
     }
 
     /**
      * Automatic Replay
      * If the next move occurs at the currentLeveltime of the GameClock - will replay move on update()
-     * Also pushes each move into the prev Stack in case User wants to go backwards (Backwards not implemented yet)
+     * Also pushes each move into the prev Stack in case User wants to go backwards (Backwards not implemented)
      *
      * @author Santino Gaeta
      */
@@ -121,7 +124,6 @@ public class Replayer implements Observer {
                 return move;
             }
         }
-        //takes the last move (even "None") off prev stack
         history.push(prev.pop());
         return history.pop();
     }
@@ -133,30 +135,9 @@ public class Replayer implements Observer {
      * @author Santino Gaeta
      */
     public void resetReplayer(){
-        //display level back to the beginning (reload through app?)
         while(!prev.isEmpty()){history.push(prev.pop());}
         autoReplayState = false;
         replaySpeed = 1;
-    }
-
-    /**
-     * Returns the Stack containing Chip's history of moves
-     * @return Stack of Steps (Chip's move history)
-     *
-     * @author Santino Gaeta
-     */
-    public Stack<Step> getHistory(){
-        return history;
-    }
-
-    /**
-     * Returns the Stack containing Chip's moves already made by the Replayer
-     * @return Stack of Steps (Chip's replay moves history)
-     *
-     * @author Santino Gaeta
-     */
-    public Stack<Step> getPrevStack(){
-        return prev;
     }
 
     /**
@@ -175,7 +156,9 @@ public class Replayer implements Observer {
      */
     public void setReplaySpeed(int newSpeed){
         this.replaySpeed = newSpeed;
-        //GameClock.setTickRate(1000/GameClock.getFrameRate() * replaySpeed);
+        GameClock.setTickRate(replaySpeed);
+        GameClock.get().pause();
+        GameClock.get().unpause();
     }
 
     /**
@@ -186,7 +169,8 @@ public class Replayer implements Observer {
      */
     public void setAutoReplay(){
         autoReplayState = true;
-        //GameClock
+        GameClock.get().pause();
+        GameClock.get().unpause();
     }
 
 }

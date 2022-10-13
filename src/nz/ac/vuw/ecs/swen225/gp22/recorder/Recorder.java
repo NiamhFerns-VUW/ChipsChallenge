@@ -45,6 +45,7 @@ public class Recorder {
      * @author Santino Gaeta
      */
     public void start(){
+        System.out.println("Starting to record "+currentLevel);
         startRecording = true;
     }
 
@@ -70,15 +71,6 @@ public class Recorder {
      */
     public void setLevel(String level){
         this.currentLevel = level;
-    }
-
-    /**
-     * @return currentRecording - List of moves from the current recorded level
-     *
-     * @author Santino Gaeta
-     */
-    public ArrayList<Step> getCurrentRecording(){
-        return currentRecording;
     }
 
     /**
@@ -177,11 +169,7 @@ public class Recorder {
         File xmlFile = jfc.getSelectedFile();
         if(xmlFile.toString().contains("level1Recording")){currentLevel = "level1";}
         else if(xmlFile.toString().contains("level2Recording")){currentLevel = "level2";}
-
-        System.out.println(xmlFile.toString());
-        Replayer rep = new Replayer(convertXmlToHistoryStack(xmlFile), currentLevel);
-        System.out.println(rep.getReplayLevel());
-
+        else{return null;}
         return new Replayer(convertXmlToHistoryStack(xmlFile), currentLevel);
     }
 
@@ -219,6 +207,9 @@ public class Recorder {
             Stack<Step> history = new Stack<>();
             for(int i = chipHistory.size()-1; i >= 0; i--){
                 history.push(chipHistory.get(i));
+            }
+            if(history.peek().getTime()==90000){
+                history.pop();
             }
             return history;
         }catch(IOException e){

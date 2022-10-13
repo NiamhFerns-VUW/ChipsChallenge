@@ -61,7 +61,7 @@ class StartScreen implements GameState, ActionListener {
         loadRecording.setBounds(220, 250, 200, 50);
         loadRecording.setText("Load Recording");
         loadRecording.addActionListener(l -> {
-            GameHandler.get().setReplayer(Recorder.loadRecording());
+            GameHandler.get().setReplayer(GameHandler.get().recorder().loadRecording());
 
         });
 

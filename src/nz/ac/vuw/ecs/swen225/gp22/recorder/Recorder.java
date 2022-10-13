@@ -153,7 +153,7 @@ public class Recorder {
      */
     public void saveRecording(){
         if(currentRecording.size() == 0){return;}       //For changing from micro to Main State in App
-        saveStepArrayListToXml(currentRecording, currentLevel); //Will call from Persistency
+        saveStepArrayListToXml(currentRecording, currentLevel);
         System.out.println(currentLevel+" recorded and saved."); //For Testing
         reset();
     }
@@ -166,7 +166,7 @@ public class Recorder {
      *
      * @author Santino Gaeta
      */
-    public static Replayer loadRecording(){
+    public Replayer loadRecording(){
         JFileChooser jfc = new JFileChooser("./src/levels/");
         jfc.setDialogTitle("Select XmlFile of Recording to Replay");
         jfc.setFileFilter(new FileNameExtensionFilter("Extensible Markup Language", "xml"));
@@ -175,12 +175,17 @@ public class Recorder {
             return null;
         }
         File xmlFile = jfc.getSelectedFile();
-        //TODO implement this method into Persistency?
-        return new Replayer(convertXmlToHistoryStack(xmlFile)); //Not implemented in Persistency yet
+        if(xmlFile.toString().contains("level1")){currentLevel = "level1";}
+        else if(xmlFile.toString().contains("level2")){currentLevel = "level2";}
+
+        return new Replayer(convertXmlToHistoryStack(xmlFile), currentLevel);
     }
 
-
-    //TODO Send to persistency
+    /**
+     *
+     * @param chipMoves
+     * @param level
+     */
     public void saveStepArrayListToXml(ArrayList<Step> chipMoves, String level){
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -191,7 +196,11 @@ public class Recorder {
         }
     }
 
-
+    /**
+     *
+     * @param xmlFile
+     * @return
+     */
     public static Stack<Step> convertXmlToHistoryStack(File xmlFile){
         XmlMapper mapper = new XmlMapper();
         try{
@@ -207,7 +216,6 @@ public class Recorder {
             throw new RuntimeException(e);
         }
     }
-
 
 }
 

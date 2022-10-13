@@ -1,7 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
-
 import java.util.Stack;
 
 /**
@@ -14,11 +13,12 @@ import java.util.Stack;
  *
  * @author Santino Gaeta
  */
-public class Replayer implements Observer { //need to make Observer public in App
+public class Replayer implements Observer {
 
     private int replaySpeed = 1;
     private Stack<Step> history;
     private Stack<Step> prev;
+    private String currentLevel;
     boolean autoReplayState = true;
     private InputGenerator inputGenerator;
     private GameHandler gameHandler;
@@ -31,8 +31,9 @@ public class Replayer implements Observer { //need to make Observer public in Ap
      *
      * @author Santino Gaeta
      */
-    public Replayer(Stack<Step> gameHistory){
+    public Replayer(Stack<Step> gameHistory, String level){
         history = gameHistory;
+        currentLevel = level;
         prev = new Stack<>();
         gameHandler = GameHandler.get();
         inputGenerator = new InputGenerator(gameHandler);
@@ -48,8 +49,8 @@ public class Replayer implements Observer { //need to make Observer public in Ap
     @Override
     public void update() {
         if(history.isEmpty()){return;}
-        if(!autoReplayState){stepByStep(); return;} //take this out? And just have button call stepByStep method itself?
-        else {autoReplay();}
+        if(autoReplayState && history.peek().getTime()==GameClock.get().currentLevelTime()){autoReplay();}
+        //if(!autoReplayState){stepByStep(); return;} //take this out? And just have button call stepByStep method itself?
     }
 
     /**
@@ -60,7 +61,6 @@ public class Replayer implements Observer { //need to make Observer public in Ap
      * @author Santino Gaeta
      */
     public void autoReplay(){
-        if(history.peek().getTime()!=GameClock.get().currentLevelTime()){return;}
         Step currentStep = history.pop();
         prev.push(currentStep);
         replayStep(currentStep);
@@ -81,6 +81,7 @@ public class Replayer implements Observer { //need to make Observer public in Ap
         autoReplayState = false;
         Step currentMove = history.pop();
         prev.push(currentMove);
+
         if(currentMove.getMove().equals("None")){
             Step validMove = skipEmptySteps();
             System.out.println("StepbyStep skipping None Actions to : "+validMove.replayerToString());
@@ -159,6 +160,14 @@ public class Replayer implements Observer { //need to make Observer public in Ap
     }
 
     /**
+     * Returns the level that this Replayer was recorded from
+     * @return String - containing which level this Replayer will replay
+     *
+     * @author Santino Gaeta
+     */
+    public String getReplayLevel(){return currentLevel;}
+
+    /**
      * Changes speed of automatic replay to play faster or slower by changing tick interval on GameClock
      * @param newSpeed - int the user wishes to change the automatic replay speed to
      *
@@ -177,7 +186,7 @@ public class Replayer implements Observer { //need to make Observer public in Ap
      */
     public void setAutoReplay(){
         autoReplayState = true;
-        //update();
+        //GameClock
     }
 
 }

@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import javax.swing.*;
@@ -51,7 +52,7 @@ class StartScreen implements GameState, ActionListener {
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                GameHandler.get().setGameState(new Level("Saved Level" , file.getAbsolutePath(), GameHandler.get().domain(), new Render()));
+                GameHandler.get().setGameState(new Level("Saved Level" , file.getName().substring(0, file.getName().indexOf(".")), GameHandler.get().domain(), new Render()));
             }
         });
 
@@ -60,7 +61,8 @@ class StartScreen implements GameState, ActionListener {
         loadRecording.setBounds(220, 250, 200, 50);
         loadRecording.setText("Load Recording");
         loadRecording.addActionListener(l -> {
-            GameHandler.get().recorder().loadRecording();
+            GameHandler.get().setReplayer(GameHandler.get().recorder().loadRecording());
+
         });
 
         // Button to quit.

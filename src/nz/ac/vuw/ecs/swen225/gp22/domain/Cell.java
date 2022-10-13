@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.Optional;
  * Each Cell keeps track of the tile it is made up of and the entities on it.
  */
 public class Cell {
-	private FreeTile freeTile;
 	private FreeTile storedTile;
 	private List<Entity> entities;
 
@@ -26,13 +26,6 @@ public class Cell {
 		entities = new ArrayList<Entity>();
 	}
 
-	public FreeTile getFreeTile() {
-		return freeTile;
-	}
-
-	public void setFreeTile(FreeTile freeTile) {
-		this.freeTile = freeTile;
-	}
 	public void setEntities(List<Entity> entities) {
 		this.entities = entities;
 	}
@@ -46,7 +39,7 @@ public class Cell {
 	}
 
 	public Cell(FreeTile freeTile, List<Entity> entities) {
-		this.freeTile = freeTile;
+		this.storedTile = freeTile;
 		this.entities = entities;
 	}
     public boolean beforeMoveInto(MovingEntity e, Direction d) {
@@ -68,10 +61,7 @@ public class Cell {
 	public List<Entity> getEntities() {
 		return entities;
 	}
-	public void setEntities(ArrayList<Entity> entList) {
-		entities = entList;
-	}
-
+	@JsonIgnore
 	public Optional<Image> getImage() {
 		Optional<Entity> entity = entities.stream().reduce((a, b)->{
 			return a.drawHierarchy() < b.drawHierarchy() ? a : b;
@@ -81,11 +71,21 @@ public class Cell {
 		return Optional.of(entity.get().getImage());
 	}
 
+	@JsonIgnore
 	public Image getTileImage() {
 		return storedTile.getImage();
 	}
 
 	public void removeEntity(Entity e) {
 		entities = new ArrayList<Entity>(entities.stream().filter(entity -> entity != e).toList());
+	}
+	@Override
+	public int hashCode() {
+		return storedTile.hashCode()+entities.hashCode()+coord.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Cell && obj.hashCode() == this.hashCode();
 	}
 }

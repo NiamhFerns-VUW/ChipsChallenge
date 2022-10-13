@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
 
-import static java.lang.System.exit;
-
 /**
  * The primary game management class for a game of chips challenge that is responsible for the lifetime and handling
  * of all major components.
@@ -66,7 +64,7 @@ public class GameHandler implements Observer {
     protected InputHandler getInput() {
         return input;
     }
-    protected Domain getDomain() {
+    protected Domain domain() {
         return domain.get();
     }
     protected Recorder recorder() { return recorder; }
@@ -105,13 +103,14 @@ public class GameHandler implements Observer {
         input.addBinding(KeyEvent.VK_SPACE,   () -> {}, () -> {});
         input.addBinding(KeyEvent.VK_ESCAPE,  () -> {}, () -> {});
 
-        input.addBinding(KeyEvent.VK_CONTROL, input::setAlternateControls, input::unsetAlternateControls);
+        input.addBinding(KeyEvent.VK_CONTROL, input::setAlternateControls, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_CONTROL, () -> {}, input::unsetAlternateControls);
 
-        input.addAlternateBinding(KeyEvent.VK_R, () -> {}, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_X, () -> {}, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_S, () -> {}, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_1, () -> {}, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_2, () -> {}, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_R, input::resumeGame, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_X, input::exitGame, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_S, input::saveGame, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_1, input::skipToLevel1, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_2, input::skipToLevel2, () -> {});
     }
 
     /**

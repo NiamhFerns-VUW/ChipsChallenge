@@ -18,8 +18,6 @@ import java.util.Optional;
 public class Render extends JPanel {
 
     private Domain domain;
-    private int chipX;
-    private int chipY;
     private final List<Object> soundToPlay = new ArrayList<Object>();
     /**
      * Default constructor for an instance of Render.
@@ -115,11 +113,6 @@ public class Render extends JPanel {
 
             ArrayList<Integer> chipsCells = findChip(cells);
             assert chipsCells != null;
-            if(chipX != chipsCells.get(0) || chipY != chipsCells.get(1)){
-                Sound s = new Sound();
-                s.setFile(3);
-                s.play();
-            }
 
             int i = 0;
             int j = 0;
@@ -182,8 +175,6 @@ public class Render extends JPanel {
                 j = 0;
                 i++;
             }
-            chipX = chipsCells.get(0);
-            chipY = chipsCells.get(1);
         }
     }
 }

@@ -5,6 +5,6 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
  *
  * @author niamh
  */
-interface Observer {
+public interface Observer {
     void update();
 }

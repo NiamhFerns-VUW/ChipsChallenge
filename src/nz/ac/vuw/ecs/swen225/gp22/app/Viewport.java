@@ -36,8 +36,11 @@ class Viewport extends JFrame implements Observer {
 
         addKeyListener(input);
 
-        setSize(new Dimension(640, 480));
         panels = List.of();
+    }
+
+    public void repack() {
+        pack();
     }
 
     /**
@@ -62,6 +65,7 @@ class Viewport extends JFrame implements Observer {
         this.state = state;
         panels = state.panels();
         panels.forEach(this::add);
+        pack();
     }
 
     protected GameState getGameState() {

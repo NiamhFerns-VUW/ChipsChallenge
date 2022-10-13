@@ -33,7 +33,7 @@ class StartScreen implements GameState, ActionListener {
         // Menu frame settings.
         menuframe.setLayout(null);
         menuframe.setFocusable(false);
-        menuframe.setSize(new Dimension(640, 480));
+        menuframe.setPreferredSize(new Dimension(640, 480));
 
         // Button to start the game.
         JButton startGame = new JButton();
@@ -51,7 +51,7 @@ class StartScreen implements GameState, ActionListener {
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                GameHandler.get().setGameState(new Level(file.getAbsolutePath(), GameHandler.get().domain(), new Render()));
+                GameHandler.get().setGameState(new Level("Saved Level" , file.getAbsolutePath(), GameHandler.get().domain(), new Render()));
             }
         });
 
@@ -91,7 +91,7 @@ class StartScreen implements GameState, ActionListener {
      */
     @Override
     public GameState nextLevel() {
-        return new Level("level1", GameHandler.get().domain(), new Render());
+        return new Level("Level One", "level1", GameHandler.get().domain(), new Render());
     }
 
     @Override

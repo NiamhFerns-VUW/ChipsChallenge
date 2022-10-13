@@ -121,6 +121,7 @@ public class GameHandler implements Observer {
     public void start() {
         GameClock.get().register(viewport);
         viewport.setState(new StartScreen());
+        viewport.repack();
         GameClock.get().start();
     }
 
@@ -146,13 +147,13 @@ public class GameHandler implements Observer {
         switch(str.toLowerCase()) {
             case "level1":
                 System.out.println("You are now at level one.");
-                setGameState(new Level("level1", domain.get(), new Render()));
+                setGameState(new Level("Level One","level1", domain.get(), new Render()));
                 break;
 
 
             case "level2":
                 System.out.println("You are now at level two.");
-                setGameState(new Level("level2", domain.get(), new Render()));
+                setGameState(new Level("Level Two", "level2", domain.get(), new Render()));
                 break;
         }
     }
@@ -176,6 +177,7 @@ public class GameHandler implements Observer {
         GameClock.get().setLevelTime(90000);
 
         viewport.validate();
+        viewport.repack();
     }
 
     /**
@@ -201,6 +203,7 @@ public class GameHandler implements Observer {
         GameClock.get().register(viewport);
 
         viewport.validate();
+        viewport.repack();
     }
 
     protected  void onFail() {

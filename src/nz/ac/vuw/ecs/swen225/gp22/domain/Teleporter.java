@@ -33,12 +33,12 @@ public class Teleporter extends FreeTile {
 		IntStream.range(0, cells.length).forEach(row -> {
 			IntStream.range(0, cells[row].length).filter(col -> {
 				return cells[row][col].getStoredTile() instanceof Teleporter t
-						&& t.teleColour == this.teleColour && t != this;})
+						&& t.teleColour.equals(this.teleColour) && t != this;})
 					.forEach(col -> otherTeleporter.add(new Coord(row, col)));
 		});
 
-		if (otherTeleporter.size() == 0) throw new Error("Teleporter missing destination!");
-		if (otherTeleporter.size() > 1) throw new Error("Too many teleporter destinations! Max 1.");
+		if (otherTeleporter.size() == 0) throw new IllegalStateException("Teleporter missing destination!");
+		if (otherTeleporter.size() > 1) throw new IllegalStateException("Too many teleporter destinations! Max 1.");
 
 		Cell newCell = cells[otherTeleporter.get(0).x()][otherTeleporter.get(0).y()];
 

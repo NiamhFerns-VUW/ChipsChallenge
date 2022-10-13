@@ -39,6 +39,11 @@ public class LockedDoor extends FreeTile {
 		return true;
 	}
 
+	@Override
+	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
+		throw new IllegalStateException("Entities cannot be moved into locked doors!");
+	}
+
 	public String toString() {
 		return "D";
 	}
@@ -49,7 +54,8 @@ public class LockedDoor extends FreeTile {
 			case "Green" -> Img.GreenLockeddoor.image;
 			case "Blue" -> Img.BlueLockeddoor.image;
 			case "Yellow" -> Img.YellowLockeddoor.image;
-			default -> throw new Error("LockedDoor does not have an image for the colour " + lockColour + "!");
+			default -> throw new IllegalArgumentException("LockedDoor does not have an image for the colour "
+					+ lockColour + "!");
 		};
 	}
 }

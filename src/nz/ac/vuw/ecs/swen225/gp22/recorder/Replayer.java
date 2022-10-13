@@ -165,8 +165,8 @@ public class Replayer implements Observer { //need to make Observer public in Ap
      * @author Santino Gaeta
      */
     public void setReplaySpeed(int newSpeed){
-        //GameClock.setTickRate(1000/GameClock.getFrameRate() * newSpeed);
         this.replaySpeed = newSpeed;
+        //GameClock.setTickRate(1000/GameClock.getFrameRate() * replaySpeed);
     }
 
     /**

@@ -26,6 +26,7 @@ class InputHandler implements KeyListener {
     private final HashMap<Integer, Runnable> released;
     private final HashMap<Integer, Runnable> alternatePressed;
     private final HashMap<Integer, Runnable> alternateReleased;
+    private final HashMap<Integer, Boolean> currentlyLocked;
 
     /**
      * Sets up an InputHandler and ties it to an instance of domain and recorder.
@@ -44,6 +45,8 @@ class InputHandler implements KeyListener {
 
         currentPressedMap = pressed;
         currentReleasedMap = released;
+
+        currentlyLocked = new HashMap<>();
     }
 
     /**
@@ -210,8 +213,10 @@ class InputHandler implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        if (currentlyLocked.getOrDefault(keyEvent.getKeyCode(), false)) return;
         if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentPressedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
+        currentlyLocked.put(keyEvent.getKeyCode(), true);
     }
 
     /**
@@ -223,6 +228,9 @@ class InputHandler implements KeyListener {
     public void keyReleased(KeyEvent keyEvent) {
         if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentReleasedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
+        currentPressedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
+        Boolean b = currentlyLocked.get(keyEvent.getKeyCode());
+        b = false;
     }
 
 }

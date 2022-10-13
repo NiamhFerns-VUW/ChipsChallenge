@@ -1,5 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +14,20 @@ public class Level {
 	private ArrayList<Entity> inventory;
 	public final Chip player;
 
+	private ArrayList<CustomMovingEntityService> mon;
+
 	public final Runnable onWin;
 	public final Runnable onDeath;
 
 	private List<Object> objSoundsToPlay;	// renderer checks this in order to play sounds such as picking up keys
 
 	public Level(long remainingTreasures, Cell[][] cells, Chip player, ArrayList<Entity> inventory,
-				 Runnable onWin, Runnable onDeath) {
+				 ArrayList<CustomMovingEntityService> mon, Runnable onWin, Runnable onDeath) {
 		this.remainingTreasures = remainingTreasures;
 		this.cells = cells;
 		this.player = player;
 		this.inventory = inventory;
+		this.mon = mon;
 		this.onWin = onWin;
 		this.onDeath = onDeath;
 		this.objSoundsToPlay = new ArrayList<Object>();
@@ -44,6 +49,10 @@ public class Level {
 
 	public List<Object> getSoundsToPlay() {
 		return objSoundsToPlay;
+	}
+
+	public ArrayList<CustomMovingEntityService> getMon() {
+		return mon;
 	}
 
 	/**

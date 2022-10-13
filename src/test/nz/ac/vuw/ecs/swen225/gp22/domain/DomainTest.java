@@ -136,41 +136,51 @@ class DomainTest {
         expectedLevel.add(
                 "\n" +
                 """
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|W|W|W|W|W|_|W|W|W|W|W|_|_|_|
-                |_|_|_|W|_|_|_|W|W|W|_|_|_|W|_|_|_|
-                |_|_|_|W|_|_|_|W|E|W|_|_|_|W|_|_|_|
-                |_|W|W|W|W|W|D|W|L|W|D|W|W|W|W|W|_|
-                |_|W|_|_|_|D|_|_|_|_|_|D|_|_|_|W|_|
-                |_|W|_|_|_|W|_|_|I|_|_|W|_|_|_|W|_|
-                |_|W|W|W|W|W|_|_|_|_|_|W|W|W|W|W|_|
-                |_|W|_|_|_|W|_|_|_|_|_|W|_|_|_|W|_|
-                |_|W|_|_|_|D|_|_|_|_|_|D|_|_|_|W|_|
-                |_|W|W|W|W|W|W|D|W|D|W|W|W|W|W|W|_|
-                |_|_|_|_|_|W|_|_|W|_|_|W|_|_|_|_|_|
-                |_|_|_|_|_|W|_|_|W|_|_|W|_|_|_|_|_|
-                |_|_|_|_|_|W|_|_|W|_|_|W|_|_|_|_|_|
-                |_|_|_|_|_|W|W|W|W|W|W|W|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|""");
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|W|W|W|W|W|_|W|W|W|W|W|_|_|_|_|_|_|_|
+                        |_|_|_|W|_|_|_|W|W|W|_|_|_|W|_|_|_|_|_|_|_|
+                        |_|_|_|W|_|_|_|W|E|W|_|_|_|W|_|_|_|_|_|_|_|
+                        |_|W|W|W|W|W|D|W|L|W|D|W|W|W|W|W|_|_|_|_|_|
+                        |_|W|_|_|_|D|_|_|_|_|_|D|_|_|_|W|_|_|_|_|_|
+                        |_|W|_|_|_|W|_|_|I|_|_|W|_|_|_|W|_|_|_|_|_|
+                        |_|W|W|W|W|W|_|_|_|_|_|W|W|W|W|W|_|_|_|_|_|
+                        |_|W|_|_|_|W|_|_|_|_|_|W|_|_|_|W|_|_|_|_|_|
+                        |_|W|_|_|_|D|_|_|_|_|_|D|_|_|_|W|_|_|_|_|_|
+                        |_|W|W|W|W|W|W|D|W|D|W|W|W|W|W|W|_|_|_|_|_|
+                        |_|_|_|_|_|W|_|_|W|_|_|W|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|W|_|_|W|_|_|W|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|W|_|_|W|_|_|W|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|W|W|W|W|W|W|W|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|""");
         expectedLevel.add(
                 "\n" +
                 """
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|_|_|t|_|_|_|_|_|t|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|k|_|_|_|_|_|_|_|_|_|k|_|_|_|
-                |_|_|_|t|_|_|k|_|_|_|k|_|_|t|_|_|_|
-                |_|_|_|_|_|_|t|_|c|_|t|_|_|_|_|_|_|
-                |_|_|_|t|_|_|k|_|_|_|k|_|_|t|_|_|_|
-                |_|_|_|_|_|_|_|_|t|_|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|t|_|t|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|k|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
-                |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|""");
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|t|_|_|_|_|_|t|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|k|_|_|_|_|_|_|_|_|_|k|_|_|_|_|_|_|_|
+                        |_|_|_|t|_|_|k|_|_|_|k|_|_|t|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|t|_|c|_|t|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|t|_|_|k|_|_|_|k|_|_|t|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|t|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|t|_|t|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|k|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+                        |_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|""");
         List<String> expectedInventory = new ArrayList<String>();
         int expectedTreasure = 11;
 
@@ -677,6 +687,48 @@ class DomainTest {
         assert(dead.get(0));
     }
 
+    @Test
+    void touchPit1() {
+        Domain dom = new Domain();
+        Cell[][] cells = createTestCells(5,5);
+        cells[2][2].getEntities().add(new Chip());
+
+        cells[2][3].setStoredTile(new Pit());
+
+        ArrayList<Boolean> dead = new ArrayList<Boolean>();
+
+        dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{dead.add(true);});
+        if (dom.getLevel().isEmpty()) throw new Error("Missing level!");
+
+        dom.movePlayer(Direction.Right);
+
+        List<String> levelSlices = levelToStrings(dom.getLevel().get());
+        List<String> actualInventory = inventoryToStrings(dom.getLevel().get());
+
+        List<String> expectedLevel = new ArrayList<String>();
+        expectedLevel.add(
+                "\n" +
+                        "|W|W|W|W|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|_|_|P|W|\n"+
+                        "|W|_|_|_|W|\n"+
+                        "|W|W|W|W|W|");
+        expectedLevel.add(
+                "\n" +
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|c|_|\n"+
+                        "|_|_|_|_|_|\n"+
+                        "|_|_|_|_|_|");
+        List<String> expectedInventory = new ArrayList<String>();
+        int expectedTreasure = 0;
+
+        assertEquals(expectedLevel, levelSlices);
+        assertEquals(expectedInventory, actualInventory);
+        assertEquals(expectedTreasure, dom.getLevel().get().getRemainingTreasures());
+        assert(dead.get(0));
+    }
+
     // ==| Image Tests |==
     @Test
     void doorAndKeyImages1() {
@@ -813,6 +865,22 @@ class DomainTest {
         assertEquals(Direction.Right, Direction.fromString("Right"));
         assertEquals(Direction.None, Direction.fromString("None"));
         assertThrows(IllegalArgumentException.class, ()->Direction.fromString("This should throw error"));
+    }
+
+    @Test
+    void cellRemoval() {
+        Cell cell = new Cell(new FreeTile(), List.of(), new Coord(-1, -1));
+        Entity e = new Key();
+
+        assertThrows(IllegalArgumentException.class,()->cell.removeEntity(e));
+    }
+
+    @Test
+    void cellImages() {
+        Cell cell = new Cell(new Wall(), List.of(new Treasure(), new AntiHazard("Fire")));
+
+        assertEquals(Img.Walltile.image, cell.getTileImage());
+        assertEquals(Img.Treasure.image, cell.getImage().get());
     }
 
 

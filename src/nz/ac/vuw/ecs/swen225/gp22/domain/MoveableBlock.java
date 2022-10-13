@@ -33,7 +33,6 @@ public class MoveableBlock extends MovingEntity {
 	}
 
 	public Image getImage() {
-		throw new Error("No image for MoveableBlock!");
-		//return Img.Treasure.image;
+		return Img.Movingblock.image;
 	}
 }

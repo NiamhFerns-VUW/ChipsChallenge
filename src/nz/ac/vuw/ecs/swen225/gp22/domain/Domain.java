@@ -1,14 +1,21 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
-import nz.ac.vuw.ecs.swen225.gp22.persistency.GameSave;
 import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.GameSave;
+import nz.ac.vuw.ecs.swen225.gp22.persistency.Persistency;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
+
+import static nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper.getLevel1GameSave;
+import static nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper.getLevel2GameSave;
 
 /**
  * The domain class is the part of the domain package the other packages interact with.
@@ -17,12 +24,20 @@ import java.util.stream.IntStream;
 public class Domain {
 	Level currentLevel = null;
 	Persistency persist = new Persistency();
+
+	int wait = 10;
 	
 	public void update() {
 		//System.out.println("Domain recieved update!");
 		if (!ok()) throw new IllegalStateException("No current level to update.");
 
-		//throw new Error("Code not done!");	//TODO
+		if (wait-- > 0) return;
+
+		wait = 10;
+
+		currentLevel.getMon().stream().forEach((m)->{
+			m.move(m.getNextDirection());
+		});
 	}
 
 	/**
@@ -32,10 +47,18 @@ public class Domain {
 	 * @param levelname - the path to the level
 	 */
 	public void startLevel(String levelname, Runnable onWin, Runnable onDeath) {
-		GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
+		try {
+			GameSave save = GameSaveHelper.loadGameSave(Path.of("./levels/" + levelname + ".xml"));
 
-		Cell[][] cells = save.getCells();
-		createLevel(cells, (ArrayList<Entity>) save.getInventory(), onWin, onDeath);
+			Cell[][] cells = new Cell[save.CELLS_HEIGHT][save.CELLS_WIDTH];
+
+			save.getCellList().forEach((c) -> {
+				cells[c.getCoord().y()][c.getCoord().x()] = c;
+			});
+			createLevel(cells, new ArrayList<Entity>(save.getInventory()), onWin, onDeath);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	public void createLevel(Cell[][] cells, ArrayList<Entity> inventory, Runnable onWin, Runnable onDeath) {
 		long remainingTreasures = Arrays.stream(cells)
@@ -53,6 +76,7 @@ public class Domain {
 
 
 		List<MovingEntity> movingEntityList = new ArrayList<>();
+		ArrayList<CustomMovingEntityService> monsters = new ArrayList<>();
 
 		IntStream.range(0, cells.length)
 				.forEach((y)->{
@@ -64,13 +88,14 @@ public class Domain {
 										.forEach(m -> {
 											m.coords = new Coord(y, x);
 											movingEntityList.add(m);
+											if (m instanceof CustomMovingEntityService mon) monsters.add(mon);
 											});
 							});
 				});
 
 		if (player.isEmpty()) { throw new IllegalArgumentException("No Chip in level!"); }
 
-		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory, onWin, onDeath);
+		currentLevel = new Level(remainingTreasures, cells, player.get(), inventory, monsters, onWin, onDeath);
 
 		player.get().setLevel(currentLevel);
 

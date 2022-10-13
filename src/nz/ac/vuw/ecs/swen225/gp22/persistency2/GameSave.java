@@ -21,21 +21,11 @@ public class GameSave {
     final int CELLS_WIDTH = 21;
     final int CELLS_HEIGHT = 21;
 
-    @JsonIgnore
-    private Cell[][] cells;
     private int time;
     private List<Entity> inventory;
 
     private List<Cell> cellList;
 
-    public GameSave(
-        Cell[][] cells,
-        int time,
-        List<Entity> inventory) {
-        this.cells = cells;
-        this.time = time;
-        this.inventory = inventory;
-    }
     @JsonCreator
     public GameSave(
         @JsonProperty("cellList") List<Cell> cellList,
@@ -83,13 +73,6 @@ public class GameSave {
         this.time = time;
     }
 
-    public Cell[][] getCells() {
-        return cells;
-    }
-
-    public void setCells(Cell[][] cells) {
-        this.cells = cells;
-    }
     @Override
     public int hashCode() {
         return time+inventory.hashCode()+cellList.hashCode();

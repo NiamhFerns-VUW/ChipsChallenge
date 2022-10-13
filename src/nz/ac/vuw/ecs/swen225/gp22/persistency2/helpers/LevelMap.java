@@ -30,11 +30,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityS
  */
 public class LevelMap {
 
-    final int CELLS_WIDTH = 21;
-    final int CELLS_HEIGHT = 21;
     private static LevelMap instance = null;
-
-    private LevelMap levelMap;
 
     private Map<Coord, Cell> level1Map;
     private Map<Coord, Cell> level2Map;
@@ -51,7 +47,6 @@ public class LevelMap {
     }
 
     private LevelMap() {
-        levelMap = null;
         initLevel1Map();
         initLevel2Map();
         level1CellList = new ArrayList<>();

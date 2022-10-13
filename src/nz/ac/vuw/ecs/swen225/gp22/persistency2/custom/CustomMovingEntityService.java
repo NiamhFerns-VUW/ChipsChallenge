@@ -68,7 +68,6 @@ public abstract class CustomMovingEntityService extends MovingEntity {
         @Override
         public void serialize(Object o, JsonGenerator jsonGenerator,
             SerializerProvider serializerProvider) throws IOException {
-            List<Direction> ld = (List<Direction>) o;
             serializerProvider.defaultSerializeValue(o,jsonGenerator);
         }
     }

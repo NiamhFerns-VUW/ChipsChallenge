@@ -22,12 +22,10 @@ public class GameSaveHelper {
     public static final Path LEVEL_PATH = Path.of("./levels/");
     public static final Path SAVE_PATH = Path.of("./saves/");
     public static GameSave getLevel1GameSave() {
-        Map<Coord, Cell> level1Map = LevelMap.get().getLevel1Map();
         GameSave gameSave = new GameSave(LevelMap.get().getLevel1CellList(), 100, List.of());
         return gameSave;
     }
     public static GameSave getLevel2GameSave() throws IOException {
-        Map<Coord, Cell> level2Map = LevelMap.get().getLevel2Map();
         GameSave gameSave = loadGameSave(Path.of(LEVEL_PATH+"/level2.xml"));
         ServiceLoader<CustomMovingEntityService> loader = ServiceLoader.load(CustomMovingEntityService.class);
         if (loader.findFirst().isEmpty()) {

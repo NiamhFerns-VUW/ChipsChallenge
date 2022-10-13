@@ -18,8 +18,8 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Entity;
  */
 public class GameSave {
 
-    final int CELLS_WIDTH = 21;
-    final int CELLS_HEIGHT = 21;
+    public final int CELLS_WIDTH = 21;
+    public final int CELLS_HEIGHT = 21;
 
     private int time;
     private List<Entity> inventory;

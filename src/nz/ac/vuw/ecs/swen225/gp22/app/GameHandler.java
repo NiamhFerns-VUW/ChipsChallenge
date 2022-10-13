@@ -19,7 +19,7 @@ public class GameHandler implements Observer {
     static GameHandler instance;
     private final ObserverAdapter domain;
     private final Recorder recorder;
-    private Replayer currentReplay;
+    protected Replayer currentReplay;
     private Viewport viewport;
     private final InputHandler input;
 
@@ -113,6 +113,9 @@ public class GameHandler implements Observer {
         input.addAlternateBinding(KeyEvent.VK_S, input::saveGame,     () -> {});
         input.addAlternateBinding(KeyEvent.VK_1, input::skipToLevel1, () -> {});
         input.addAlternateBinding(KeyEvent.VK_2, input::skipToLevel2, () -> {});
+
+        input.addBinding(KeyEvent.VK_PLUS, input::speedUp, () -> {});
+        input.addBinding(KeyEvent.VK_MINUS, input::speedDown, () -> {});
     }
 
     /**
@@ -152,6 +155,7 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     public void skipTo(String str) {
+        System.out.println(str);
         if (currentReplay != null) {
             GameClock.get().unregister(currentReplay);
             currentReplay = null;
@@ -164,6 +168,9 @@ public class GameHandler implements Observer {
             case "level2" -> {
                 System.out.println("You are now at level two.");
                 setGameState(new Level("Level Two", "level2", domain.get(), new Render()));
+            }
+            case "startMenu" -> {
+                setGameState(new StartScreen());
             }
             default -> {
                 System.out.println(str + " is not a level that exists.");

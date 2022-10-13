@@ -3,9 +3,12 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
+import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -135,6 +138,7 @@ class InputHandler implements KeyListener {
      * @author niamh
      */
     protected void saveGame() {
+        System.out.println("Saving game...");
     }
 
     /**
@@ -143,6 +147,17 @@ class InputHandler implements KeyListener {
      * @author niamh
      */
     protected void exitGame() {
+        System.exit(0);
+    }
+
+    protected void resumeGame() {
+        var fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("./src/levels/"));
+        int response = fileChooser.showOpenDialog(null);
+        if (response == 0) {
+            File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+            GameHandler.get().setGameState(new Level(file.getAbsolutePath(), domain, new Render()));
+        }
     }
 
     /**
@@ -151,6 +166,7 @@ class InputHandler implements KeyListener {
      * @author niamh
      */
     protected void skipToLevel1() {
+        GameHandler.get().skipTo("level1");
     }
 
     /**
@@ -159,6 +175,7 @@ class InputHandler implements KeyListener {
      * @author niamh
      */
     protected void skipToLevel2() {
+        GameHandler.get().skipTo("level2");
     }
 
     /**
@@ -176,7 +193,7 @@ class InputHandler implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        pressed.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
+        currentPressedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
     }
 
     /**
@@ -186,7 +203,7 @@ class InputHandler implements KeyListener {
      */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        released.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
+        currentReleasedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
     }
 
 }

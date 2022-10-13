@@ -50,4 +50,12 @@ public class Key implements Entity {
 			default -> throw new Error("Key does not have an image for the colour " + keyColour + "!");
 		};
 	}
+	@Override
+	public int hashCode() {
+		return keyColour.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof Key && obj.hashCode() == this.hashCode();
+	}
 }

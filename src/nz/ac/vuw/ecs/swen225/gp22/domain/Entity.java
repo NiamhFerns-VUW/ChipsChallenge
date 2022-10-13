@@ -1,14 +1,31 @@
 package nz.ac.vuw.ecs.swen225.gp22.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import gameImages.Img;
 
 import java.awt.*;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityServiceProvider;
 
 /**
  * The Entity interface is for the various things that the player could interact with.
  * Different from tiles, these can stack on top of each other (for example, a monster standing on the key, or a box pushed onto treasure).
  * 
  */
+@JsonTypeInfo(
+	use = JsonTypeInfo.Id.CLASS,
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "type"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = Key.class, name = "key"),
+	@JsonSubTypes.Type(value = Treasure.class, name = "treasure"),
+	@JsonSubTypes.Type(value = Chip.class, name = "chip"),
+	@JsonSubTypes.Type(value = DefaultCustomMovingEntityServiceProvider.class, name = "defaultcustomentity"),
+	@JsonSubTypes.Type(value = CustomMovingEntityService.class, name = "customentity")
+})
 public interface Entity {
 	/**
 	 * The interactBefore method causes the entity to perform an action based on its class, before the player moves
@@ -44,6 +61,7 @@ public interface Entity {
 	/**
 	 * @return Returns the entity's image
 	 */
+	@JsonIgnore
 	public Image getImage();
 
 	public String toString();

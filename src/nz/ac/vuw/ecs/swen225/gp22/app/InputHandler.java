@@ -113,6 +113,23 @@ class InputHandler implements KeyListener {
     }
 
     /**
+     * Move a player right/east and then record the movement to a recorder.
+     *
+     * @author niamh
+     */
+    protected void pause() {
+        GameClock.pause();
+    }
+    /**
+     * Move a player right/east and then record the movement to a recorder.
+     *
+     * @author niamh
+     */
+    protected void unpause() {
+        GameClock.unpause();
+    }
+
+    /**
      * Sets the InputHandler to expect an alternate control with the control key modifier.
      *
      * @author niamh
@@ -156,7 +173,7 @@ class InputHandler implements KeyListener {
         int response = fileChooser.showOpenDialog(null);
         if (response == 0) {
             File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-            GameHandler.get().setGameState(new Level(file.getAbsolutePath(), domain, new Render()));
+            GameHandler.get().setGameState(new Level("Saved File", file.getName().substring(0, file.getName().indexOf(".")), domain, new Render()));
         }
     }
 
@@ -193,6 +210,7 @@ class InputHandler implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentPressedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
     }
 
@@ -203,6 +221,7 @@ class InputHandler implements KeyListener {
      */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
+        if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentReleasedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
     }
 

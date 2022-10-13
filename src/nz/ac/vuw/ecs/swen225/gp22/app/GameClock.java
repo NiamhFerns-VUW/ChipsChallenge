@@ -12,12 +12,15 @@ import javax.swing.*;
 public class GameClock extends Subject {
     private static GameClock clock;
     private Timer timer;
-    public static final int FRAMERATE = 60;
+    public static final int DEFAULT_FRAMERATE = 60;
+    private static int FRAMERATE;
+    private static int TICKRATE;
 
     private long tickCount;
     private long levelTickCount;
     private long timePlayed;
     private long timeRemaining;
+    private boolean paused;
 
     /**
      * Retrieve the instance of GameClock or instantiate it if there isn't one.
@@ -30,6 +33,37 @@ public class GameClock extends Subject {
             clock = new GameClock();
         }
         return clock;
+    }
+
+    private void validateClock() {
+        timer.stop();
+        timer = new Timer(TICKRATE, _e -> {
+                tickIncrement();
+                update();
+            });
+    }
+
+
+    /**
+     * Resets the tickrate based on the users desired framerate.
+     * @param frameRate this is the desired frameRate that the user has set.
+     *
+     * @author niamh
+     */
+    public static void setTickRate(int frameRate) {
+        FRAMERATE = frameRate;
+        TICKRATE = 1000 / FRAMERATE;
+        if (clock != null) get().validateClock();
+    }
+
+    /**
+     * Returns the framerate that the clock is currently running at.
+     * @return the current framerate of the clock.
+     *
+     * @author niamh
+     */
+    public static int getFrameRate() {
+        return FRAMERATE;
     }
 
     /**
@@ -99,12 +133,27 @@ public class GameClock extends Subject {
      * @author niamh
      */
     protected void start() {
-            timer = new Timer(1000 / FRAMERATE, _e -> {
+            timer = new Timer(TICKRATE, _e -> {
                 tickIncrement();
                 update();
             });
             timer.start();
     }
+
+    public static void pause() {
+        if (clock.paused) return;
+        clock.paused = true;
+        clock.timer.stop();
+    }
+
+    public static void unpause() {
+        if (!clock.paused) return;
+        clock.paused = false;
+        clock.timer.start();
+    }
+
+    public static boolean isPaused() { return clock.paused; }
+
 
     /**
      * Stops the clock.
@@ -115,7 +164,7 @@ public class GameClock extends Subject {
         timer.stop();
     }
 
-    protected void reset() {
+    protected static void reset() {
         clock = new GameClock();
     }
 
@@ -140,5 +189,7 @@ public class GameClock extends Subject {
         levelTickCount = 0;
         timePlayed = 0;
         timeRemaining = 0;
+        GameClock.setTickRate(DEFAULT_FRAMERATE);
+        paused = false;
     }
 }

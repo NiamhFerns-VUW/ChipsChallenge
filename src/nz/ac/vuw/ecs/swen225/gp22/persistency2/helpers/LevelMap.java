@@ -3,8 +3,6 @@
  */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
-import gameImages.Img;
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,11 +19,9 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Info;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
 import nz.ac.vuw.ecs.swen225.gp22.domain.LockedDoor;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MoveableBlock;
-import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pit;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Treasure;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Wall;
-import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.DefaultCustomMovingEntityServiceProvider;
 
 /**
@@ -43,10 +39,29 @@ public class LevelMap {
     private Map<Coord, Cell> level1Map;
     private Map<Coord, Cell> level2Map;
 
+    private final List<Cell> level1CellList;
+    private final List<Cell> level2CellList;
+
+    public List<Cell> getLevel1CellList() {
+        return level1CellList;
+    }
+
+    public List<Cell> getLevel2CellList() {
+        return level2CellList;
+    }
+
     private LevelMap() {
         levelMap = null;
         initLevel1Map();
         initLevel2Map();
+        level1CellList = new ArrayList<>();
+        level2CellList = new ArrayList<>();
+        level1Map.keySet().forEach(key->{
+            level1CellList.add(level1Map.get(key));
+        });
+        level2Map.keySet().forEach(key->{
+            level2CellList.add(level2Map.get(key));
+        });
     }
     private void initLevel1Map() {
         this.level1Map = new HashMap<>();
@@ -3809,6 +3824,11 @@ public class LevelMap {
         });
     }
 
+    /**
+     * Converts map of coordinates to cells into a 2d array of Cells.
+     * @param map
+     * @return
+     */
     public Cell[][] to2D(Map<Coord,Cell> map) {
         Cell[][] cells = new Cell[map.keySet().size()][map.keySet().size()];
         map.keySet().forEach(key->{

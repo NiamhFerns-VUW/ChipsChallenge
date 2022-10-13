@@ -12,10 +12,10 @@ class DirectionTest {
 
     @Test
     void fromString() {
-        assertThrows(Error.class,()->{
+        assertThrows(IllegalArgumentException.class,()->{
             Direction direction = Direction.fromString("");
         });
-        assertThrows(Error.class,()->{
+        assertThrows(IllegalArgumentException.class,()->{
             Direction direction = Direction.fromString("NotADir");
         });
         Map<String, Direction> stringDirectionMap = Map.ofEntries(

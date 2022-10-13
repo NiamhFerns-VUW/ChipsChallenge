@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.*;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
+import nz.ac.vuw.ecs.swen225.gp22.recorder.Replayer;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
 import javax.swing.*;
@@ -15,9 +16,10 @@ import java.lang.reflect.InvocationTargetException;
  * @author niamh
  */
 public class GameHandler implements Observer {
-    public static GameHandler instance;
+    static GameHandler instance;
     private final ObserverAdapter domain;
     private final Recorder recorder;
+    private Replayer currentReplay;
     private Viewport viewport;
     private final InputHandler input;
 
@@ -100,15 +102,15 @@ public class GameHandler implements Observer {
         input.addBinding(KeyEvent.VK_DOWN,    input::mvDown,  () -> {});
         input.addBinding(KeyEvent.VK_LEFT,    input::mvLeft,  () -> {});
         input.addBinding(KeyEvent.VK_RIGHT,   input::mvRight, () -> {});
-        input.addBinding(KeyEvent.VK_SPACE,   () -> {}, () -> {});
-        input.addBinding(KeyEvent.VK_ESCAPE,  () -> {}, () -> {});
+        input.addBinding(KeyEvent.VK_SPACE,   input::pause,   () -> {});
+        input.addBinding(KeyEvent.VK_ESCAPE,  input::unpause, () -> {});
 
         input.addBinding(KeyEvent.VK_CONTROL, input::setAlternateControls, () -> {});
         input.addAlternateBinding(KeyEvent.VK_CONTROL, () -> {}, input::unsetAlternateControls);
 
-        input.addAlternateBinding(KeyEvent.VK_R, input::resumeGame, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_X, input::exitGame, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_S, input::saveGame, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_R, input::resumeGame,   () -> {});
+        input.addAlternateBinding(KeyEvent.VK_X, input::exitGame,     () -> {});
+        input.addAlternateBinding(KeyEvent.VK_S, input::saveGame,     () -> {});
         input.addAlternateBinding(KeyEvent.VK_1, input::skipToLevel1, () -> {});
         input.addAlternateBinding(KeyEvent.VK_2, input::skipToLevel2, () -> {});
     }
@@ -121,6 +123,7 @@ public class GameHandler implements Observer {
     public void start() {
         GameClock.get().register(viewport);
         viewport.setState(new StartScreen());
+        viewport.repack();
         GameClock.get().start();
     }
 
@@ -131,9 +134,15 @@ public class GameHandler implements Observer {
      */
     public void reset() {
         GameClock.get().stop();
-        GameClock.get().reset();
+        GameClock.reset();
         GameClock.get().unregister(this);
         GameClock.get().unregister(viewport);
+    }
+
+    public void setReplayer(Replayer replayer) {
+        skipTo(replayer.getReplayLevel());
+        currentReplay = replayer;
+        GameClock.get().register(replayer);
     }
 
     /**
@@ -143,17 +152,22 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     public void skipTo(String str) {
-        switch(str.toLowerCase()) {
-            case "level1":
+        if (currentReplay != null) {
+            GameClock.get().unregister(currentReplay);
+            currentReplay = null;
+        }
+        switch (str.toLowerCase()) {
+            case "level1" -> {
                 System.out.println("You are now at level one.");
-                setGameState(new Level("level1", domain.get(), new Render()));
-                break;
-
-
-            case "level2":
+                setGameState(new Level("Level One", "level1", domain.get(), new Render()));
+            }
+            case "level2" -> {
                 System.out.println("You are now at level two.");
-                setGameState(new Level("level2", domain.get(), new Render()));
-                break;
+                setGameState(new Level("Level Two", "level2", domain.get(), new Render()));
+            }
+            default -> {
+                System.out.println(str + " is not a level that exists.");
+            }
         }
     }
 
@@ -164,6 +178,10 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     protected void setGameState(GameState state) {
+        if (currentReplay != null) {
+            GameClock.get().unregister(currentReplay);
+            currentReplay = null;
+        }
         GameClock.get().unregister(viewport);
         GameClock.get().unregister(domain);
         viewport.setState(state);
@@ -176,6 +194,7 @@ public class GameHandler implements Observer {
         GameClock.get().setLevelTime(90000);
 
         viewport.validate();
+        viewport.repack();
     }
 
     /**
@@ -184,6 +203,10 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     protected void onLevelChange() {
+        if (currentReplay != null) {
+            GameClock.get().unregister(currentReplay);
+            currentReplay = null;
+        }
         GameClock.get().unregister(this);
         GameClock.get().unregister(domain);
         GameClock.get().unregister(viewport);
@@ -201,6 +224,7 @@ public class GameHandler implements Observer {
         GameClock.get().register(viewport);
 
         viewport.validate();
+        viewport.repack();
     }
 
     protected  void onFail() {
@@ -216,7 +240,7 @@ public class GameHandler implements Observer {
      */
     private void setComponents(Level level) {
             // Start the next level in domain.
-            domain.get().startLevel(level.levelName(), this::onLevelChange, this::onFail);
+            domain.get().startLevel(level.levelPath(), this::onLevelChange, this::onFail);
             assert domain.get().ok();
             GameClock.get().register(domain);
 

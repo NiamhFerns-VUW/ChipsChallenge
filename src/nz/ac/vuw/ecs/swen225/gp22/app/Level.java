@@ -18,31 +18,41 @@ import java.util.List;
  *
  * @author niamh
  */
-record Level(String levelName, Domain domain, Render gameplayPanel) implements GameState {
+record Level(String levelName, String levelPath, Domain domain, Render gameplayPanel) implements GameState {
     @Override
     public List<JPanel> panels() {
         JPanel timerPanel = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                FontMetrics fm = g2d.getFontMetrics();
+
                 g.setColor(Color.GRAY);
                 g.fillRect(0, 0, getWidth(), getHeight());
 
                 g.setColor(Color.GREEN);
-                g.drawString(levelName, 80, 50);
-                g.drawString("Time Remaining: " + GameClock.get().currentLevelTime() / 1000, 50, getHeight() / 2 - 100);
-                g.drawString("Keys Remaining: " + GameHandler.get().chipsRemaining(), 50, getHeight() - 250);
+                String currentlyDrawing = levelName;
+                g.drawString(currentlyDrawing, getWidth() / 2 - fm.stringWidth(currentlyDrawing) / 2, 50);
+                currentlyDrawing = "Time Remaining: " + GameClock.get().currentLevelTime() / 1000;
+                g.drawString(currentlyDrawing, getWidth() / 2 - fm.stringWidth(currentlyDrawing) / 2, getHeight() / 2 - 100);
+
+                var level = domain.getLevel().orElseThrow(() -> new Error("No level was found."));
+                var chipsRemaining = level.getRemainingTreasures();
+
+                currentlyDrawing = "Sphynxes Remaining: " + chipsRemaining;
+                g.drawString(currentlyDrawing, getWidth() / 2 - fm.stringWidth(currentlyDrawing) / 2, getHeight() - 250);
             }
         };
-        timerPanel.setMaximumSize(new Dimension(200, 480));
+        timerPanel.setPreferredSize(new Dimension(200, 480));
         timerPanel.setFocusable(false);
 
-        gameplayPanel.setMaximumSize(new Dimension(440, 480));
+        gameplayPanel.setPreferredSize(new Dimension(480, 480));
         gameplayPanel.setFocusable(false);
         return List.of(gameplayPanel, timerPanel);
     }
 
     @Override
     public GameState nextLevel() {
-        return new Level("level2", domain, new Render());
+        return new Level("Level Two", "level2", domain, new Render());
     }
 }

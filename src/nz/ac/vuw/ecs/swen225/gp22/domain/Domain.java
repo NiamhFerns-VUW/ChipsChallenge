@@ -32,8 +32,7 @@ public class Domain {
 	 * @param levelname - the path to the level
 	 */
 	public void startLevel(String levelname, Runnable onWin, Runnable onDeath) {
-		//GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
-		GameSave save = persist.loadGameSave(Path.of("./src/levels/level1.xml"));	// TODO: change to proper name
+		GameSave save = persist.loadGameSave(Path.of("./src/levels/" + levelname + ".xml"));
 
 		Cell[][] cells = save.getCells();
 		createLevel(cells, (ArrayList<Entity>) save.getInventory(), onWin, onDeath);

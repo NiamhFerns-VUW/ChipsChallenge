@@ -13,7 +13,7 @@ import java.util.Stack;
  * the user to make the AutoReplay faster or slower.
  * And StepByStep allows User to move through each step made by chip in their own time, on Step at a time.
  *
- * @author Santino Gaeta
+ * @author Santino Gaeta 300305101
  */
 public class Replayer implements Observer {
 

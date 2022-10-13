@@ -4,7 +4,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 /**
  * When Recording, 'Steps' are created to contain the direction Chip moved in and Time the move occured.
  *
- * @author Santino Gaeta
+ * @author Santino Gaeta 300305101
  */
 public class Step{
 

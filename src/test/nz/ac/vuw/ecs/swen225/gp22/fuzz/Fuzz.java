@@ -201,18 +201,18 @@ class Fuzz{
         Input input1 = new Input( new ProbInput());
         Input input2 = new Input( new FollowedInput());
 
-        int method = 4;
+        int method = 3;
         switch (method) {
-            case 1:
+            case 0:
                 f.testInputStrategy(input1, 100000, "level2");
                 break;
-            case 2:
+            case 1:
                 f.testInputStrategy(input2, 100000, "level2");
                 break;
-            case 3:
+            case 2:
                 f.randomKeys(100000, "level2");
                 break;
-            case 4:
+            case 3:
                 f.actiontest(100000, "level2");
                 break;
             default:

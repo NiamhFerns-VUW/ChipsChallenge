@@ -1,5 +1,7 @@
 /**
- * @author Micky Snadden
+ * @author Micky Snadden 300569572
+ * Originally used Maps of coordinates to cells but Coords were added to Cells for convenience of
+ * serializing and deserializing as jackson deals with simpler data structures better.
  */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
@@ -32,7 +34,9 @@ public class LevelMap {
 
     private static LevelMap instance = null;
 
+    @Deprecated
     private Map<Coord, Cell> level1Map;
+    @Deprecated
     private Map<Coord, Cell> level2Map;
 
     private final List<Cell> level1CellList;

@@ -1,10 +1,9 @@
 /**
- * @author Micky Snadden
+ * @author Micky Snadden 300569572
  */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

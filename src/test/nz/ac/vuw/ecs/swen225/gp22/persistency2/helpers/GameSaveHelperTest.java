@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
+import static nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper.LEVEL_PATH;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
@@ -11,7 +12,11 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.custom.CustomMovingEntityService;
 import org.junit.jupiter.api.Test;
 
 class GameSaveHelperTest {
-
+    @Test
+    public void testLoadLevel() throws IOException {
+        GameSave gameSave = GameSaveHelper.loadLevel(
+            Path.of(LEVEL_PATH.toString() + "/level2.xml"));
+    }
     @Test
     void getLevel1GameSave() {
         // compare against source of truth source code levels

@@ -34,7 +34,7 @@ public enum Direction {
 				case "None" -> {
 					return Direction.None;
 				}
-				default -> throw new Error("Not a valid direction string");
+				default -> throw new IllegalArgumentException("Not a valid direction string");
 			}
 	}
 }

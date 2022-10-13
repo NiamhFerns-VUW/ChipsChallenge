@@ -13,6 +13,11 @@ public class Wall extends FreeTile {
 		return false;
 	}
 
+	@Override
+	public boolean afterMoveInto(MovingEntity e, Direction d, Cell myCell) {
+		throw new IllegalStateException("Entities cannot be moved into walls!");
+	}
+
 	public String toString() {
 		return "W";
 	}

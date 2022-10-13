@@ -52,7 +52,7 @@ class DomainTest {
         Domain dom = new Domain();
         Cell[][] cells = createTestCells(4,4);
         cells[1][1].getEntities().add(new AntiHazard());
-        cells[1][2].getEntities().add(new Key());
+        cells[1][2] = new Cell(new FreeTile(), List.of(new Key()));
         cells[2][1].getEntities().add(new Treasure());
         cells[2][2].getEntities().add(new Chip());
 
@@ -733,8 +733,6 @@ class DomainTest {
     }
 
 
-
-    //
     // ==========================
     //       Invalid Tests:
     // ==========================
@@ -745,7 +743,7 @@ class DomainTest {
         Domain dom = new Domain();
         Cell[][] cells = createTestCells(4,4);
 
-        assertThrows(Error.class, ()->dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{}));
+        assertThrows(IllegalArgumentException.class, ()->dom.createLevel(cells, new ArrayList<Entity>(), ()->{}, ()->{}));
     }
 
     // ==| Chip Tests |==
@@ -793,6 +791,29 @@ class DomainTest {
     }
 
 
+    // ==========================
+    //     Misc/Minor Tests:
+    // ==========================
+    @Test
+    void coordEqualsTest() {
+        Coord c1 = new Coord(1, 2);
+        Coord c2 = new Coord();
+
+        assertFalse(c1.equals(c2) || c2.equals(c1));
+        assertFalse(c1.equals("word"));
+
+        assert c1.equals(c1);
+    }
+
+    @Test
+    void stringToDir() {
+        assertEquals(Direction.Up, Direction.fromString("Up"));
+        assertEquals(Direction.Down, Direction.fromString("Down"));
+        assertEquals(Direction.Left, Direction.fromString("Left"));
+        assertEquals(Direction.Right, Direction.fromString("Right"));
+        assertEquals(Direction.None, Direction.fromString("None"));
+        assertThrows(IllegalArgumentException.class, ()->Direction.fromString("This should throw error"));
+    }
 
 
     public static Cell[][] createTestCells(int row, int col) {

@@ -156,7 +156,7 @@ class InputHandler implements KeyListener {
         int response = fileChooser.showOpenDialog(null);
         if (response == 0) {
             File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-            GameHandler.get().setGameState(new Level("Saved File", file.getAbsolutePath(), domain, new Render()));
+            GameHandler.get().setGameState(new Level("Saved File", file.getName().substring(0, file.getName().indexOf(".")), domain, new Render()));
         }
     }
 

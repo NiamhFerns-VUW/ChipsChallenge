@@ -22,7 +22,7 @@ import java.util.Stack;
  * Recorder can also load those xml files from levels folder and produce a Replayer object, who can
  * replay those levels and re-enact Chip's movements during the level that was recorded.
  *
- * @author Santino Gaeta
+ * @author Santino Gaeta 300305101
  */
 public class Recorder {
 

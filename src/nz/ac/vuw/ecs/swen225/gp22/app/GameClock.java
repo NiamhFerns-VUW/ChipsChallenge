@@ -148,6 +148,7 @@ public class GameClock extends Subject {
 
     public static void unpause() {
         if (!clock.paused) return;
+        clock.paused = false;
         clock.timer.start();
     }
 

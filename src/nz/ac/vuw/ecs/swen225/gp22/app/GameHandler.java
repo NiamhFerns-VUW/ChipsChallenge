@@ -102,15 +102,15 @@ public class GameHandler implements Observer {
         input.addBinding(KeyEvent.VK_DOWN,    input::mvDown,  () -> {});
         input.addBinding(KeyEvent.VK_LEFT,    input::mvLeft,  () -> {});
         input.addBinding(KeyEvent.VK_RIGHT,   input::mvRight, () -> {});
-        input.addBinding(KeyEvent.VK_SPACE,   () -> {}, () -> {});
-        input.addBinding(KeyEvent.VK_ESCAPE,  () -> {}, () -> {});
+        input.addBinding(KeyEvent.VK_SPACE,   input::pause,   () -> {});
+        input.addBinding(KeyEvent.VK_ESCAPE,  input::unpause, () -> {});
 
         input.addBinding(KeyEvent.VK_CONTROL, input::setAlternateControls, () -> {});
         input.addAlternateBinding(KeyEvent.VK_CONTROL, () -> {}, input::unsetAlternateControls);
 
-        input.addAlternateBinding(KeyEvent.VK_R, input::resumeGame, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_X, input::exitGame, () -> {});
-        input.addAlternateBinding(KeyEvent.VK_S, input::saveGame, () -> {});
+        input.addAlternateBinding(KeyEvent.VK_R, input::resumeGame,   () -> {});
+        input.addAlternateBinding(KeyEvent.VK_X, input::exitGame,     () -> {});
+        input.addAlternateBinding(KeyEvent.VK_S, input::saveGame,     () -> {});
         input.addAlternateBinding(KeyEvent.VK_1, input::skipToLevel1, () -> {});
         input.addAlternateBinding(KeyEvent.VK_2, input::skipToLevel2, () -> {});
     }
@@ -140,8 +140,9 @@ public class GameHandler implements Observer {
     }
 
     public void setReplayer(Replayer replayer) {
-        currentReplay = replayer;
         skipTo(replayer.getReplayLevel());
+        currentReplay = replayer;
+        GameClock.get().register(replayer);
     }
 
     /**
@@ -151,6 +152,10 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     public void skipTo(String str) {
+        if (currentReplay != null) {
+            GameClock.get().unregister(currentReplay);
+            currentReplay = null;
+        }
         switch (str.toLowerCase()) {
             case "level1" -> {
                 System.out.println("You are now at level one.");
@@ -173,6 +178,10 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     protected void setGameState(GameState state) {
+        if (currentReplay != null) {
+            GameClock.get().unregister(currentReplay);
+            currentReplay = null;
+        }
         GameClock.get().unregister(viewport);
         GameClock.get().unregister(domain);
         viewport.setState(state);

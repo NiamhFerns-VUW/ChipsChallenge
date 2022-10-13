@@ -47,7 +47,7 @@ public class Key implements Entity {
 			case "Green" -> Img.Greenkey.image;
 			case "Blue" -> Img.Bluekey.image;
 			case "Yellow" -> Img.Yellowkey.image;
-			default -> throw new Error("Key does not have an image for the colour " + keyColour + "!");
+			default -> throw new IllegalArgumentException("Key does not have an image for the colour " + keyColour + "!");
 		};
 	}
 	@Override

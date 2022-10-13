@@ -10,9 +10,7 @@ import java.awt.*;
 public class Pit extends FreeTile{
 	@Override
 	public boolean onMoveInto(MovingEntity e, Direction d, Cell myCell) {
-		if (e instanceof MoveableBlock) return true;
-
-		return false;
+		return true;
 	}
 
 	@Override

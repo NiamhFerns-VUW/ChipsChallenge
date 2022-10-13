@@ -17,7 +17,7 @@ public class Chip extends MovingEntity {
 
 	@Override
 	public boolean interactBefore(MovingEntity e, Direction d, Cell myCell) {
-		return false;
+		return true;
 	}
 
 	@Override

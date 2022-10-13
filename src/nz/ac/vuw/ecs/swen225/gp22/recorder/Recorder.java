@@ -175,8 +175,12 @@ public class Recorder {
             return null;
         }
         File xmlFile = jfc.getSelectedFile();
-        if(xmlFile.toString().contains("level1")){currentLevel = "level1";}
-        else if(xmlFile.toString().contains("level2")){currentLevel = "level2";}
+        if(xmlFile.toString().contains("Level One Recording")){currentLevel = "Level One";}
+        else if(xmlFile.toString().contains("Level Two Recording")){currentLevel = "Level Two";}
+
+        System.out.println(xmlFile.toString());
+        Replayer rep = new Replayer(convertXmlToHistoryStack(xmlFile), currentLevel);
+        System.out.println(rep.getReplayLevel());
 
         return new Replayer(convertXmlToHistoryStack(xmlFile), currentLevel);
     }
@@ -190,7 +194,7 @@ public class Recorder {
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try{
-            mapper.writeValue(new File("./src/levels/"+level+"Recording.xml"), chipMoves);
+            mapper.writeValue(new File("./src/levels/"+level+" Recording.xml"), chipMoves);
         }catch(IOException e){
             throw new RuntimeException(e);
         }

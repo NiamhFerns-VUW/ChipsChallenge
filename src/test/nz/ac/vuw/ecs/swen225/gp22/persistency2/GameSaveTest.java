@@ -66,9 +66,4 @@ class GameSaveTest {
         ArrayList<Cell> cells = new ArrayList<>(cells1);
         return new GameSave(cells, 100, List.of());
     }
-    @Test
-    public void sanityCheckTest() throws JsonProcessingException {
-        GameSave testGameSave = getTestGameSave();
-        System.out.println(validateGameSave(testGameSave));
-    }
 }

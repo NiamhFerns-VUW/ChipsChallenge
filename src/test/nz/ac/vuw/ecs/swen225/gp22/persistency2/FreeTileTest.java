@@ -50,7 +50,6 @@ class FreeTileTest {
         tiles.forEach(tile->{
             try {
                 String tileString = mapper.writeValueAsString(tile);
-                System.out.println(tileString);
                 FreeTile freeTile = mapper.readValue(tileString, FreeTile.class);
                 assertEquals(tile,freeTile);
             } catch (JsonProcessingException e) {

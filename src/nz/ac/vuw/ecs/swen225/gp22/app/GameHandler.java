@@ -113,9 +113,14 @@ public class GameHandler implements Observer {
         input.addAlternateBinding(KeyEvent.VK_S, input::saveGame,     () -> {});
         input.addAlternateBinding(KeyEvent.VK_1, input::skipToLevel1, () -> {});
         input.addAlternateBinding(KeyEvent.VK_2, input::skipToLevel2, () -> {});
+    }
 
-        input.addBinding(KeyEvent.VK_PLUS, input::speedUp, () -> {});
-        input.addBinding(KeyEvent.VK_MINUS, input::speedDown, () -> {});
+    public void addBindings(Integer keyCode, Runnable onPress, Runnable onRelease) {
+        input.addBinding(keyCode, onPress, onRelease);
+    }
+
+    public void addAltBindings(Integer keyCode, Runnable onPress, Runnable onRelease) {
+        input.addAlternateBinding(keyCode, onPress, onRelease);
     }
 
     /**
@@ -169,9 +174,7 @@ public class GameHandler implements Observer {
                 System.out.println("You are now at level two.");
                 setGameState(new Level("Level Two", "level2", domain.get(), new Render()));
             }
-            case "startMenu" -> {
-                setGameState(new StartScreen());
-            }
+            case "startmenu" -> setGameState(new StartScreen());
             default -> {
                 System.out.println(str + " is not a level that exists.");
             }

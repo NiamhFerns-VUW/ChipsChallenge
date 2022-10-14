@@ -9,7 +9,7 @@ import java.util.stream.Stream;
  * This class is used to generate random inputs for the game with different probabilities.
  */
 
-public class ProbInput implements InputStrategy {
+class ProbInput implements InputStrategy {
     Random random = new Random();
     private int[] keys = {
             KeyEvent.VK_UP,
@@ -18,8 +18,8 @@ public class ProbInput implements InputStrategy {
             KeyEvent.VK_RIGHT,
             KeyEvent.VK_SPACE,
             KeyEvent.VK_ESCAPE,
-            KeyEvent.VK_S,
-            KeyEvent.VK_R
+//            KeyEvent.VK_S,
+//            KeyEvent.VK_R
     };
     /**
      * This is the constructor of the ProbInput class
@@ -32,12 +32,12 @@ public class ProbInput implements InputStrategy {
      */
     @Override
     public int nextInput(Input input) {
-        double[] weightMost = {0.2, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1};
-        double[] weightAfterS = {0, 0, 0, 0, 0, 0, 0, 1};
-        double[] weightAfterSpace = {0.1, 0.1, 0.1, 0.1, 0.1, 0.3, 0.1, 0.1};
+        double[] weightMost = {0.2, 0.2, 0.2, 0.2, 0.1, 0.1};
+//        double[] weightAfterS = {0, 0, 0, 0, 0, 0, 0, 1};
+        double[] weightAfterSpace = {0.15, 0.15, 0.15, 0.15, 0.1, 0.3};
 
         double[] fromProb = switch (input.prevKey) {
-            case KeyEvent.VK_S -> weightAfterS;
+            //case KeyEvent.VK_S -> weightAfterS;
             case KeyEvent.VK_SPACE -> weightAfterSpace;
             default -> weightMost;
         };

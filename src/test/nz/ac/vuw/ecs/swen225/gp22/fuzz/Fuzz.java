@@ -6,6 +6,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
@@ -164,16 +165,16 @@ class Fuzz{
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
-        Input input1 = new Input( new ProbInput());
-        Input input2 = new Input( new FollowedInput());
+        Input ProbInput = new Input( new ProbInput());
+        Input FollowedInput = new Input( new FollowedInput());
 
-        int method = 3;
+        int method = 0;
         switch (method) {
             case 0:
-                f.testInputStrategy(input1, 100000, "level1");
+                f.testInputStrategy(ProbInput, 100000, "level1");
                 break;
             case 1:
-                f.testInputStrategy(input2, 100000, "level1");
+                f.testInputStrategy(FollowedInput, 100000, "level1");
                 break;
             case 2:
                 f.randomKeys(100000, "level1");
@@ -198,16 +199,16 @@ class Fuzz{
     @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
-        Input input1 = new Input( new ProbInput());
-        Input input2 = new Input( new FollowedInput());
+        Input ProbInput = new Input( new ProbInput());
+        Input FollowedInput = new Input( new FollowedInput());
 
-        int method = 3;
+        int method = 0;
         switch (method) {
             case 0:
-                f.testInputStrategy(input1, 100000, "level2");
+                f.testInputStrategy(ProbInput, 100000, "level2");
                 break;
             case 1:
-                f.testInputStrategy(input2, 100000, "level2");
+                f.testInputStrategy(FollowedInput, 100000, "level2");
                 break;
             case 2:
                 f.randomKeys(100000, "level2");
@@ -218,5 +219,168 @@ class Fuzz{
             default:
                 break;
         }
+    }
+}
+
+interface InputStrategy {
+    int nextInput(Input input);
+    boolean isPressCtrl(Input input);
+}
+
+
+class FollowedInput implements InputStrategy {
+    Random random = new Random();
+    private int[] keys = {
+            KeyEvent.VK_UP,
+            KeyEvent.VK_DOWN,
+            KeyEvent.VK_LEFT,
+            KeyEvent.VK_RIGHT,
+            KeyEvent.VK_SPACE,
+            KeyEvent.VK_ESCAPE,
+//            KeyEvent.VK_S,
+//            KeyEvent.VK_R
+    };
+
+    /**
+     * This is the constructor of the FollowedInput class
+     */
+    public FollowedInput() {
+    }
+
+    /**
+     * This method is used to generate random inputs for the game by following the previous input
+     *
+     * @param input the input
+     * @return the next input
+     */
+    @Override
+    public int nextInput(Input input) {
+        int[] keysWithoutUp = {KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE};
+        int[] keysWithoutDown = {KeyEvent.VK_UP, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE};
+        int[] keysWithoutLeft = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE};
+        int[] keysWithoutRight = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE};
+//        int[] keyAfterS = { KeyEvent.VK_R };
+//        int[] keyAfterR = { KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE, KeyEvent.VK_S, KeyEvent.VK_R };
+        int[] keyAfterSpace = {KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE};
+        int[] keyAfterEscape = {KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_SPACE, KeyEvent.VK_ESCAPE};
+
+        int[] from = switch (input.prevKey) {
+            case KeyEvent.VK_UP -> keysWithoutDown;
+            case KeyEvent.VK_DOWN -> keysWithoutUp;
+            case KeyEvent.VK_LEFT -> keysWithoutRight;
+            case KeyEvent.VK_RIGHT -> keysWithoutLeft;
+//            case KeyEvent.VK_S -> keyAfterS;
+//            case KeyEvent.VK_R -> keyAfterR;
+            case KeyEvent.VK_SPACE -> keyAfterSpace;
+            case KeyEvent.VK_ESCAPE -> keyAfterEscape;
+            default -> keys;
+        };
+
+        return from[random.nextInt(from.length)];
+    }
+
+    /**
+     * This method is used to check if the input is a control key
+     *
+     * @param input the input
+     * @return true if the input is a control key
+     */
+    @Override
+    public boolean isPressCtrl(Input input) {
+        return (input.key == KeyEvent.VK_S || input.key == KeyEvent.VK_R);
+    }
+}
+
+class Input {
+    InputStrategy inputStrategy;
+    int prevKey;
+    int key;
+
+    /**
+     * Constructor for Input
+     * @param inputStrategy the input strategy to use
+     */
+    public Input( InputStrategy inputStrategy) {
+        this.inputStrategy = inputStrategy;
+        int prevKey = 0;
+    }
+
+    /**
+     * This method is used to get the next input
+     * @return the next KeyEvent
+     */
+    public int nextInput() {
+        key = inputStrategy.nextInput(this);
+        prevKey = key;
+        return key;
+    }
+
+    /**
+     * This method is used to check if the next input is a ctrl key
+     * @return true if the next input is a ctrl key
+     */
+    public boolean isPressCtrl() {
+        return inputStrategy.isPressCtrl(this);
+    }
+}
+
+
+class ProbInput implements InputStrategy {
+    Random random = new Random();
+    private int[] keys = {
+            KeyEvent.VK_UP,
+            KeyEvent.VK_DOWN,
+            KeyEvent.VK_LEFT,
+            KeyEvent.VK_RIGHT,
+            KeyEvent.VK_SPACE,
+            KeyEvent.VK_ESCAPE,
+//            KeyEvent.VK_S,
+//            KeyEvent.VK_R
+    };
+    /**
+     * This is the constructor of the ProbInput class
+     */
+    public ProbInput() {}
+    /**
+     * This method is used to generate random inputs for the game with different probabilities
+     * @param input the input
+     * @return the next input
+     */
+    @Override
+    public int nextInput(Input input) {
+        double[] weightMost = {0.22, 0.22, 0.22, 0.22, 0.06, 0.06};
+        double[] weightAfterUp = {0.3, 0, 0.3, 0.3, 0.05, 0.05};
+        double[] weightAfterDown = {0, 0.3, 0.3, 0.3, 0.05, 0.05};
+        double[] weightAfterLeft = {0.3, 0.3, 0.3, 0, 0.05, 0.05};
+        double[] weightAfterRight = {0.3, 0.3, 0, 0.3, 0.05, 0.05};
+//        double[] weightAfterS = {0, 0, 0, 0, 0, 0, 0, 1};
+        double[] weightAfterSpace = {0.15, 0.15, 0.15, 0.15, 0.1, 0.3};
+
+        double[] fromProb = switch (input.prevKey) {
+            //case KeyEvent.VK_S -> weightAfterS;
+            case KeyEvent.VK_UP -> weightAfterUp;
+            case KeyEvent.VK_DOWN -> weightAfterDown;
+            case KeyEvent.VK_LEFT -> weightAfterLeft;
+            case KeyEvent.VK_RIGHT -> weightAfterRight;
+            case KeyEvent.VK_SPACE -> weightAfterSpace;
+            default -> weightMost;
+        };
+
+        int[] from = IntStream.range(0, fromProb.length)
+                .filter(i -> fromProb[i] > 0)
+                .mapToObj(i -> IntStream.range(0, (int) (fromProb[i] * 100)).map(j -> keys[i]).toArray())
+                .flatMapToInt(IntStream::of)
+                .toArray();
+
+        return from[random.nextInt(from.length)];
+    }
+    /**
+     * This method is used to check if the next input is a ctrl key
+     * @param input the input
+     * @return true if the next input is a ctrl key
+     */
+    @Override
+    public boolean isPressCtrl(Input input) {
+        return (input.key == KeyEvent.VK_S || input.key == KeyEvent.VK_R);
     }
 }

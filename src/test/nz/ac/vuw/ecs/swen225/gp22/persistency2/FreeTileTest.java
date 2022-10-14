@@ -1,9 +1,10 @@
 /**
- * @author Micky Snadden
+ * @author Micky Snadden 300569572
  */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -16,7 +17,6 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Hazard;
 import nz.ac.vuw.ecs.swen225.gp22.domain.IceHazard;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Info;
-import nz.ac.vuw.ecs.swen225.gp22.domain.Key;
 import nz.ac.vuw.ecs.swen225.gp22.domain.LockedDoor;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Pit;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Teleporter;
@@ -29,7 +29,7 @@ class FreeTileTest {
     /**
      * All variations of free tile to check that I can serialize and deserialize.
      */
-    List<FreeTile> tiles = new ArrayList<>(List.of(
+    final List<FreeTile> tiles = new ArrayList<>(List.of(
         new Exit(),
         new ExitLock(),
         new Hazard(),

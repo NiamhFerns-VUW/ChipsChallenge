@@ -14,7 +14,7 @@ public class LevelHelper {
     /**
      * Used to get the Path of Level xml file associated with given LevelEnum.
      */
-    public Map<LevelEnum,Path> levelEnumPathMap;
+    public final Map<LevelEnum,Path> levelEnumPathMap;
 
     public LevelHelper() {
         // Initialize levelEnumPathMap with the appropriate LevelEnum values and their paths.

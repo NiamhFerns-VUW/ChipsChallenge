@@ -1,5 +1,5 @@
 /**
- * @author Micky Snadden
+ * @author Micky Snadden 300569572
  */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2.custom;
 
@@ -14,12 +14,11 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.MovingEntity;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Check a simple implementation of the abstract class works as expected.
+ */
 class CustomMovingEntityServiceTest {
 
-    @Test
-    void testGetAssociatedLevelFile() {
-        CustomMovingEntityService entity = createEntity();
-    }
     @Test
     void directionList() {
         CustomMovingEntityService entity = createEntity();

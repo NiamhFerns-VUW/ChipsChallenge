@@ -1,3 +1,6 @@
+/**
+ * @author Micky Snadden 300569572
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,12 +15,8 @@ class DirectionTest {
 
     @Test
     void fromString() {
-        assertThrows(IllegalArgumentException.class,()->{
-            Direction direction = Direction.fromString("");
-        });
-        assertThrows(IllegalArgumentException.class,()->{
-            Direction direction = Direction.fromString("NotADir");
-        });
+        assertThrows(IllegalArgumentException.class,()-> Direction.fromString(""));
+        assertThrows(IllegalArgumentException.class,()-> Direction.fromString("NotADir"));
         Map<String, Direction> stringDirectionMap = Map.ofEntries(
             Map.entry("Up", Direction.Up),
             Map.entry("Down", Direction.Down),
@@ -36,7 +35,4 @@ class DirectionTest {
         assertEquals(Direction.values().length,5);
     }
 
-    @Test
-    void valueOf() {
-    }
 }

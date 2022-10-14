@@ -2,6 +2,8 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
+
+import java.awt.event.KeyEvent;
 import java.util.Stack;
 
 
@@ -17,12 +19,12 @@ import java.util.Stack;
  */
 public class Replayer implements Observer {
 
-    private int replaySpeed = GameClock.get().DEFAULT_FRAMERATE;
-    private Stack<Step> history;
-    private Stack<Step> prev;
+    private static int replaySpeed = GameClock.get().DEFAULT_FRAMERATE;
+    private static Stack<Step> history;
+    private static Stack<Step> prev;
     private String currentLevel;
-    boolean autoReplayState = true;
-    private InputGenerator inputGenerator;
+    static boolean autoReplayState = true;
+    private static InputGenerator inputGenerator;
     private GameHandler gameHandler;
 
     /**
@@ -42,7 +44,12 @@ public class Replayer implements Observer {
         gameHandler = GameHandler.get();
         inputGenerator = new InputGenerator(gameHandler);
         setReplaySpeed(GameClock.get().DEFAULT_FRAMERATE);
+        setBindings();
+    }
 
+    public void setBindings(){
+        GameHandler.get().addBindings(KeyEvent.VK_EQUALS, Replayer::speedUp, ()->{});
+        GameHandler.get().addBindings(KeyEvent.VK_MINUS, Replayer::speedDown, ()->{});
     }
 
     /**
@@ -55,7 +62,7 @@ public class Replayer implements Observer {
      */
     @Override
     public void update() {
-        if(history.isEmpty()){setReplaySpeed(10000);}
+        if(history.isEmpty()){GameHandler.get().skipTo("startmenu");}
         else if(autoReplayState && history.peek().getTime()==GameClock.get().currentLevelTime()){
             autoReplay();
         }
@@ -82,7 +89,7 @@ public class Replayer implements Observer {
      *
      * @author Santino Gaeta
      */
-    public void stepByStep(){
+    public static void stepByStep(){
         autoReplayState = false;
         Step currentMove = history.pop();
         prev.push(currentMove);
@@ -95,13 +102,15 @@ public class Replayer implements Observer {
         }
     }
 
+    //TODO STEPBYSTEP BACKWARDS
+
     /**
      * Invokes InputGenerator from App to move Chip in Game during replay
      * @param step - Step popped from history Stack to be invoked on Chip
      *
      * @author Santino Gaeta
      */
-    public void replayStep(Step step){
+    public static void replayStep(Step step){
         if(step.getMove().equals("Left")){inputGenerator.left();}
         else if (step.getMove().equals("Right")){inputGenerator.right();}
         else if (step.getMove().equals("Up")){inputGenerator.up();}
@@ -117,7 +126,7 @@ public class Replayer implements Observer {
      *
      * @author Santino Gaeta
      */
-    public Step skipEmptySteps(){
+    public static Step skipEmptySteps(){
         while(!history.isEmpty()){
             Step move = history.pop();
             prev.push(move);
@@ -130,15 +139,48 @@ public class Replayer implements Observer {
     }
 
     /**
-     * Resets Replay if player wants to replay the same level again
-     * Moves Steps from prev Stack back to history Stack and sets speed back to default
+     * Initialises the replaySpeed when Replayer is initialised
+     * @param newSpeed - DEFAULT_FRAMERATE of GameClock ( = 60 )
      *
      * @author Santino Gaeta
      */
-    public void resetReplayer(){
-        while(!prev.isEmpty()){history.push(prev.pop());}
-        autoReplayState = false;
-        replaySpeed = 1;
+    public void setReplaySpeed(int newSpeed){
+        this.replaySpeed = newSpeed;
+        GameClock.setTickRate(replaySpeed);
+        restartClock();
+    }
+
+    public static void speedUp(){
+        if(replaySpeed > 180){return;}
+        replaySpeed += 15;
+        GameClock.setTickRate(replaySpeed);
+        restartClock();
+    }
+
+    public static void speedDown(){
+        if(replaySpeed < 20){return;}
+        replaySpeed -= 15;
+        GameClock.setTickRate(replaySpeed);
+        restartClock();
+    }
+
+    /**
+     * Switches the Replayer's state to change from StepByStep into Automatic Replay mode
+     * Starts the GameClock update() up again
+     *
+     * @author Santino Gaeta
+     */
+    public static void changeReplayMode(){
+        if(autoReplayState = true){autoReplayState = false; GameClock.get().pause();}
+        else{
+            autoReplayState = false;
+            GameClock.get().unpause();
+        }
+    }
+
+    public static void restartClock(){
+        GameClock.get().pause();
+        GameClock.get().unpause();
     }
 
     /**
@@ -148,30 +190,5 @@ public class Replayer implements Observer {
      * @author Santino Gaeta
      */
     public String getReplayLevel(){return currentLevel;}
-
-    /**
-     * Changes speed of automatic replay to play faster or slower by changing tickRate on GameClock
-     * @param newSpeed - int the user wishes to change the automatic replay speed to
-     *
-     * @author Santino Gaeta
-     */
-    public void setReplaySpeed(int newSpeed){
-        this.replaySpeed = newSpeed;
-        GameClock.setTickRate(replaySpeed);
-        GameClock.get().pause();
-        GameClock.get().unpause();
-    }
-
-    /**
-     * Switches the Replayer's state to change from StepByStep into Automatic Replay mode
-     * Starts the GameClock update() up again
-     *
-     * @author Santino Gaeta
-     */
-    public void setAutoReplay(){
-        autoReplayState = true;
-        GameClock.get().pause();
-        GameClock.get().unpause();
-    }
 
 }

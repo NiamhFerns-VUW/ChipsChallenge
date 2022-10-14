@@ -165,16 +165,16 @@ class Fuzz{
     @Test
     public void test1() throws AWTException {
         Fuzz f = new Fuzz();
-        Input input1 = new Input( new ProbInput());
-        Input input2 = new Input( new FollowedInput());
+        Input ProbInput = new Input( new ProbInput());
+        Input FollowedInput = new Input( new FollowedInput());
 
         int method = 0;
         switch (method) {
             case 0:
-                f.testInputStrategy(input1, 100000, "level1");
+                f.testInputStrategy(ProbInput, 100000, "level1");
                 break;
             case 1:
-                f.testInputStrategy(input2, 100000, "level1");
+                f.testInputStrategy(FollowedInput, 100000, "level1");
                 break;
             case 2:
                 f.randomKeys(100000, "level1");
@@ -199,16 +199,16 @@ class Fuzz{
     @Test
     public void test2() throws AWTException {
         Fuzz f = new Fuzz();
-        Input input1 = new Input( new ProbInput());
-        Input input2 = new Input( new FollowedInput());
+        Input ProbInput = new Input( new ProbInput());
+        Input FollowedInput = new Input( new FollowedInput());
 
-        int method = 3;
+        int method = 0;
         switch (method) {
             case 0:
-                f.testInputStrategy(input1, 100000, "level2");
+                f.testInputStrategy(ProbInput, 100000, "level2");
                 break;
             case 1:
-                f.testInputStrategy(input2, 100000, "level2");
+                f.testInputStrategy(FollowedInput, 100000, "level2");
                 break;
             case 2:
                 f.randomKeys(100000, "level2");
@@ -348,12 +348,20 @@ class ProbInput implements InputStrategy {
      */
     @Override
     public int nextInput(Input input) {
-        double[] weightMost = {0.2, 0.2, 0.2, 0.2, 0.1, 0.1};
+        double[] weightMost = {0.22, 0.22, 0.22, 0.22, 0.06, 0.06};
+        double[] weightAfterUp = {0.3, 0, 0.3, 0.3, 0.05, 0.05};
+        double[] weightAfterDown = {0, 0.3, 0.3, 0.3, 0.05, 0.05};
+        double[] weightAfterLeft = {0.3, 0.3, 0.3, 0, 0.05, 0.05};
+        double[] weightAfterRight = {0.3, 0.3, 0, 0.3, 0.05, 0.05};
 //        double[] weightAfterS = {0, 0, 0, 0, 0, 0, 0, 1};
         double[] weightAfterSpace = {0.15, 0.15, 0.15, 0.15, 0.1, 0.3};
 
         double[] fromProb = switch (input.prevKey) {
             //case KeyEvent.VK_S -> weightAfterS;
+            case KeyEvent.VK_UP -> weightAfterUp;
+            case KeyEvent.VK_DOWN -> weightAfterDown;
+            case KeyEvent.VK_LEFT -> weightAfterLeft;
+            case KeyEvent.VK_RIGHT -> weightAfterRight;
             case KeyEvent.VK_SPACE -> weightAfterSpace;
             default -> weightMost;
         };

@@ -68,4 +68,7 @@ public class Step{
         this.time = time;
     }
 
+    public String toString(){
+        return getMove()+" "+getTime();
+    }
 }

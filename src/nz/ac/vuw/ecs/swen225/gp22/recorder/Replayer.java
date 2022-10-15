@@ -21,7 +21,7 @@ public class Replayer implements Observer {
 
     private static int replaySpeed = GameClock.get().DEFAULT_FRAMERATE;
     private static Stack<Step> history;
-    private static Stack<Step> prev;
+    private static Stack<Step> prevSteps;
     private String currentLevel;
     static boolean autoReplayState = true;
     private static InputGenerator inputGenerator;
@@ -38,18 +38,32 @@ public class Replayer implements Observer {
      * @author Santino Gaeta
      */
     public Replayer(Stack<Step> gameHistory, String level){
-        history = gameHistory;
+        setHistory(gameHistory);
         currentLevel = level;
-        prev = new Stack<>();
+        setPrevStack();
         gameHandler = GameHandler.get();
-        inputGenerator = new InputGenerator(gameHandler);
+        setInputGenerator(gameHandler);
         setReplaySpeed(GameClock.get().DEFAULT_FRAMERATE);
         setBindings();
     }
 
-    public void setBindings(){
-        GameHandler.get().addBindings(KeyEvent.VK_EQUALS, Replayer::speedUp, ()->{});
-        GameHandler.get().addBindings(KeyEvent.VK_MINUS, Replayer::speedDown, ()->{});
+    private void setHistory(Stack<Step> stack){
+        history = stack;
+    }
+
+    private void setPrevStack(){
+        prevSteps = new Stack<>();
+    }
+
+    private void setInputGenerator(GameHandler gh){
+        inputGenerator = new InputGenerator(gh);
+    }
+
+    private void setBindings(){
+        GameHandler.get().addBindings(KeyEvent.VK_EQUALS, Replayer::speedUp, () -> {});
+        GameHandler.get().addBindings(KeyEvent.VK_MINUS, Replayer::speedDown, () -> {});
+        GameHandler.get().addBindings(KeyEvent.VK_PERIOD, Replayer::stepForward, () -> {});
+        GameHandler.get().addBindings(KeyEvent.VK_COMMA, Replayer::stepBackward, () -> {});
     }
 
     /**
@@ -71,13 +85,13 @@ public class Replayer implements Observer {
     /**
      * Automatic Replay
      * If the next move occurs at the currentLeveltime of the GameClock - will replay move on update()
-     * Also pushes each move into the prev Stack in case User wants to go backwards (Backwards not implemented)
+     * Also pushes each move into the prev Stack
      *
      * @author Santino Gaeta
      */
-    public void autoReplay(){
+    public static void autoReplay(){
         Step currentStep = history.pop();
-        prev.push(currentStep);
+        prevSteps.push(currentStep);
         replayStep(currentStep);
     }
 
@@ -89,20 +103,34 @@ public class Replayer implements Observer {
      *
      * @author Santino Gaeta
      */
-    public static void stepByStep(){
+    public static void stepForward(){
+        if(history.isEmpty()){return;}
         autoReplayState = false;
+        setReplaySpeed(15);
         Step currentMove = history.pop();
-        prev.push(currentMove);
-        if(currentMove.getMove().equals("None")){
-            Step validMove = skipEmptySteps();
-            replayStep(validMove);
-        }
-        else{
-            replayStep(currentMove);
-        }
+        prevSteps.push(currentMove);
+        replayStep(currentMove);
+        System.out.println("Backwards: " + currentMove.toString());
     }
 
-    //TODO STEPBYSTEP BACKWARDS
+    /**
+     * Step-by-Step Replay
+     * Sets Automatic replay off in case Automatic replay was currently on
+     * Moves Step from history Stack to prev Stack and replays that move direction
+     * If move was direction "None" will look for next step not "None" and replay that instead
+     *
+     * @author Santino Gaeta
+     */
+
+    public static void stepBackward(){
+        if(prevSteps.isEmpty()){return;}
+        setReplaySpeed(15);
+        autoReplayState = false;
+        Step currentMove = prevSteps.pop();
+        history.push(currentMove);
+        replayBackStep(currentMove);
+        System.out.println("Backwards: " + currentMove.toString());
+    }
 
     /**
      * Invokes InputGenerator from App to move Chip in Game during replay
@@ -118,24 +146,16 @@ public class Replayer implements Observer {
     }
 
     /**
-     * Used during Step-by-Step replay when there is a "None" direction move
-     * Will look through history Stack until a move that is not "None" direction appears and returns it
-     * If Stack is empty and no moves other than "None" are found, the last move is returned anyway, even if "None"
-     *
-     * @return Step - move that is not "None" or returns the last move of the stack
+     * Invokes InputGenerator from App to move Chip in Game during replay
+     * @param step - Step popped from history Stack to be invoked on Chip
      *
      * @author Santino Gaeta
      */
-    public static Step skipEmptySteps(){
-        while(!history.isEmpty()){
-            Step move = history.pop();
-            prev.push(move);
-            if(!move.getMove().equals("None")){
-                return move;
-            }
-        }
-        history.push(prev.pop());
-        return history.pop();
+    public static void replayBackStep(Step step){
+        if(step.getMove().equals("Left")){inputGenerator.right();}
+        else if (step.getMove().equals("Right")){inputGenerator.left();}
+        else if (step.getMove().equals("Up")){inputGenerator.down();}
+        else if (step.getMove().equals("Down")){inputGenerator.up();}
     }
 
     /**
@@ -144,8 +164,8 @@ public class Replayer implements Observer {
      *
      * @author Santino Gaeta
      */
-    public void setReplaySpeed(int newSpeed){
-        this.replaySpeed = newSpeed;
+    public static void setReplaySpeed(int newSpeed){
+        replaySpeed = newSpeed;
         GameClock.setTickRate(replaySpeed);
         restartClock();
     }
@@ -162,20 +182,6 @@ public class Replayer implements Observer {
         replaySpeed -= 15;
         GameClock.setTickRate(replaySpeed);
         restartClock();
-    }
-
-    /**
-     * Switches the Replayer's state to change from StepByStep into Automatic Replay mode
-     * Starts the GameClock update() up again
-     *
-     * @author Santino Gaeta
-     */
-    public static void changeReplayMode(){
-        if(autoReplayState = true){autoReplayState = false; GameClock.get().pause();}
-        else{
-            autoReplayState = false;
-            GameClock.get().unpause();
-        }
     }
 
     public static void restartClock(){

@@ -1,7 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
-
 import nz.ac.vuw.ecs.swen225.gp22.app.*;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -18,7 +18,7 @@ import java.util.Stack;
 /**
  * Represents a Recorder implemented in App, where Recorder stores Chip's movements into an Array
  * of Steps.
- * Recorder remains being able to record multiple levels and storing them in xml format into the levels folder.
+ * Recorder remains being able to record multiple levels and storing them in xml format into the "./src/levels/" folder.
  * Recorder can also load those xml files from levels folder and produce a Replayer object, who can
  * replay those levels and re-enact Chip's movements during the level that was recorded.
  *

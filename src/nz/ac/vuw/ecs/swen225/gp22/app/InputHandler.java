@@ -228,9 +228,12 @@ class InputHandler implements KeyListener {
     public void keyReleased(KeyEvent keyEvent) {
         if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentReleasedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
-        currentPressedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
-        Boolean b = currentlyLocked.get(keyEvent.getKeyCode());
-        b = false;
+        currentlyLocked.remove(keyEvent.getKeyCode());
+    }
+
+    public void call(Integer keyCode) {
+        currentPressedMap.getOrDefault(keyCode, () -> {}).run();
+        currentReleasedMap.getOrDefault(keyCode, () -> {}).run();
     }
 
 }

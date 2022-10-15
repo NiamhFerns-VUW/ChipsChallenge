@@ -70,8 +70,6 @@ public class GameHandler implements Observer {
         return domain.get();
     }
     protected Recorder recorder() { return recorder; }
-    protected int chipsRemaining() { return  0; }
-
 
     @Override
     public void update() {

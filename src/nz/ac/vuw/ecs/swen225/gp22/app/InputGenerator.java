@@ -18,6 +18,35 @@ public class InputGenerator {
     public void call(Integer keyCode) {
         game.getInput().call(keyCode);
     }
+    
+    /**
+     * Call move up on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void up() { game.getInput().mvUp(); }
+
+    /**
+     * Call move down on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void down() { game.getInput().mvDown(); }
+
+    /**
+     * Call move left on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void left() { game.getInput().mvLeft(); }
+
+    /**
+     * Call move right on your GameHandler instance.
+     *
+     * @author niamh
+     */
+    public void right() { game.getInput().mvRight(); }
+
 
     /**
      * Constructs an instance of input generator and ties it to a Gamehandler instance.

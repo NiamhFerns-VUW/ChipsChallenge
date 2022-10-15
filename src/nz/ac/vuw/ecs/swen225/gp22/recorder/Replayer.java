@@ -105,10 +105,10 @@ public class Replayer implements Observer {
      * @author Santino Gaeta
      */
     public void replayStep(Step step){
-        if(step.getMove().equals("Left")){inputGenerator.call(KeyEvent.VK_LEFT);}
-        else if (step.getMove().equals("Right")){inputGenerator.call(KeyEvent.VK_RIGHT);}
-        else if (step.getMove().equals("Up")){inputGenerator.call(KeyEvent.VK_UP);}
-        else if (step.getMove().equals("Down")){inputGenerator.call(KeyEvent.VK_DOWN);}
+        if(step.getMove().equals("Left")){inputGenerator.left();}
+        else if (step.getMove().equals("Right")){inputGenerator.right();}
+        else if (step.getMove().equals("Up")){inputGenerator.up();}
+        else if (step.getMove().equals("Down")){inputGenerator.down();}
     }
 
     /**

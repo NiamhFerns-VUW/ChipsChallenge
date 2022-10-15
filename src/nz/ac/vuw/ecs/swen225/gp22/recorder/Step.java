@@ -2,7 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp22.recorder;
 
 
 /**
- * When Recording, 'Steps' are created to contain the direction Chip moved in and Time the move occured.
+ * When Recording, 'Steps' are created to contain the direction Chip moved in and Time the move occurred.
  *
  * @author Santino Gaeta 300305101
  */
@@ -68,6 +68,12 @@ public class Step{
         this.time = time;
     }
 
+    /**
+     * Returns String representation of the contents in Step
+     * @return String - String will display move and time move occurred by Chips of this Step
+     *
+     * @author Santino Gaeta
+     */
     public String toString(){
         return getMove()+" "+getTime();
     }

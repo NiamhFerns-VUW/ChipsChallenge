@@ -13,6 +13,6 @@
   - acts as source of truth for tests.
 - `GameSaveHelper`
   - Helper class for writing and reading game save objects
-  - to load a game save use static method `GameSaveHelper.loadGameSave(Path path)` to load a GameSave object into memory. To save a gameSave object use `GameSaveHelper.saveGameSave(GameSave gameSave)` to save given GameSave to the `SAVE_DIR` directory under name `save-gamesavehash.xml`.
+  - to load a game save use static method `GameSaveHelper.loadGameSave(Path path)` to load a GameSave object into memory. To save a gameSave object use `GameSaveHelper.saveGameSave(GameSave gameSave)` to save given GameSave to the `SAVE_DIR` directory under name `save-<gamesavehash>.xml`.
 - `CustomMovingEntityService`
   - Abstract class to be implemented by service providers

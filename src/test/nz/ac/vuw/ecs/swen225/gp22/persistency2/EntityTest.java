@@ -1,3 +1,6 @@
+/**
+ * @author Micky Snadden 300569572
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +25,7 @@ class EntityTest {
     /**
      * List of all entities to test
      */
-    List<Entity> entityList;
+    final List<Entity> entityList;
 
     EntityTest() {
         entityList = new ArrayList<>(

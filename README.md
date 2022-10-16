@@ -4,6 +4,11 @@ To play the Game select from level 1 choose "Start Game", to Load a game choose 
 
 The keys for this game are the up, down, left and right arrow keys.
 
+To keys for Replay of Recorded Game once Recording is loaded:
+"-" to decrease Automatic ReplaySpeed, "+" to increase Automatic ReplaySpeed
+"." to replay one single step forward at a time with each press
+"," to replay one single step backwards at a time with each press
+
 
 If the game does not compile, please make sure the Project structure for the Modules looks like this:
 

@@ -34,9 +34,7 @@ public class LevelMap {
 
     private static LevelMap instance = null;
 
-    @Deprecated
     private Map<Coord, Cell> level1Map;
-    @Deprecated
     private Map<Coord, Cell> level2Map;
 
     private final List<Cell> level1CellList;
@@ -55,12 +53,8 @@ public class LevelMap {
         initLevel2Map();
         level1CellList = new ArrayList<>();
         level2CellList = new ArrayList<>();
-        level1Map.keySet().forEach(key->{
-            level1CellList.add(level1Map.get(key));
-        });
-        level2Map.keySet().forEach(key->{
-            level2CellList.add(level2Map.get(key));
-        });
+        level1Map.keySet().forEach(key-> level1CellList.add(level1Map.get(key)));
+        level2Map.keySet().forEach(key-> level2CellList.add(level2Map.get(key)));
     }
     private void initLevel1Map() {
         this.level1Map = new HashMap<>();
@@ -1940,9 +1934,7 @@ public class LevelMap {
                 new ArrayList<>(List.of())
             ));
         }
-        level1Map.forEach((coord, cell) -> {
-            cell.setCoord(coord);
-        });
+        level1Map.forEach((coord, cell) -> cell.setCoord(coord));
     }
     private void initLevel2Map() {
         this.level2Map = new HashMap<>();
@@ -3818,24 +3810,9 @@ public class LevelMap {
                 new ArrayList<>(List.of())
             ));
         }
-        level2Map.forEach((coord, cell) -> {
-            cell.setCoord(coord);
-        });
+        level2Map.forEach((coord, cell) -> cell.setCoord(coord));
     }
 
-    /**
-     * Converts map of coordinates to cells into a 2d array of Cells.
-     * @param map
-     * @return
-     */
-    public Cell[][] to2D(Map<Coord,Cell> map) {
-        Cell[][] cells = new Cell[map.keySet().size()][map.keySet().size()];
-        map.keySet().forEach(key->{
-            Cell cell = map.get(key);
-            cells[key.y()][key.x()] = cell;
-        });
-        return cells;
-    }
     /**
      *
      * @return Unmodifiable map of coords to cells for level 1.
@@ -3854,7 +3831,7 @@ public class LevelMap {
 
     /**
      * Used to get singleton instance of LevelMap.
-     * @return
+     * @return singleton instance of LevelMap
      */
     public static LevelMap get() {
         if (instance == null) {

@@ -1,6 +1,9 @@
+/**
+ * @author Micky Snadden 300569572
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -14,7 +17,6 @@ import nz.ac.vuw.ecs.swen225.gp22.domain.Coord;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper;
-import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.LevelHelper;
 import org.junit.jupiter.api.Test;
 
 class GameSaveTest {
@@ -42,7 +44,7 @@ class GameSaveTest {
         boolean equalXml = deserialisedReserialised.equals(gameSaveXml);
         return gameSavesEqual && equalXml;
     }
-    public GameSave getTestGameSave() throws JsonProcessingException {
+    public GameSave getTestGameSave() {
         List<Cell> cells1 = new ArrayList<>();
         cells1.add(new Cell(
             new FreeTile(),
@@ -62,12 +64,6 @@ class GameSaveTest {
             List.of(),new Coord(1,1)
         ));
         ArrayList<Cell> cells = new ArrayList<>(cells1);
-        GameSave gameSave = new GameSave(cells, 100, List.of());
-        return gameSave;
-    }
-    @Test
-    public void sanityCheckTest() throws JsonProcessingException {
-        GameSave testGameSave = getTestGameSave();
-        System.out.println(validateGameSave(testGameSave));
+        return new GameSave(cells, 100, List.of());
     }
 }

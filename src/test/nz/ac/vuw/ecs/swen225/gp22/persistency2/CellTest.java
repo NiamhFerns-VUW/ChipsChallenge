@@ -1,3 +1,6 @@
+/**
+ * @author Michealangelo Snaddoni 300569572
+ */
 package nz.ac.vuw.ecs.swen225.gp22.persistency2;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,9 +15,7 @@ import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.LevelMap;
 import org.junit.jupiter.api.Test;
 
 class CellTest {
-    private Map<Coord, Cell> level1Map = LevelMap.get().getLevel1Map();
-    private Map<Coord, Cell> level2Map = LevelMap.get().getLevel2Map();
-    XmlMapper mapper = new XmlMapper();
+    final XmlMapper mapper = new XmlMapper();
     public CellTest() {
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);

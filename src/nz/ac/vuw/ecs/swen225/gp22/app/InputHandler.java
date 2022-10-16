@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Stream;
@@ -80,6 +81,12 @@ class InputHandler implements KeyListener {
         this.alternateReleased.put(key, released);
     }
 
+    /**
+     * Resets the key HashMaps to get ready for a new stage with different bindings. Allows for locking of keys in
+     * certain modes.
+     *
+     * @author niamh
+     */
     protected void clearBindings() {
         pressed = new HashMap<>();
         released = new HashMap<>();
@@ -180,7 +187,7 @@ class InputHandler implements KeyListener {
                 Arrays.stream(GameHandler.get().domain().getLevel().orElseThrow(() -> new Error("Current Level not found")).cells).flatMap(Stream::of).toList(),
                 (int)GameClock.get().currentLevelTime(),
                 GameHandler.get().domain().getLevel().orElseThrow(() -> new Error("Current Level not found")).getInventory(),
-                -1);
+                Integer.parseInt(GameHandler.getLevelInfo().currentPath().substring(5)));
         try {
             GameSaveHelper.saveGameSave(save);
         } catch (IOException e) {
@@ -204,9 +211,15 @@ class InputHandler implements KeyListener {
         int response = fileChooser.showOpenDialog(null);
         if (response == 0) {
             File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-            LevelTracker level = LevelTracker.SAVED_LEVEL;
-            level.setCustomPath(file.getName().substring(0, file.getName().indexOf(".")));
-            GameHandler.get().setGameState(new Level(level, GameHandler.get().domain(), new Render()));
+            try {
+                var sv = GameSaveHelper.loadGameSave(Path.of(file.getAbsolutePath()));
+                var level = LevelTracker.valueOf("LEVEL" + sv.getLevelNumber());
+                level.setCustomPath(file.getName().substring(0, file.getName().indexOf(".")));
+                GameHandler.get().setGameState(new Level(level, GameHandler.get().domain(), new Render()));
+                GameClock.get().setLevelTime(sv.getTime());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -261,6 +274,13 @@ class InputHandler implements KeyListener {
         currentlyLocked.remove(keyEvent.getKeyCode());
     }
 
+    /**
+     * Responsible for translating a call from inside the program into an actual action based on what's currently in
+     * the key maps. Respects locking as these aren't hard coded.
+     * @param keyCode the key event to call.
+     *
+     * @author niamh
+     */
     public void call(Integer keyCode) {
         currentPressedMap.getOrDefault(keyCode, () -> {}).run();
         currentReleasedMap.getOrDefault(keyCode, () -> {}).run();

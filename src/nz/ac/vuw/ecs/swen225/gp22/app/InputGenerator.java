@@ -11,7 +11,7 @@ public class InputGenerator {
     private final GameHandler game;
 
     /**
-     * Call move up on your GameHandler instance.
+     * Call move up on an instance of GameHandler.
      *
      * @author niamh
      */

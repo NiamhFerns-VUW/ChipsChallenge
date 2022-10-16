@@ -35,6 +35,12 @@ public class GameClock extends Subject {
         return clock;
     }
 
+    /**
+     * Responsible for resetting and validating the timer on a change of tickrate. This will refresh it to begin ticking
+     * at the correct rate.
+     *
+     * @author niamh
+     */
     private void validateClock() {
         timer.stop();
         timer = new Timer(TICKRATE, _e -> {
@@ -140,18 +146,32 @@ public class GameClock extends Subject {
             timer.start();
     }
 
+    /**
+     * Pauses the clock and any tick updates that are sent out to observers.
+     *
+     * @author niamh
+     */
     public static void pause() {
         if (clock.paused) return;
         clock.paused = true;
         clock.timer.stop();
     }
 
+    /**
+     * Unpauses the clock and resumes ticking to update the observers.
+     *
+     * @author niamh
+     */
     public static void unpause() {
         if (!clock.paused) return;
         clock.paused = false;
         clock.timer.start();
     }
 
+    /**
+     * Check what state the clock currently is.
+     * @return true if the clock is paused, false otherwise.
+     */
     public static boolean isPaused() { return clock.paused; }
 
 
@@ -164,6 +184,12 @@ public class GameClock extends Subject {
         timer.stop();
     }
 
+    /**
+     * Resets the GameClock to it state to simulate restarting the program.
+     * THIS IS A DANGEROUS OPERATION. USE WITH CAUTION.
+     *
+     * @author niamh
+     */
     protected static void reset() {
         clock = new GameClock();
     }

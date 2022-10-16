@@ -66,11 +66,32 @@ public class GameHandler implements Observer {
     protected InputHandler getInput() {
         return input;
     }
+
+    /**
+     * Retrieve the domain currently assigned to the GameHandler instance.
+     * @return an instance of domain tied to GameHandler
+     *
+     * @author niamh
+     */
     protected Domain domain() {
         return domain.get();
     }
-    protected Recorder recorder() { return recorder; }
 
+    /**
+     * Retrieve the recorder instance currently assigned to the GameHandler instance.
+     * @return an instance of recorder tied to GameHandler
+     *
+     * @author niamh
+     */
+    protected Recorder recorder() {
+        return recorder;
+    }
+
+    /**
+     * Check for fail conditions.
+     *
+     * @author niamh
+     */
     @Override
     public void update() {
         if (GameClock.get().currentLevelTime() <= 0)
@@ -113,10 +134,28 @@ public class GameHandler implements Observer {
         input.addAlternateBinding(KeyEvent.VK_2, input::skipToLevel2, () -> {});
     }
 
+    /**
+     * Utility method that allows other modules and parts of the game to add their own bindings to the input handler
+     * allowing them to handle their own needs.
+     * @param keyCode the keyCode to detect.
+     * @param onPress the action to be run when the key is pressed.
+     * @param onRelease the action to be run when the key is released.
+     *
+     * @author niamh
+     */
     public void addBindings(Integer keyCode, Runnable onPress, Runnable onRelease) {
         input.addBinding(keyCode, onPress, onRelease);
     }
 
+    /**
+     * Utility method that allows other modules and parts of the game to add their own alternate bindings to the input
+     * handle allowing them to handle their own needs. (Alternate bindings are when Ctrl is held.)
+     * @param keyCode the keyCode to detect.
+     * @param onPress the action to be run when the key is pressed.
+     * @param onRelease the action to be run when the key is released.
+     *
+     * @author niamh
+     */
     public void addAltBindings(Integer keyCode, Runnable onPress, Runnable onRelease) {
         input.addAlternateBinding(keyCode, onPress, onRelease);
     }
@@ -145,6 +184,12 @@ public class GameHandler implements Observer {
         GameClock.get().unregister(viewport);
     }
 
+    /**
+     * Sets the GameHandler to expect a replayer and make the appropriate preparations.
+     * @param replayer the instance of replayer currently being used.
+     *
+     * @author niamh
+     */
     public void setReplayer(Replayer replayer) {
         skipTo(replayer.getReplayLevel());
         input.clearBindings();
@@ -153,12 +198,14 @@ public class GameHandler implements Observer {
         GameClock.get().register(replayer);
     }
 
-    public static String nextLevelName() {
-        return "Level Two";
-    }
-
-    public static String nextLevelCode() {
-        return "level2";
+    /**
+     * Retrieves information for the current level.
+     * @return a LevelTracker instance with the correct information.
+     */
+    public static LevelTracker getLevelInfo() {
+        var gs = instance.viewport.getGameState();
+        if(gs instanceof Level) return ((Level)gs).levelInfo();
+        return LevelTracker.NONE;
     }
 
     /**
@@ -176,11 +223,11 @@ public class GameHandler implements Observer {
         switch (str.toLowerCase()) {
             case "level1" -> {
                 System.out.println("You are now at level one.");
-                setGameState(new Level(LevelTracker.LEVEL_ONE, domain.get(), new Render()));
+                setGameState(new Level(LevelTracker.LEVEL1, domain.get(), new Render()));
             }
             case "level2" -> {
                 System.out.println("You are now at level two.");
-                setGameState(new Level(LevelTracker.LEVEL_TWO, domain.get(), new Render()));
+                setGameState(new Level(LevelTracker.LEVEL2, domain.get(), new Render()));
             }
             case "startmenu" -> setGameState(new StartScreen());
             default -> {
@@ -208,11 +255,11 @@ public class GameHandler implements Observer {
         if (state instanceof Level) {
             setComponents((Level) state);
             setBindings(input);
+            GameClock.get().setLevelTime(((Level) state).levelInfo().getTime());
         }
 
         GameClock.get().register(viewport);
         GameClock.get().register(this);
-        GameClock.get().setLevelTime(90000);
 
         viewport.validate();
         viewport.repack();
@@ -239,10 +286,10 @@ public class GameHandler implements Observer {
         if (viewport.getGameState() instanceof Level) {
             setComponents((Level) viewport.getGameState());
             setBindings(input);
+            GameClock.get().setLevelTime(((Level) viewport.getGameState()).levelInfo().getTime());
         }
 
 
-        GameClock.get().setLevelTime(90000);
         GameClock.get().register(this);
         GameClock.get().register(viewport);
 
@@ -250,6 +297,11 @@ public class GameHandler implements Observer {
         viewport.repack();
     }
 
+    /**
+     * Responsible for handling what the game does on a death of the player.
+     *
+     * @author niamh
+     */
     protected  void onFail() {
         input.clearBindings();
         GameClock.get().unregister(this);

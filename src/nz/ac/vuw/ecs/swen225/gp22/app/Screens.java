@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp22.app;
 
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
@@ -8,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +55,15 @@ class StartScreen implements GameState, ActionListener {
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                LevelTracker level = LevelTracker.SAVED_LEVEL;
-                level.setCustomPath(file.getName().substring(0, file.getName().indexOf(".")));
-                GameHandler.get().setGameState(new Level(level, GameHandler.get().domain(), new Render()));
-
+                try {
+                    var sv = GameSaveHelper.loadGameSave(Path.of(file.getAbsolutePath()));
+                    var level = LevelTracker.valueOf("LEVEL" + sv.getLevelNumber());
+                    level.setCustomPath(file.getName().substring(0, file.getName().indexOf(".")));
+                    GameHandler.get().setGameState(new Level(level, GameHandler.get().domain(), new Render()));
+                    GameClock.get().setLevelTime(sv.getTime());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

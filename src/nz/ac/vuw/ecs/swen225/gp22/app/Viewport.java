@@ -39,6 +39,11 @@ class Viewport extends JFrame implements Observer {
         panels = List.of();
     }
 
+    /**
+     * Repacks the viewport to change dimensions.
+     *
+     * @author niamh
+     */
     public void repack() {
         pack();
     }
@@ -68,6 +73,10 @@ class Viewport extends JFrame implements Observer {
         pack();
     }
 
+    /**
+     * Retrieves the current state the game is in.
+     * @return the current gameState assigned to this viewport instance.
+     */
     protected GameState getGameState() {
         return state;
     }

@@ -81,6 +81,12 @@ class InputHandler implements KeyListener {
         this.alternateReleased.put(key, released);
     }
 
+    /**
+     * Resets the key HashMaps to get ready for a new stage with different bindings. Allows for locking of keys in
+     * certain modes.
+     *
+     * @author niamh
+     */
     protected void clearBindings() {
         pressed = new HashMap<>();
         released = new HashMap<>();
@@ -268,6 +274,13 @@ class InputHandler implements KeyListener {
         currentlyLocked.remove(keyEvent.getKeyCode());
     }
 
+    /**
+     * Responsible for translating a call from inside the program into an actual action based on what's currently in
+     * the key maps. Respects locking as these aren't hard coded.
+     * @param keyCode the key event to call.
+     *
+     * @author niamh
+     */
     public void call(Integer keyCode) {
         currentPressedMap.getOrDefault(keyCode, () -> {}).run();
         currentReleasedMap.getOrDefault(keyCode, () -> {}).run();

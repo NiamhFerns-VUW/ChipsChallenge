@@ -7,18 +7,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-// ------------------------------------------------
-// NEEDS MAJOR REFACTORING TO REMOVE DUPLICATE CODE
-// You should not need an interface here. A single
-// record called "Level" should be enough.
-// ------------------------------------------------
-
 /**
- * Represents level one of chip's challenge.
+ * Represents a level of chip's challenge.
  *
  * @author niamh
  */
 record Level(LevelTracker levelInfo, Domain domain, Render gameplayPanel) implements GameState {
+    /**
+     * Responsible for setting up a list of gameplay and timer panels to hold all the relevant contents of the game.
+     * @return returns a list containing just the gameplay and timer panels.
+     *
+     * @author niamh
+     */
     @Override
     public List<JPanel> panels() {
         JPanel timerPanel = new JPanel() {
@@ -51,6 +51,10 @@ record Level(LevelTracker levelInfo, Domain domain, Render gameplayPanel) implem
         return List.of(gameplayPanel, timerPanel);
     }
 
+    /**
+     * Functionality that will be called when it's time to switch levels.
+     * @return next level if available or else start screen.
+     */
     @Override
     public GameState nextLevel() {
         if (levelInfo.nextLevel().currentName().equals("Start Screen")) return new StartScreen();

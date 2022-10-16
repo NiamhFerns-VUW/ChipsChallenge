@@ -25,13 +25,11 @@ public class Replayer implements Observer {
     private String currentLevel;
     static boolean autoReplayState = true;
     private static InputGenerator inputGenerator;
-    private GameHandler gameHandler;
 
     /**
      * Replayer initialised with a Stack of Chip's moves to go through and replay
-     * Also GameHandler of currently level and InputGenerator invoking moves on Chip
+     * Instantiates InputGenerator invoking moves on Chip
      * AutoReplay mode on default at default speed
-     * Sets the KeyBindings needed for changing replaySpeed and using StepbyStep replay
      * @param gameHistory - Stack<Steps> Chip's movements to be replayed
      * @param level - A String of which level was recorded
      *
@@ -41,10 +39,8 @@ public class Replayer implements Observer {
         setHistory(gameHistory);
         currentLevel = level;
         setPrevStack();
-        gameHandler = GameHandler.get();
         setInputGenerator();
         setReplaySpeed(GameClock.get().DEFAULT_FRAMERATE);
-        setBindings();
     }
         /**
      * Sets the history Stack with Chips's recorded Steps
@@ -76,7 +72,7 @@ public class Replayer implements Observer {
 
     /**
      * Adds Keybindings to GameHandler to operate a Replayer altering replaySpeed and
-     * StepByStep Replay forward and backwards movement
+     * StepByStep Replay forward and backwards movement - called in App module
      *
      * @author Santino Gaeta
      */

@@ -95,9 +95,6 @@ class GameSaveHelperTest {
 
         File file1 = Path.of(file.toURI() + "/" + getFileName(gameSave)).toFile();
         assertTrue(file.exists());
-
-        GameSaveHelper.SAVE_PATH = Path.of("./saves/");
-        GameSaveHelper.saveGameSave(gameSave);
     }
 
 }

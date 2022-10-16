@@ -179,8 +179,8 @@ class InputHandler implements KeyListener {
         GameSave save = new GameSave(
                 Arrays.stream(GameHandler.get().domain().getLevel().orElseThrow(() -> new Error("Current Level not found")).cells).flatMap(Stream::of).toList(),
                 (int)GameClock.get().currentLevelTime(),
-                GameHandler.get().domain().getLevel().orElseThrow(() -> new Error("Current Level not found")).getInventory()
-                );
+                GameHandler.get().domain().getLevel().orElseThrow(() -> new Error("Current Level not found")).getInventory(),
+                -1);
         try {
             GameSaveHelper.saveGameSave(save);
         } catch (IOException e) {

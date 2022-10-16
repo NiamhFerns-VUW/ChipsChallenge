@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
 /**
- * This class is used to test the game by automatically generating random inputs
+ * This class is used to test the game by automatically generating random inputs.
  *
  * @author zhanghaos
  * zhanghaos and holycabbage are the same person.
@@ -30,7 +30,7 @@ class FuzzTest {
             KeyEvent.VK_ESCAPE
     );
     /**
-     * This the constructor of the Fuzz class
+     * This the constructor of the Fuzz class.
      */
     public FuzzTest() {
         game = GameHandler.get();
@@ -38,8 +38,8 @@ class FuzzTest {
         game.start();
     }
     /**
-     * This method is used Strategy Pattern to generate random inputs
-     * @throws AWTException if the Robot class is not supported
+     * This method is used Strategy Pattern to generate random inputs.
+     * @throws AWTException if the Robot class is not supported.
      */
     public void testInputStrategy(Input input, int size, String level) throws AWTException {
         game.skipTo(level);
@@ -63,11 +63,11 @@ class FuzzTest {
 
     /**
      * this method generates a random sequence of inputs
-     *             and then executes them
-     * @param size the number of random inputs to generate
-     * @param level the level to start the game on
-     * @throws AWTException if the Robot class is not supported
-     * @throws IllegalArgumentException if there is a precondition violation
+     *             and then executes them.
+     * @param size the number of random inputs to generate.
+     * @param level the level to start the game on.
+     * @throws AWTException if the Robot class is not supported.
+     * @throws IllegalArgumentException if there is a precondition violation.
      */
     public void randomKeys(int size, String level) throws AWTException, IllegalArgumentException {
         Robot robot = new Robot();
@@ -84,8 +84,8 @@ class FuzzTest {
          }
     }
     /**
-     * This method generates a mouse click at a location
-     * @throws AWTException if the Robot class is not supported
+     * This method generates a mouse click at a location.
+     * @throws AWTException if the Robot class is not supported.
      */
     public void mouseTest() throws AWTException {
         Robot robot = new Robot();
@@ -97,9 +97,9 @@ class FuzzTest {
     }
     /**
      * this method generates a random sequence of actions functions from the
-     *             list of actions and then executes them
-     * @param size the number of random inputs to generate
-     * @param level the level to start the game on
+     *             list of actions and then executes them.
+     * @param size the number of random inputs to generate.
+     * @param level the level to start the game on.
      */
     public void actionTest(int size, String level) throws AWTException {
         game.skipTo(level);
@@ -132,9 +132,9 @@ class FuzzTest {
         }
     }
     /**
-     * This method is used to print the name of the action which works for actionTest() method
-     * @param index the index of the action
-     * @return the name of the action
+     * This method is used to print the name of the action which works for actionTest() method.
+     * @param index the index of the action.
+     * @return the name of the action.
      */
     public String printActionName(int index) {
         return switch (index) {
@@ -146,8 +146,8 @@ class FuzzTest {
         };
     }
     /**
-     * This method tests the clock
-     * @throws IllegalStateException if the precondition is violated
+     * This method tests the clock.
+     * @throws IllegalStateException if the precondition is violated.
      */
     public void testClock() throws IllegalStateException {
         if(GameClock.get().currentLevelTime() < 0) {
@@ -156,13 +156,13 @@ class FuzzTest {
     }
     public static void main(String[] args){}
     /**
-     * This method is used to test level 1
-     * using int method to determine the strategy of generating random inputs
-     * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy
-     * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
-     * method 2: randomKeys() method, using Robot to generate random Key Events
-     * method 3: actionTest() method, calling the action functions from the list of actions
-     * @throws AWTException if the Robot class is not supported
+     * This method is used to test level 1.
+     * using int method to determine the strategy of generating random inputs.
+     * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy.
+     * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy.
+     * method 2: randomKeys() method, using Robot to generate random Key Events.
+     * method 3: actionTest() method, calling the action functions from the list of actions.
+     * @throws AWTException if the Robot class is not supported.
      */
     @Test
     public void test1() throws AWTException {
@@ -183,13 +183,13 @@ class FuzzTest {
 
     }
     /**
-     * This method is used to test level 2
-     * using int method to determine the strategy of generating random inputs
-     * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy
-     * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
-     * method 2: randomKeys() method, using Robot to generate random Key Events
-     * method 3: actionTest() method, calling the action functions from the list of actions
-     * @throws AWTException if the Robot class is not supported
+     * This method is used to test level 2.
+     * using int method to determine the strategy of generating random inputs.
+     * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy.
+     * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy.
+     * method 2: randomKeys() method, using Robot to generate random Key Events.
+     * method 3: actionTest() method, calling the action functions from the list of actions.
+     * @throws AWTException if the Robot class is not supported.
      */
     @Test
     public void test2() throws AWTException {
@@ -209,13 +209,16 @@ class FuzzTest {
         }
     }
 }
-
+/**
+ * This the interface of the Strategy Pattern.
+ */
 interface InputStrategy {
     int nextInput(Input input);
     boolean isPressCtrl(Input input);
 }
-
-
+/**
+ * This class is used to generate random inputs from the previous inputs.
+ */
 class FollowedInput implements InputStrategy {
     Random random = new Random();
     private final int[] keys = {
@@ -230,16 +233,16 @@ class FollowedInput implements InputStrategy {
     };
 
     /**
-     * This is the constructor of the FollowedInput class
+     * This is the constructor of the FollowedInput class.
      */
     public FollowedInput() {
     }
 
     /**
-     * This method is used to generate random inputs for the game by following the previous input
+     * This method is used to generate random inputs for the game by following the previous input.
      *
-     * @param input the input
-     * @return the next input
+     * @param input the input.
+     * @return the next input.
      */
     @Override
     public int nextInput(Input input) {
@@ -268,33 +271,35 @@ class FollowedInput implements InputStrategy {
     }
 
     /**
-     * This method is used to check if the input is a control key
+     * This method is used to check if the input is a control key.
      *
-     * @param input the input
-     * @return true if the input is a control key
+     * @param input the input.
+     * @return true if the input is a control key.
      */
     @Override
     public boolean isPressCtrl(Input input) {
         return (input.key == KeyEvent.VK_S || input.key == KeyEvent.VK_R);
     }
 }
-
+/**
+ * This class is used to handle the input.
+ */
 class Input {
     InputStrategy inputStrategy;
     int prevKey;
     int key;
 
     /**
-     * Constructor for Input
-     * @param inputStrategy the input strategy to use
+     * Constructor for Input.
+     * @param inputStrategy the input strategy to use.
      */
     public Input( InputStrategy inputStrategy) {
         this.inputStrategy = inputStrategy;
     }
 
     /**
-     * This method is used to get the next input
-     * @return the next KeyEvent
+     * This method is used to get the next input.
+     * @return the next KeyEvent.
      */
     public int nextInput() {
         key = inputStrategy.nextInput(this);
@@ -303,15 +308,17 @@ class Input {
     }
 
     /**
-     * This method is used to check if the next input is a ctrl key
-     * @return true if the next input is a ctrl key
+     * This method is used to check if the next input is a ctrl key.
+     * @return true if the next input is a ctrl key.
      */
     public boolean isPressCtrl() {
         return inputStrategy.isPressCtrl(this);
     }
 }
 
-
+/**
+ * This class is used to generate random inputs with a different probability.
+ */
 class ProbInput implements InputStrategy {
     Random random = new Random();
     private final int[] keys = {
@@ -325,13 +332,13 @@ class ProbInput implements InputStrategy {
 //            KeyEvent.VK_R
     };
     /**
-     * This is the constructor of the ProbInput class
+     * This is the constructor of the ProbInput class.
      */
     public ProbInput() {}
     /**
-     * This method is used to generate random inputs for the game with different probabilities
-     * @param input the input
-     * @return the next input
+     * This method is used to generate random inputs for the game with different probabilities.
+     * @param input the input.
+     * @return the next input.
      */
     @Override
     public int nextInput(Input input) {
@@ -362,9 +369,9 @@ class ProbInput implements InputStrategy {
         return from[random.nextInt(from.length)];
     }
     /**
-     * This method is used to check if the next input is a ctrl key
-     * @param input the input
-     * @return true if the next input is a ctrl key
+     * This method is used to check if the next input is a ctrl key.
+     * @param input the input.
+     * @return true if the next input is a ctrl key.
      */
     @Override
     public boolean isPressCtrl(Input input) {

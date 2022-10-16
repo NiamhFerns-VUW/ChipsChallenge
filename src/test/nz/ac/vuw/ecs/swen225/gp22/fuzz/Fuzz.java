@@ -171,7 +171,7 @@ class FuzzTest {
         Input FollowedInput = new Input( new FollowedInput());
 
         //Switch 'method' to determine the strategy of generating random inputs(0-3)
-        int method = 0;
+        int method = 3;
         switch (method) {
             case 0 -> f.testInputStrategy(ProbInput, 100000, "level1");
             case 1 -> f.testInputStrategy(FollowedInput, 100000, "level1");

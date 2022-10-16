@@ -48,11 +48,14 @@ class StartScreen implements GameState, ActionListener {
         loadGame.setText("Load Game");
         loadGame.addActionListener(l -> {
             var fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File("./src/levels/"));
+            fileChooser.setCurrentDirectory(new File("./levels/"));
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                GameHandler.get().setGameState(new Level("Saved Level" , file.getName().substring(0, file.getName().indexOf(".")), GameHandler.get().domain(), new Render()));
+                LevelTracker level = LevelTracker.SAVED_LEVEL;
+                level.setCustomPath(file.getName().substring(0, file.getName().indexOf(".")));
+                GameHandler.get().setGameState(new Level(level, GameHandler.get().domain(), new Render()));
+
             }
         });
 
@@ -96,7 +99,7 @@ class StartScreen implements GameState, ActionListener {
      */
     @Override
     public GameState nextLevel() {
-        return new Level("Level One", "level1", GameHandler.get().domain(), new Render());
+        return new Level(LevelTracker.NONE.nextLevel(), GameHandler.get().domain(), new Render());
     }
 
     @Override

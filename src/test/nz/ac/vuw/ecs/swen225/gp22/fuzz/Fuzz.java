@@ -6,12 +6,17 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-class Fuzzing{
+/**
+ * This class is used to test the game by automatically generating random inputs
+ *
+ * @author zhanghaos
+ * zhanghaos and holycabbage are the same person.
+ */
+class FuzzTest {
     private final GameHandler game;
     static final Random random = new Random();
     // keys to be pressed
@@ -27,7 +32,7 @@ class Fuzzing{
     /**
      * This the constructor of the Fuzz class
      */
-    public Fuzzing() {
+    public FuzzTest() {
         game = GameHandler.get();
         game.reset();
         game.start();
@@ -96,7 +101,7 @@ class Fuzzing{
      * @param size the number of random inputs to generate
      * @param level the level to start the game on
      */
-    public void actiontest(int size, String level) throws AWTException {
+    public void actionTest(int size, String level) throws AWTException {
         game.skipTo(level);
         InputGenerator input = new InputGenerator();
         Robot robot = new Robot();
@@ -127,18 +132,18 @@ class Fuzzing{
         }
     }
     /**
-     * This method is used to print the name of the action which works for actiontest() method
+     * This method is used to print the name of the action which works for actionTest() method
      * @param index the index of the action
      * @return the name of the action
      */
     public String printActionName(int index) {
-        switch(index) {
-            case 0: return "up";
-            case 1: return "down";
-            case 2: return "left";
-            case 3: return "right";
-            default: return "unknown";
-        }
+        return switch (index) {
+            case 0 -> "up";
+            case 1 -> "down";
+            case 2 -> "left";
+            case 3 -> "right";
+            default -> "unknown";
+        };
     }
     /**
      * This method tests the clock
@@ -149,44 +154,31 @@ class Fuzzing{
             throw new IllegalStateException("Time is negative");
         }
     }
-    public static void main(String[] args) throws AWTException, IllegalArgumentException {
-        Fuzzing f = new Fuzzing();
-
-        //f.randomKeys(100, "level1");
-        f.actiontest(100, "level1");
-    }
+    public static void main(String[] args){}
     /**
      * This method is used to test level 1
      * using int method to determine the strategy of generating random inputs
      * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy
      * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
      * method 2: randomKeys() method, using Robot to generate random Key Events
-     * method 3: actiontest() method, calling the action functions from the list of actions
+     * method 3: actionTest() method, calling the action functions from the list of actions
      * @throws AWTException if the Robot class is not supported
      */
     @Test
     public void test1() throws AWTException {
-        Fuzzing f = new Fuzzing();
+        FuzzTest f = new FuzzTest();
         Input ProbInput = new Input( new ProbInput());
         Input FollowedInput = new Input( new FollowedInput());
 
         //Switch 'method' to determine the strategy of generating random inputs(0-3)
-        int method = 3;
+        int method = 0;
         switch (method) {
-            case 0:
-                f.testInputStrategy(ProbInput, 100000, "level1");
-                break;
-            case 1:
-                f.testInputStrategy(FollowedInput, 100000, "level1");
-                break;
-            case 2:
-                f.randomKeys(100000, "level1");
-                break;
-            case 3:
-                f.actiontest(100000, "level1");
-                break;
-            default:
-                break;
+            case 0 -> f.testInputStrategy(ProbInput, 100000, "level1");
+            case 1 -> f.testInputStrategy(FollowedInput, 100000, "level1");
+            case 2 -> f.randomKeys(100000, "level1");
+            case 3 -> f.actionTest(100000, "level1");
+            default -> {
+            }
         }
 
     }
@@ -196,32 +188,24 @@ class Fuzzing{
      * method 0: using Strategy Pattern to generate random inputs with ProbInput Strategy
      * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
      * method 2: randomKeys() method, using Robot to generate random Key Events
-     * method 3: actiontest() method, calling the action functions from the list of actions
+     * method 3: actionTest() method, calling the action functions from the list of actions
      * @throws AWTException if the Robot class is not supported
      */
     @Test
     public void test2() throws AWTException {
-        Fuzzing f = new Fuzzing();
+        FuzzTest f = new FuzzTest();
         Input ProbInput = new Input( new ProbInput());
         Input FollowedInput = new Input( new FollowedInput());
 
         //Switch 'method' to determine the strategy of generating random inputs(0-3)
         int method = 0;
         switch (method) {
-            case 0:
-                f.testInputStrategy(ProbInput, 100000, "level2");
-                break;
-            case 1:
-                f.testInputStrategy(FollowedInput, 100000, "level2");
-                break;
-            case 2:
-                f.randomKeys(100000, "level2");
-                break;
-            case 3:
-                f.actiontest(100000, "level2");
-                break;
-            default:
-                break;
+            case 0 -> f.testInputStrategy(ProbInput, 100000, "level2");
+            case 1 -> f.testInputStrategy(FollowedInput, 100000, "level2");
+            case 2 -> f.randomKeys(100000, "level2");
+            case 3 -> f.actionTest(100000, "level2");
+            default -> {
+            }
         }
     }
 }

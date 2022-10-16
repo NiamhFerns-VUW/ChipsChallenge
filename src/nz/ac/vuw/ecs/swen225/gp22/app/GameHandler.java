@@ -148,6 +148,7 @@ public class GameHandler implements Observer {
     public void setReplayer(Replayer replayer) {
         skipTo(replayer.getReplayLevel());
         input.clearBindings();
+        replayer.setBindings();
         currentReplay = replayer;
         GameClock.get().register(replayer);
     }

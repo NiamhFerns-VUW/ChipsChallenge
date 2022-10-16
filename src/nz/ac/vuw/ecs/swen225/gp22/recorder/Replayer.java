@@ -80,7 +80,7 @@ public class Replayer implements Observer {
      *
      * @author Santino Gaeta
      */
-    private void setBindings(){
+    public void setBindings(){
         GameHandler.get().addBindings(KeyEvent.VK_EQUALS, Replayer::speedUp, () -> {});
         GameHandler.get().addBindings(KeyEvent.VK_MINUS, Replayer::speedDown, () -> {});
         GameHandler.get().addBindings(KeyEvent.VK_PERIOD, Replayer::stepForward, () -> {});

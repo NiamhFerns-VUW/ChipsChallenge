@@ -5,8 +5,10 @@ package nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers;
 
 import static nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper.getFileName;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,7 +30,7 @@ class GameSaveHelperTest {
          *  to save and then load the save, I'm not sure what the better approach is.
          */
         Path tmpDir = Files.createTempDirectory("tmpSaveDir");
-        GameSave gameSave = new GameSave(LevelMap.get().getLevel2CellList(), 100, List.of());
+        GameSave gameSave = new GameSave(LevelMap.get().getLevel2CellList(), 100, List.of(),-1);
 
         GameSaveHelper.SAVE_PATH=tmpDir;
         GameSaveHelper.saveGameSave(gameSave);
@@ -40,7 +42,7 @@ class GameSaveHelperTest {
     @Test
     void getLevel1GameSave() {
         List<Cell> level1CellList = LevelMap.get().getLevel1CellList();
-        GameSave gameSave = new GameSave(level1CellList, 100, List.of());
+        GameSave gameSave = new GameSave(level1CellList, 100, List.of(),1);
         GameSave level1GameSave = GameSaveHelper.getLevel1GameSave();
         assertEquals(gameSave,level1GameSave);
     }
@@ -57,7 +59,7 @@ class GameSaveHelperTest {
     void loadGameSave() throws IOException {
         // TODO find way to do with mockito
         List<Cell> level1CellList = LevelMap.get().getLevel1CellList();
-        GameSave gameSave = new GameSave(level1CellList, 100, List.of());
+        GameSave gameSave = new GameSave(level1CellList, 100, List.of(),1);
         // create a tmpDir and write the gamesave to it.
         Path tmpSaveDir = Files.createTempDirectory("tmpSaveDir");
         GameSaveHelper.SAVE_PATH=tmpSaveDir;
@@ -72,7 +74,7 @@ class GameSaveHelperTest {
     @Test
     void saveGameSave() throws IOException {
         List<Cell> level1CellList = LevelMap.get().getLevel1CellList();
-        GameSave gameSave = new GameSave(level1CellList, 100, List.of());
+        GameSave gameSave = new GameSave(level1CellList, 100, List.of(),1);
         // TODO find way to do with mockito
         Path tmpSaveDir = Files.createTempDirectory("tmpSaveDir");
         GameSaveHelper.SAVE_PATH=tmpSaveDir;
@@ -82,6 +84,20 @@ class GameSaveHelperTest {
             Path.of(tmpSaveDir + "/save" + gameSave.hashCode() + ".xml"));
 
         assertEquals(gameSave1, gameSave);
+
+        File file = new File(tmpSaveDir + "/deez/");
+        assertFalse(file.exists());
+
+        GameSaveHelper.SAVE_PATH = file.toPath();
+        GameSaveHelper.saveGameSave(gameSave);
+
+        assertTrue(file.exists());
+
+        File file1 = Path.of(file.toURI() + "/" + getFileName(gameSave)).toFile();
+        assertTrue(file.exists());
+
+        GameSaveHelper.SAVE_PATH = Path.of("./saves/");
+        GameSaveHelper.saveGameSave(gameSave);
     }
 
 }

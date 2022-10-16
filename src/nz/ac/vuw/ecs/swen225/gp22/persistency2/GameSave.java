@@ -25,6 +25,7 @@ public class GameSave {
     private List<Entity> inventory;
 
     private List<Cell> cellList;
+    private int levelNumber;
 
     /**
      * GameSave constructor, annotations allow the jackson library to know how to serialize and
@@ -37,10 +38,20 @@ public class GameSave {
     public GameSave(
         @JsonProperty("cellList") List<Cell> cellList,
         @JsonProperty("time") int time,
-        @JsonProperty("inventory") List<Entity> inventory) {
+        @JsonProperty("inventory") List<Entity> inventory,
+        @JsonProperty("levelNumber") int levelNumber) {
         this.cellList = cellList;
         this.time = time;
         this.inventory = inventory;
+        this.levelNumber = levelNumber;
+    }
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
+    }
+
+    public int getLevelNumber() {
+        return levelNumber;
     }
 
     public List<Cell> getCellList() {

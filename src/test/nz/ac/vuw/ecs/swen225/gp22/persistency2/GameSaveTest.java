@@ -42,6 +42,7 @@ class GameSaveTest {
         boolean gameSavesEqual = gameSaveFromXml.equals(gameSave);
         String deserialisedReserialised = mapper.writeValueAsString(gameSaveFromXml);
         boolean equalXml = deserialisedReserialised.equals(gameSaveXml);
+        System.out.println(gameSave);
         return gameSavesEqual && equalXml;
     }
     public GameSave getTestGameSave() {
@@ -64,6 +65,6 @@ class GameSaveTest {
             List.of(),new Coord(1,1)
         ));
         ArrayList<Cell> cells = new ArrayList<>(cells1);
-        return new GameSave(cells, 100, List.of());
+        return new GameSave(cells, 100, List.of(),0);
     }
 }

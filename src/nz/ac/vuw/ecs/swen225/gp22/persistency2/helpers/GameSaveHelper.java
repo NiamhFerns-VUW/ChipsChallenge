@@ -35,7 +35,7 @@ public class GameSaveHelper {
      * @return gamesave object for level 1.
      */
     public static GameSave getLevel1GameSave() {
-        return new GameSave(LevelMap.get().getLevel1CellList(), 100, List.of());
+        return new GameSave(LevelMap.get().getLevel1CellList(), 100, List.of(),1);
     }
     /**
      * Convenience method so modules could get Level 2 to play around with.
@@ -113,6 +113,13 @@ public class GameSaveHelper {
     public static void saveGameSave(GameSave gameSave) throws IOException {
         XmlMapper mapper = new XmlMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        // create dir if non existent
+        if (!new File(SAVE_PATH.toUri()).exists()) {
+            boolean mkdir = new File(SAVE_PATH.toUri()).mkdir();
+            if (!mkdir) {
+                throw new IOException("Can't create save dir");
+            }
+        }
         File file = new File(SAVE_PATH + "/save" + gameSave.hashCode()+".xml");
         mapper.writeValue(file,gameSave);
     }

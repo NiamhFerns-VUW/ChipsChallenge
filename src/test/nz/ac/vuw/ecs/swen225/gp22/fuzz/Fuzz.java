@@ -161,7 +161,7 @@ class Fuzzing{
      * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
      * method 2: randomKeys() method, using Robot to generate random Key Events
      * method 3: actiontest() method, calling the action functions from the list of actions
-     * @throws AWTException
+     * @throws AWTException if the Robot class is not supported
      */
     @Test
     public void test1() throws AWTException {
@@ -196,7 +196,7 @@ class Fuzzing{
      * method 1: using Strategy Pattern to generate random inputs with RandomInput Strategy
      * method 2: randomKeys() method, using Robot to generate random Key Events
      * method 3: actiontest() method, calling the action functions from the list of actions
-     * @throws AWTException
+     * @throws AWTException if the Robot class is not supported
      */
     @Test
     public void test2() throws AWTException {
@@ -233,7 +233,7 @@ interface InputStrategy {
 
 class FollowedInput implements InputStrategy {
     Random random = new Random();
-    private int[] keys = {
+    private final int[] keys = {
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,
@@ -305,7 +305,6 @@ class Input {
      */
     public Input( InputStrategy inputStrategy) {
         this.inputStrategy = inputStrategy;
-        int prevKey = 0;
     }
 
     /**
@@ -330,7 +329,7 @@ class Input {
 
 class ProbInput implements InputStrategy {
     Random random = new Random();
-    private int[] keys = {
+    private final int[] keys = {
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,

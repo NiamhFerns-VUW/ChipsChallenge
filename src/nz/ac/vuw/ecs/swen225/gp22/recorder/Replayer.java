@@ -40,6 +40,7 @@ public class Replayer implements Observer {
         currentLevel = level;
         setPrevStack();
         setInputGenerator();
+        setReplayState(true);
         setReplaySpeed(GameClock.get().DEFAULT_FRAMERATE);
     }
         /**
@@ -68,6 +69,16 @@ public class Replayer implements Observer {
      */
     private void setInputGenerator(){
         inputGenerator = new InputGenerator();
+    }
+
+    /**
+     * Sets the replay state of the Replayer to Automatic each time replay starts
+     * @param auto - sets the ReplayState as automatic replay mode
+     *
+     * @author Santino Gaeta
+     */
+    private void setReplayState(boolean auto){
+        autoReplayState = true;
     }
 
     /**

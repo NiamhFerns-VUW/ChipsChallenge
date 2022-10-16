@@ -10,11 +10,12 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-class Fuzz{
-    private GameHandler game;
+class Fuzzing{
+    private final GameHandler game;
     static final Random random = new Random();
     // keys to be pressed
-    private static List<Integer> keys = List.of(
+    private static final List
+            <Integer> keys = List.of(
             KeyEvent.VK_UP,
             KeyEvent.VK_DOWN,
             KeyEvent.VK_LEFT,
@@ -25,14 +26,14 @@ class Fuzz{
     /**
      * This the constructor of the Fuzz class
      */
-    public Fuzz() {
+    public Fuzzing() {
         game = GameHandler.get();
         game.reset();
         game.start();
     }
     /**
      * This method is used Strategy Pattern to generate random inputs
-     * @throws AWTException
+     * @throws AWTException if the Robot class is not supported
      */
     public void testInputStrategy(Input input, int size, String level) throws AWTException {
         game.skipTo(level);
@@ -59,8 +60,8 @@ class Fuzz{
      *             and then executes them
      * @param size the number of random inputs to generate
      * @param level the level to start the game on
-     * @throws AWTException
-     * @throws IllegalArgumentException
+     * @throws AWTException if the Robot class is not supported
+     * @throws IllegalArgumentException if there is a precondition violation
      */
     public void randomKeys(int size, String level) throws AWTException, IllegalArgumentException {
         Robot robot = new Robot();
@@ -78,7 +79,7 @@ class Fuzz{
     }
     /**
      * This method generates a mouse click at a location
-     * @throws AWTException
+     * @throws AWTException if the Robot class is not supported
      */
     public void mouseTest() throws AWTException {
         Robot robot = new Robot();
@@ -126,7 +127,7 @@ class Fuzz{
     }
     /**
      * This method is used to print the name of the action which works for actiontest() method
-     * @param index
+     * @param index the index of the action
      * @return the name of the action
      */
     public String printActionName(int index) {
@@ -140,7 +141,7 @@ class Fuzz{
     }
     /**
      * This method tests the clock
-     * @throws IllegalStateException
+     * @throws IllegalStateException if the precondition is violated
      */
     public void testClock() throws IllegalStateException {
         if(GameClock.get().currentLevelTime() < 0) {
@@ -148,7 +149,7 @@ class Fuzz{
         }
     }
     public static void main(String[] args) throws AWTException, IllegalArgumentException {
-        Fuzz f = new Fuzz();
+        Fuzzing f = new Fuzzing();
 
         //f.randomKeys(100, "level1");
         f.actiontest(100, "level1");
@@ -164,10 +165,11 @@ class Fuzz{
      */
     @Test
     public void test1() throws AWTException {
-        Fuzz f = new Fuzz();
+        Fuzzing f = new Fuzzing();
         Input ProbInput = new Input( new ProbInput());
         Input FollowedInput = new Input( new FollowedInput());
 
+        //Switch 'method' to determine the strategy of generating random inputs(0-3)
         int method = 0;
         switch (method) {
             case 0:
@@ -198,10 +200,11 @@ class Fuzz{
      */
     @Test
     public void test2() throws AWTException {
-        Fuzz f = new Fuzz();
+        Fuzzing f = new Fuzzing();
         Input ProbInput = new Input( new ProbInput());
         Input FollowedInput = new Input( new FollowedInput());
 
+        //Switch 'method' to determine the strategy of generating random inputs(0-3)
         int method = 0;
         switch (method) {
             case 0:

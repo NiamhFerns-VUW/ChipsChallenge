@@ -2,6 +2,8 @@ package nz.ac.vuw.ecs.swen225.gp22.app;
 
 import nz.ac.vuw.ecs.swen225.gp22.domain.Direction;
 import nz.ac.vuw.ecs.swen225.gp22.domain.Domain;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.GameSave;
+import nz.ac.vuw.ecs.swen225.gp22.persistency2.helpers.GameSaveHelper;
 import nz.ac.vuw.ecs.swen225.gp22.recorder.Recorder;
 import nz.ac.vuw.ecs.swen225.gp22.renderer.Render;
 
@@ -9,7 +11,10 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 /**
  * Responsible for handling user input for a game of chips challenge.
@@ -170,7 +175,18 @@ class InputHandler implements KeyListener {
      * @author niamh
      */
     protected void saveGame() {
-        System.out.println("Saving game...");
+        GameClock.get().stop();
+        GameSave save = new GameSave(
+                Arrays.stream(GameHandler.get().domain().getLevel().orElseThrow(() -> new Error("Current Level not found")).cells).flatMap(Stream::of).toList(),
+                (int)GameClock.get().currentLevelTime(),
+                GameHandler.get().domain().getLevel().orElseThrow(() -> new Error("Current Level not found")).getInventory()
+                );
+        try {
+            GameSaveHelper.saveGameSave(save);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
 
     /**
@@ -184,7 +200,7 @@ class InputHandler implements KeyListener {
 
     protected void resumeGame() {
         var fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("./src/levels/"));
+        fileChooser.setCurrentDirectory(new File("./saves/"));
         int response = fileChooser.showOpenDialog(null);
         if (response == 0) {
             File file = new File(fileChooser.getSelectedFile().getAbsolutePath());

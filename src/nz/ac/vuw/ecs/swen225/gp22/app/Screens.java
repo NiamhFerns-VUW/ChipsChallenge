@@ -48,7 +48,7 @@ class StartScreen implements GameState, ActionListener {
         loadGame.setText("Load Game");
         loadGame.addActionListener(l -> {
             var fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File("./levels/"));
+            fileChooser.setCurrentDirectory(new File("./saves/"));
             int response = fileChooser.showOpenDialog(menuframe);
             if (response == 0) {
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());

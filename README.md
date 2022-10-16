@@ -20,6 +20,4 @@ And the Libraries looks like this:
 
 
 
-NOTE: We are having a strange bug with the IDE in InputStrategy.java where we sometimes get errors when InputStrategy is public,
-but then without changing code it sometimes works. The fix is to remove 'public' from the InputStrategy, which works until it starts giving errors again, with the fix
-being to make InputStrategy public again.
+The Gource video can be found here: https://www.youtube.com/watch?v=_bWZLoOOn_U

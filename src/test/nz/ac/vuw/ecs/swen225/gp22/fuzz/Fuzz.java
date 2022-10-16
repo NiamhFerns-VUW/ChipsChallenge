@@ -6,6 +6,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
@@ -75,7 +76,7 @@ class Fuzzing{
             System.out.println("Key: " + KeyEvent.getKeyText(key));
             robot.keyRelease(key);
             robot.delay(10);
-        }
+         }
     }
     /**
      * This method generates a mouse click at a location
@@ -97,13 +98,29 @@ class Fuzzing{
      */
     public void actiontest(int size, String level) throws AWTException {
         game.skipTo(level);
-        InputGenerator input = new InputGenerator(game);
+        // InputGenerator input = new InputGenerator();
         Robot robot = new Robot();
 
-        List<Runnable> actions_without_up = List.of(input::down, input::down, input::left, input::right);
-        List<Runnable> actions_without_down = List.of(input::up, input::up, input::left, input::right);
-        List<Runnable> actions_without_left = List.of(input::up, input::down, input::right, input::right);
-        List<Runnable> actions_without_right = List.of(input::up, input::down, input::left, input::left);
+        List<Runnable> actions_without_up = List.of(
+                () -> robot.keyPress(KeyEvent.VK_DOWN),
+                () -> robot.keyPress(KeyEvent.VK_DOWN),
+                () -> robot.keyPress(KeyEvent.VK_LEFT),
+                () -> robot.keyPress(KeyEvent.VK_RIGHT));
+        List<Runnable> actions_without_down = List.of(
+                () -> robot.keyPress(KeyEvent.VK_UP),
+                () -> robot.keyPress(KeyEvent.VK_UP),
+                () -> robot.keyPress(KeyEvent.VK_LEFT),
+                () -> robot.keyPress(KeyEvent.VK_RIGHT));
+        List<Runnable> actions_without_left = List.of(
+                () -> robot.keyPress(KeyEvent.VK_UP),
+                () -> robot.keyPress(KeyEvent.VK_DOWN),
+                () -> robot.keyPress(KeyEvent.VK_RIGHT),
+                () -> robot.keyPress(KeyEvent.VK_RIGHT));
+        List<Runnable> actions_without_right = List.of(
+                () -> robot.keyPress(KeyEvent.VK_UP),
+                () -> robot.keyPress(KeyEvent.VK_DOWN),
+                () -> robot.keyPress(KeyEvent.VK_LEFT),
+                () -> robot.keyPress(KeyEvent.VK_LEFT));
 
         robot.delay(2000);
         int index = 3;

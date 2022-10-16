@@ -22,11 +22,11 @@ class InputHandler implements KeyListener {
     private final Recorder recorder;
     private HashMap<Integer, Runnable> currentPressedMap;
     private HashMap<Integer, Runnable> currentReleasedMap;
-    private final HashMap<Integer, Runnable> pressed;
-    private final HashMap<Integer, Runnable> released;
-    private final HashMap<Integer, Runnable> alternatePressed;
-    private final HashMap<Integer, Runnable> alternateReleased;
-    private final HashMap<Integer, Boolean> currentlyLocked;
+    private HashMap<Integer, Runnable> pressed;
+    private HashMap<Integer, Runnable> released;
+    private HashMap<Integer, Runnable> alternatePressed;
+    private HashMap<Integer, Runnable> alternateReleased;
+    private HashMap<Integer, Boolean> currentlyLocked;
 
     /**
      * Sets up an InputHandler and ties it to an instance of domain and recorder.
@@ -73,6 +73,18 @@ class InputHandler implements KeyListener {
     protected void addAlternateBinding(Integer key, Runnable pressed, Runnable released) {
         this.alternatePressed.put(key, pressed);
         this.alternateReleased.put(key, released);
+    }
+
+    protected void clearBindings() {
+        pressed = new HashMap<>();
+        released = new HashMap<>();
+        alternatePressed= new HashMap<>();
+        alternateReleased = new HashMap<>();
+
+        currentPressedMap = pressed;
+        currentReleasedMap = released;
+
+        currentlyLocked = new HashMap<>();
     }
 
     /**
@@ -228,9 +240,12 @@ class InputHandler implements KeyListener {
     public void keyReleased(KeyEvent keyEvent) {
         if (GameClock.isPaused() && keyEvent.getKeyCode() != KeyEvent.VK_ESCAPE) return;
         currentReleasedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
-        currentPressedMap.getOrDefault(keyEvent.getKeyCode(), () -> {}).run();
-        Boolean b = currentlyLocked.get(keyEvent.getKeyCode());
-        b = false;
+        currentlyLocked.remove(keyEvent.getKeyCode());
+    }
+
+    public void call(Integer keyCode) {
+        currentPressedMap.getOrDefault(keyCode, () -> {}).run();
+        currentReleasedMap.getOrDefault(keyCode, () -> {}).run();
     }
 
 }

@@ -61,7 +61,11 @@ class StartScreen implements GameState, ActionListener {
         loadRecording.setBounds(220, 250, 200, 50);
         loadRecording.setText("Load Recording");
         loadRecording.addActionListener(l -> {
-            GameHandler.get().setReplayer(GameHandler.get().recorder().loadRecording());
+            try {
+                GameHandler.get().setReplayer(GameHandler.get().recorder().loadRecording());
+            } catch (NullPointerException e) {
+                System.out.println("Unfortunately that save is not a valid file. Please try again.");
+            }
         });
 
         // Button to quit.

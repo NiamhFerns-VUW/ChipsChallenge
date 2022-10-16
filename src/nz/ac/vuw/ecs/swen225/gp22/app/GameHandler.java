@@ -70,8 +70,6 @@ public class GameHandler implements Observer {
         return domain.get();
     }
     protected Recorder recorder() { return recorder; }
-    protected int chipsRemaining() { return  0; }
-
 
     @Override
     public void update() {
@@ -149,6 +147,8 @@ public class GameHandler implements Observer {
 
     public void setReplayer(Replayer replayer) {
         skipTo(replayer.getReplayLevel());
+        input.clearBindings();
+        replayer.setBindings();
         currentReplay = replayer;
         GameClock.get().register(replayer);
     }
@@ -188,6 +188,7 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     protected void setGameState(GameState state) {
+        input.clearBindings();
         if (currentReplay != null) {
             GameClock.get().unregister(currentReplay);
             currentReplay = null;
@@ -196,8 +197,10 @@ public class GameHandler implements Observer {
         GameClock.get().unregister(domain);
         viewport.setState(state);
 
-        if (state instanceof Level)
+        if (state instanceof Level) {
             setComponents((Level) state);
+            setBindings(input);
+        }
 
         GameClock.get().register(viewport);
         GameClock.get().register(this);
@@ -213,6 +216,7 @@ public class GameHandler implements Observer {
      * @author niamh
      */
     protected void onLevelChange() {
+        input.clearBindings();
         if (currentReplay != null) {
             GameClock.get().unregister(currentReplay);
             currentReplay = null;
@@ -226,6 +230,7 @@ public class GameHandler implements Observer {
 
         if (viewport.getGameState() instanceof Level) {
             setComponents((Level) viewport.getGameState());
+            setBindings(input);
         }
 
 
@@ -238,6 +243,7 @@ public class GameHandler implements Observer {
     }
 
     protected  void onFail() {
+        input.clearBindings();
         GameClock.get().unregister(this);
         setGameState(new StartScreen());
     }

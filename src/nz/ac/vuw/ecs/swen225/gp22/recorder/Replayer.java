@@ -37,17 +37,16 @@ public class Replayer implements Observer {
      *
      * @author Santino Gaeta
      */
-    public Replayer(Stack<Step> gameHistory, String level){
+    public Replayer(Stack<Step> gameHistory, String level) {
         setHistory(gameHistory);
         currentLevel = level;
         setPrevStack();
         gameHandler = GameHandler.get();
-        setInputGenerator(gameHandler);
+        setInputGenerator();
         setReplaySpeed(GameClock.get().DEFAULT_FRAMERATE);
         setBindings();
     }
-
-    /**
+        /**
      * Sets the history Stack with Chips's recorded Steps
      * @param steps - Stack of Chip's movements during recorded level
      *
@@ -68,12 +67,11 @@ public class Replayer implements Observer {
 
     /**
      * Instantiates a new InputGenerator for executing Chip's recorded movements
-     * @param gh - GameHandler of the currentLevel being replayed
      *
      * @author Santino Gaeta
      */
-    private void setInputGenerator(GameHandler gh){
-        inputGenerator = new InputGenerator(gh);
+    private void setInputGenerator(){
+        inputGenerator = new InputGenerator();
     }
 
     /**
@@ -82,7 +80,7 @@ public class Replayer implements Observer {
      *
      * @author Santino Gaeta
      */
-    private void setBindings(){
+    public void setBindings(){
         GameHandler.get().addBindings(KeyEvent.VK_EQUALS, Replayer::speedUp, () -> {});
         GameHandler.get().addBindings(KeyEvent.VK_MINUS, Replayer::speedDown, () -> {});
         GameHandler.get().addBindings(KeyEvent.VK_PERIOD, Replayer::stepForward, () -> {});

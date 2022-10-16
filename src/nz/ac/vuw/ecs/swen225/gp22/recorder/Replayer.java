@@ -78,7 +78,7 @@ public class Replayer implements Observer {
      * @author Santino Gaeta
      */
     private void setReplayState(boolean auto){
-        autoReplayState = true;
+        autoReplayState = auto;
     }
 
     /**

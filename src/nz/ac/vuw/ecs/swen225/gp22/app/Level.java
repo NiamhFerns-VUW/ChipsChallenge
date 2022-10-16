@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author niamh
  */
-record Level(String levelName, String levelPath, Domain domain, Render gameplayPanel) implements GameState {
+record Level(LevelTracker levelInfo, Domain domain, Render gameplayPanel) implements GameState {
     @Override
     public List<JPanel> panels() {
         JPanel timerPanel = new JPanel() {
@@ -31,7 +31,7 @@ record Level(String levelName, String levelPath, Domain domain, Render gameplayP
                 g.fillRect(0, 0, getWidth(), getHeight());
 
                 g.setColor(Color.GREEN);
-                String currentlyDrawing = levelName;
+                String currentlyDrawing = levelInfo().currentName();
                 g.drawString(currentlyDrawing, getWidth() / 2 - fm.stringWidth(currentlyDrawing) / 2, 50);
                 currentlyDrawing = "Time Remaining: " + GameClock.get().currentLevelTime() / 1000;
                 g.drawString(currentlyDrawing, getWidth() / 2 - fm.stringWidth(currentlyDrawing) / 2, getHeight() / 2 - 100);
@@ -53,6 +53,7 @@ record Level(String levelName, String levelPath, Domain domain, Render gameplayP
 
     @Override
     public GameState nextLevel() {
-        return new Level("Level Two", "level2", domain, new Render());
+        if (levelInfo.nextLevel().currentName().equals("Start Screen")) return new StartScreen();
+        return new Level(levelInfo.nextLevel(), domain, new Render());
     }
 }

@@ -153,6 +153,14 @@ public class GameHandler implements Observer {
         GameClock.get().register(replayer);
     }
 
+    public static String nextLevelName() {
+        return "Level Two";
+    }
+
+    public static String nextLevelCode() {
+        return "level2";
+    }
+
     /**
      * Skips to a level from anywhere in the game. Can be used by other classes to set level for testing purposes.
      * @param str a string containing the level name.
@@ -168,11 +176,11 @@ public class GameHandler implements Observer {
         switch (str.toLowerCase()) {
             case "level1" -> {
                 System.out.println("You are now at level one.");
-                setGameState(new Level("Level One", "level1", domain.get(), new Render()));
+                setGameState(new Level(LevelTracker.LEVEL_ONE, domain.get(), new Render()));
             }
             case "level2" -> {
                 System.out.println("You are now at level two.");
-                setGameState(new Level("Level Two", "level2", domain.get(), new Render()));
+                setGameState(new Level(LevelTracker.LEVEL_TWO, domain.get(), new Render()));
             }
             case "startmenu" -> setGameState(new StartScreen());
             default -> {
@@ -256,13 +264,13 @@ public class GameHandler implements Observer {
      */
     private void setComponents(Level level) {
             // Start the next level in domain.
-            domain.get().startLevel(level.levelPath(), this::onLevelChange, this::onFail);
+            domain.get().startLevel(level.levelInfo().currentPath(), this::onLevelChange, this::onFail);
             assert domain.get().ok();
             GameClock.get().register(domain);
 
             // Reset the recorder.
             recorder.reset();
-            recorder.setLevel(level.levelName());
+            recorder.setLevel(level.levelInfo().currentName());
             recorder.start();
 
             // Register domain to the renderer instance.

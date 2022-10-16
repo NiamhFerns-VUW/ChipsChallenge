@@ -4,19 +4,27 @@ public enum LevelTracker {
     NONE("Start Screen", "") {
         @Override
         public LevelTracker nextLevel() {
-            return LevelTracker.LEVEL_ONE;
+            return LevelTracker.LEVEL1;
         }
     },
-    LEVEL_ONE("Level One", "level1") {
+    LEVEL1("Level One", "level1") {
         @Override
         public LevelTracker nextLevel() {
-            return LevelTracker.LEVEL_TWO;
+            return LevelTracker.LEVEL2;
+        }
+        @Override
+        public long getTime() {
+            return 60000;
         }
     },
-    LEVEL_TWO("Level Two", "level2") {
+    LEVEL2("Level Two", "level2") {
         @Override
         public LevelTracker nextLevel() {
             return LevelTracker.NONE;
+        }
+        @Override
+        public long getTime() {
+            return 90000;
         }
     },
     SAVED_LEVEL("Saved Level", "") {
@@ -28,8 +36,15 @@ public enum LevelTracker {
 
     private final Pair<String, String> currentLevel;
 
+    protected void setCustomName(String name) {
+        currentLevel.setKey(name);
+    }
     protected void setCustomPath(String path) {
         currentLevel.setValue(path);
+    }
+
+    public long getTime() {
+        return 0;
     }
 
     public String currentName(){

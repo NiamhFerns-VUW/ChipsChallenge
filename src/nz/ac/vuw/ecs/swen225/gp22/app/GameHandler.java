@@ -153,12 +153,10 @@ public class GameHandler implements Observer {
         GameClock.get().register(replayer);
     }
 
-    public static String nextLevelName() {
-        return "Level Two";
-    }
-
-    public static String nextLevelCode() {
-        return "level2";
+    public static LevelTracker getLevelInfo() {
+        var gs = instance.viewport.getGameState();
+        if(gs instanceof Level) return ((Level)gs).levelInfo();
+        return LevelTracker.NONE;
     }
 
     /**
@@ -176,11 +174,11 @@ public class GameHandler implements Observer {
         switch (str.toLowerCase()) {
             case "level1" -> {
                 System.out.println("You are now at level one.");
-                setGameState(new Level(LevelTracker.LEVEL_ONE, domain.get(), new Render()));
+                setGameState(new Level(LevelTracker.LEVEL1, domain.get(), new Render()));
             }
             case "level2" -> {
                 System.out.println("You are now at level two.");
-                setGameState(new Level(LevelTracker.LEVEL_TWO, domain.get(), new Render()));
+                setGameState(new Level(LevelTracker.LEVEL2, domain.get(), new Render()));
             }
             case "startmenu" -> setGameState(new StartScreen());
             default -> {
@@ -208,11 +206,11 @@ public class GameHandler implements Observer {
         if (state instanceof Level) {
             setComponents((Level) state);
             setBindings(input);
+            GameClock.get().setLevelTime(((Level) state).levelInfo().getTime());
         }
 
         GameClock.get().register(viewport);
         GameClock.get().register(this);
-        GameClock.get().setLevelTime(90000);
 
         viewport.validate();
         viewport.repack();
@@ -239,10 +237,10 @@ public class GameHandler implements Observer {
         if (viewport.getGameState() instanceof Level) {
             setComponents((Level) viewport.getGameState());
             setBindings(input);
+            GameClock.get().setLevelTime(((Level) viewport.getGameState()).levelInfo().getTime());
         }
 
 
-        GameClock.get().setLevelTime(90000);
         GameClock.get().register(this);
         GameClock.get().register(viewport);
 

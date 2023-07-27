@@ -1,3 +1,13 @@
+# Chip's Challenge
+
+Group work project to build Chip's Challenge from scratch following the MVC pattern for SWEN 225.
+
+I was responsible for the App module.
+
+**Imported from Victoria University Gitlab.**
+
+*Below this line is for assignment submission requirements.*
+
 Start the game by running nz.ac.vuw.ecs.swen225.gp22.app.Main from your chosen IDE.
 
 To play the Game select from level 1 choose "Start Game", to Load a game choose "Load game" and to play a recorded game choose "Load recording".
